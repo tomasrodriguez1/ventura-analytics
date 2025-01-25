@@ -7,16 +7,17 @@ import Register from './Register'
 import Image from 'next/image'
 
 // Define un tipo específico en lugar de 'any'
-interface UserData {
-  // Define las propiedades que realmente usas
-}
+// interface UserData {
+//   // Define las propiedades que realmente usas
+// }
 
 interface DemoProps {
   playfair: NextFont
-  userData: UserData
+  // Eliminar userData si no se usa
+  // userData: UserData
 }
 
-export default function Demo({ playfair, userData }: DemoProps) {
+export default function Demo({ playfair }: DemoProps) {
   const [showDemo, setShowDemo] = useState(false)
   const [showRegister, setShowRegister] = useState(false)
 

@@ -13,11 +13,6 @@ import Contact from './components/Contact'
 import Demo from './components/Demo'
 import Footer from './components/Footer'
 
-// Define tipos específicos en lugar de 'any'
-interface SomeType {
-  // Define las propiedades que realmente usas
-}
-
 export default function Page() {
   const [currentSection, setCurrentSection] = useState('home')
 
