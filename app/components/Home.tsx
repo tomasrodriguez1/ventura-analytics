@@ -46,7 +46,7 @@ export default function Home({ playfair, setCurrentSection }: HomeProps) {
           <div className="flex flex-col justify-center space-y-4">
             <div className="bg-gray-700/50 p-4 rounded-lg">
               <p className="text-blue-400 mb-2">Pregunta:</p>
-              <p className="text-white">"¿Qué producto me deja el mayor margen?"</p>
+              <p className="text-white">&quot;¿Qué producto me deja el mayor margen?&quot;</p>
             </div>
             <div className="bg-gray-700/50 p-4 rounded-lg">
               <p className="text-blue-400 mb-2">Respuesta:</p>
