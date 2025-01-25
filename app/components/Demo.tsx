@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import { NextFont } from 'next/dist/compiled/@next/font'
 import { motion } from 'framer-motion'
 import Register from './Register'
+import Image from 'next/image'
 
 interface DemoProps {
   playfair: NextFont
@@ -136,10 +137,12 @@ export default function Demo({ playfair, userData }: DemoProps) {
         <div className="container mx-auto px-4 h-full flex items-center">
           <div className="bg-black/50 p-8 rounded-lg flex flex-col md:flex-row w-full gap-8">
             <div className="w-full md:w-1/2">
-              <img 
+              <Image 
                 src="/images/img_tiena.png" 
                 alt="Imagen de Tienda" 
                 className="w-full h-auto rounded-lg shadow-lg"
+                width={500}
+                height={300}
               />
             </div>
             <div className="w-full md:w-1/2 text-left text-gray-200">
@@ -188,10 +191,12 @@ export default function Demo({ playfair, userData }: DemoProps) {
             </ul>
           </div>
           <div className="w-full md:w-1/2">
-            <img 
+            <Image 
               src="/images/imagen_desafios.png" 
               alt="Imagen de Desafíos" 
               className="w-full h-auto rounded-lg shadow-lg"
+              width={500}
+              height={300}
             />
           </div>
         </div>
@@ -204,10 +209,12 @@ export default function Demo({ playfair, userData }: DemoProps) {
       >
         <div className="container mx-auto px-4 flex flex-col md:flex-row gap-8">
         <div className="w-full md:w-1/2">
-            <img 
+            <Image 
               src="/images/image_solucion.png" 
               alt="Imagen de Soluciones" 
               className="w-full h-auto rounded-lg shadow-lg"
+              width={500}
+              height={300}
             />
           </div>
           <div className="w-full md:w-1/2 bg-gray-700/50 p-6 rounded-xl text-gray-300">
