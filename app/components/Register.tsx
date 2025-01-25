@@ -4,57 +4,119 @@ import { useState } from 'react'
 import { NextFont } from 'next/dist/compiled/@next/font'
 
 interface RegisterProps {
-  onRegister: (data: { name: string; email: string; reason: string }) => void;
-  playfair: NextFont;
+  playfair: NextFont
+  onRegisterComplete: () => void
+  onClose: () => void
 }
 
-export default function Register({ onRegister, playfair }: RegisterProps) {
-  const [formData, setFormData] = useState({ name: '', email: '', reason: '' })
+export default function Register({ playfair, onRegisterComplete, onClose }: RegisterProps) {
+  const [isLoading, setIsLoading] = useState(false)
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    reason: ''
+  })
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    onRegister(formData)
-  }
+    setIsLoading(true)
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
+    try {
+      const response = await fetch('/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+
+      if (!response.ok) {
+        throw new Error('Error al registrar')
+      }
+
+      onRegisterComplete()
+    } catch (error) {
+      console.error('Error:', error)
+      // Aquí podrías mostrar un mensaje de error al usuario
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
-    <section className="space-y-4">
-      <h2 className={`text-3xl font-bold text-white ${playfair.className}`}>Regístrate para ver la Demo</h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input
-          type="text"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-          placeholder="Nombre"
-          required
-          className="w-full p-2 bg-black border border-white rounded text-white"
-        />
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          placeholder="Correo"
-          required
-          className="w-full p-2 bg-black border border-white rounded text-white"
-        />
-        <textarea
-          name="reason"
-          value={formData.reason}
-          onChange={handleChange}
-          placeholder="¿Por qué te interesa ver la demo?"
-          required
-          className="w-full p-2 bg-black border border-white rounded text-white h-32"
-        ></textarea>
-        <button type="submit" className="bg-white text-black px-4 py-2 rounded hover:bg-gray-200">
-          Acceder a la Demo
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+      <div className="bg-gray-800 rounded-xl p-8 max-w-md w-full relative">
+        <button 
+          onClick={onClose}
+          className="absolute top-4 right-4 text-gray-400 hover:text-white"
+        >
+          ✕
         </button>
-      </form>
-    </section>
+
+        <h2 className={`${playfair.className} text-2xl font-bold mb-6 text-white`}>
+          Registro para Demo
+        </h2>
+
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="grid md:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-gray-300 mb-2">Nombre</label>
+              <input
+                type="text"
+                required
+                value={formData.firstName}
+                onChange={(e) => setFormData({...formData, firstName: e.target.value})}
+                className="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 text-white focus:outline-none focus:border-blue-500"
+              />
+            </div>
+            <div>
+              <label className="block text-gray-300 mb-2">Apellido</label>
+              <input
+                type="text"
+                required
+                value={formData.lastName}
+                onChange={(e) => setFormData({...formData, lastName: e.target.value})}
+                className="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 text-white focus:outline-none focus:border-blue-500"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-gray-300 mb-2">Email</label>
+            <input
+              type="email"
+              required
+              value={formData.email}
+              onChange={(e) => setFormData({...formData, email: e.target.value})}
+              className="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 text-white focus:outline-none focus:border-blue-500"
+            />
+          </div>
+
+          <div>
+            <label className="block text-gray-300 mb-2">¿Por qué te interesa ver la demo?</label>
+            <textarea
+              required
+              value={formData.reason}
+              onChange={(e) => setFormData({...formData, reason: e.target.value})}
+              className="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 text-white focus:outline-none focus:border-blue-500 h-32"
+            />
+          </div>
+
+          <button
+            type="submit"
+            disabled={isLoading}
+            className={`w-full py-3 rounded-lg transition-colors ${
+              isLoading 
+                ? 'bg-gray-600 cursor-not-allowed' 
+                : 'bg-blue-600 hover:bg-blue-700 text-white'
+            }`}
+          >
+            {isLoading ? 'Registrando...' : 'Comenzar Demo'}
+          </button>
+        </form>
+      </div>
+    </div>
   )
 }
 

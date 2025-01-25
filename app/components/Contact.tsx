@@ -23,25 +23,25 @@ export default function Contact({ playfair }: ContactProps) {
       <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto px-4 mb-12">
         <div className="bg-gray-800/50 rounded-xl p-6 backdrop-blur-sm">
           <div className="text-blue-400 text-3xl mb-4">🎯</div>
-          <h3 className="text-xl font-bold text-white mb-3">Demostración Personalizada</h3>
+          <h3 className="text-xl font-bold text-white mb-3">Demo Interactiva</h3>
           <p className="text-gray-300">
-            Verás en tiempo real cómo nuestra plataforma puede adaptarse a las necesidades específicas de tu negocio.
+            Interactúa con nuestro agente IA usando datos reales de una boutique de moda para ver cómo puede ayudarte.
           </p>
         </div>
 
         <div className="bg-gray-800/50 rounded-xl p-6 backdrop-blur-sm">
           <div className="text-blue-400 text-3xl mb-4">💡</div>
-          <h3 className="text-xl font-bold text-white mb-3">Consultoría Gratuita</h3>
+          <h3 className="text-xl font-bold text-white mb-3">Análisis de Necesidades</h3>
           <p className="text-gray-300">
-            30 minutos de asesoría con nuestros expertos para analizar tus desafíos actuales en análisis de datos.
+            Evaluaremos juntos tus desafíos específicos en gestión de datos, ventas y toma de decisiones.
           </p>
         </div>
 
         <div className="bg-gray-800/50 rounded-xl p-6 backdrop-blur-sm">
-          <div className="text-blue-400 text-3xl mb-4">📈</div>
-          <h3 className="text-xl font-bold text-white mb-3">ROI Estimado</h3>
+          <div className="text-blue-400 text-3xl mb-4">📊</div>
+          <h3 className="text-xl font-bold text-white mb-3">Insights en Tiempo Real</h3>
           <p className="text-gray-300">
-            Te mostraremos el impacto potencial en tu negocio con casos de éxito similares a tu industria.
+            Descubre cómo el agente puede responder preguntas específicas sobre ventas, inventario y rendimiento.
           </p>
         </div>
       </div>

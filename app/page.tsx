@@ -41,7 +41,7 @@ export default function Page() {
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
-          opacity: '0.6'
+          opacity: '0.2'
         }}
       />
       
@@ -66,7 +66,6 @@ export default function Page() {
           )}
           {currentSection === 'about' && <About playfair={playfair} />}
           {currentSection === 'contact' && <Contact playfair={playfair} />}
-          {currentSection === 'register' && <Register onRegister={handleRegister} playfair={playfair} />}
           {currentSection === 'demo' && <Demo playfair={playfair} userData={userData} />}
         </main>
         <Footer />
