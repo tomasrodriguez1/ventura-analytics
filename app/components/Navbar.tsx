@@ -1,4 +1,4 @@
-import Link from 'next/link'
+// import Link from 'next/link'
 import { NextFont } from 'next/dist/compiled/@next/font'
 
 interface NavbarProps {

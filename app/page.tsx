@@ -10,24 +10,19 @@ import Navbar from './components/Navbar'
 import Home from './components/Home'
 import About from './components/About'
 import Contact from './components/Contact'
-import Register from './components/Register'
 import Demo from './components/Demo'
 import Footer from './components/Footer'
 
+// Define tipos específicos en lugar de 'any'
+interface SomeType {
+  // Define las propiedades que realmente usas
+}
+
 export default function Page() {
   const [currentSection, setCurrentSection] = useState('home')
-  const [isRegistered, setIsRegistered] = useState(false)
-  const [userData, setUserData] = useState(null)
-
-  const handleRegister = (data: any) => {
-    setIsRegistered(true)
-    setUserData(data)
-    setCurrentSection('demo')
-  }
 
   // Función para manejar la navegación a demo
   const handleDemoNavigation = () => {
-    setIsRegistered(true)
     setCurrentSection('demo')
   }
 
@@ -66,7 +61,7 @@ export default function Page() {
           )}
           {currentSection === 'about' && <About playfair={playfair} />}
           {currentSection === 'contact' && <Contact playfair={playfair} />}
-          {currentSection === 'demo' && <Demo playfair={playfair} userData={userData} />}
+          {currentSection === 'demo' && <Demo playfair={playfair} />}
         </main>
         <Footer />
       </div>

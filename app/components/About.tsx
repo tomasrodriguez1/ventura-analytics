@@ -1,5 +1,4 @@
 import { NextFont } from 'next/dist/compiled/@next/font'
-import Image from 'next/image'
 
 interface AboutProps {
   playfair: NextFont;

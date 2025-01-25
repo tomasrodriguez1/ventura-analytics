@@ -6,9 +6,14 @@ import { motion } from 'framer-motion'
 import Register from './Register'
 import Image from 'next/image'
 
+// Define un tipo específico en lugar de 'any'
+interface UserData {
+  // Define las propiedades que realmente usas
+}
+
 interface DemoProps {
   playfair: NextFont
-  userData: any
+  userData: UserData
 }
 
 export default function Demo({ playfair, userData }: DemoProps) {
@@ -271,8 +276,6 @@ export default function Demo({ playfair, userData }: DemoProps) {
           </button>
         </div>
       </motion.section>
-
-
 
       {/* Modal de Registro */}
       {showRegister && (
