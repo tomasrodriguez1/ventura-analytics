@@ -181,16 +181,15 @@ export default function Demo({ playfair }: DemoProps) {
           
           <div className="w-full md:w-1/2 bg-gray-700/50 p-6 rounded-xl text-gray-300">
             <h4 className="text-xl font-bold text-white mb-3">
-              La realidad de los datos dispersos
+              El desafío de los datos dispersos
             </h4>
             <p className="text-xl leading-relaxed mb-4">
-              La realidad es que tienes los datos, pero están dispersos o no están organizados: ventas en hojas de cálculo, mensajes de WhatsApp, registros de Instagram y las notas de tus vendedores. Sin una visión unificada, tomar decisiones se vuelve una tarea intuitiva más que estratégica.
-            </p>
+              Aunque cuentas con los datos necesarios, estos suelen estar dispersos y desorganizados: ventas registradas en hojas de cálculo, conversaciones en WhatsApp, interacciones en Instagram y las notas de los vendedores. Sin una perspectiva integral, tomar decisiones pasa de ser un proceso estratégico a uno basado únicamente en la intuición.            </p>
             <h4 className="text-xl font-bold text-white mb-3">
               Decisiones críticas pendientes:
             </h4>
             <ul className="list-disc pl-6 mb-4 text-xl leading-relaxed">
-              <li>¿Deberías invertir más en inventario de vestidos o en accesorios?</li>
+              <li>¿Es más rentable invertir en inventario de bolsos o accesorios?</li>
               <li>¿Cuál sucursal necesita refuerzo en personal de ventas?</li>
               <li>¿Qué productos deberías promocionar más en redes sociales?</li>
               <li>¿Vale la pena mantener todas las tallas y colores en ambas sucursales?</li>
@@ -235,7 +234,7 @@ export default function Demo({ playfair }: DemoProps) {
               <li>Calcula márgenes de ganancia por producto y categoría.</li>
             </ul>
             <p className="text-xl leading-relaxed mb-4 text-white">
-              Ya no más decisiones basadas en corazonadas. Con nuestro asistente, podrás preguntar específicamente lo que necesitas saber: "¿Qué vestidos tienen mejor margen de ganancia en la sucursal norte?" o "¿Cuál es mi vendedor estrella en accesorios?" y obtener respuestas precisas al instante.
+              Ya no más decisiones basadas en corazonadas. Con nuestro asistente, podrás preguntar específicamente lo que necesitas saber: "¿Qué bolsos tienen mejor margen de ganancia en la sucursal norte?" o "¿Cuál es mi vendedor estrella en accesorios?" y obtener respuestas precisas al instante.
             </p>
           </div>
           
@@ -256,7 +255,7 @@ export default function Demo({ playfair }: DemoProps) {
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
             <div className="bg-gray-800 p-4 rounded-lg">
-              <p className="text-gray-300">&quot;¿Cuál es el margen de ganancia promedio en vestidos de la sucursal 1?&quot;</p>
+              <p className="text-gray-300">&quot;¿Cuál es el margen de ganancia promedio en bolsos de la sucursal 1?&quot;</p>
             </div>
             <div className="bg-gray-800 p-4 rounded-lg">
               <p className="text-gray-300">"¿Qué vendedor tiene mejor desempeño en ventas de accesorios?"</p>
