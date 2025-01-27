@@ -95,7 +95,7 @@ export default function Demo({ playfair }: DemoProps) {
                 <div>
                   <h4 className="text-blue-400 text-sm mb-2">Métricas Específicas</h4>
                   <ul className="text-gray-300 text-sm space-y-2">
-                    <li>• "¿Cuál es el margen de ganancia promedio de vestidos en la sucursal 1?"</li>
+                    <li>• "¿Cuál es el margen de ganancia promedio de bolsos en la sucursal 1?"</li>
                     <li>• "Muéstrame los 5 productos con más unidades vendidas en el último mes."</li>
                     <li>• "¿Qué vendedor ha generado mayores ventas esta semana?"</li>
                   </ul>
@@ -112,7 +112,7 @@ export default function Demo({ playfair }: DemoProps) {
                 <div>
                   <h4 className="text-blue-400 text-sm mb-2">Resúmenes y Tendencias</h4>
                   <ul className="text-gray-300 text-sm space-y-2">
-                    <li>• "Dame un resumen general de las ventas de la boutique en el último mes."</li>
+                    <li>• "Dame un resumen general de las ventas de la tienda en el último mes."</li>
                     <li>• "¿Qué tendencias de venta se observan en el último trimestre?"</li>
                     <li>• "¿Cómo ha evolucionado el volumen de ventas por canal (Instagram, web, tienda física) en las últimas semanas?"</li>
                   </ul>
