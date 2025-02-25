@@ -109,7 +109,7 @@ export default function Demo({ playfair }: DemoProps) {
       <div className="max-w-6xl mx-auto bg-gray-800/50 p-8 rounded-lg backdrop-blur-sm">
         {/* Limitaciones del Sistema de Análisis de Ventas */}
         <div className="mb-8 bg-gray-900/70 p-6 rounded-lg shadow-lg text-white">
-          <h3 className="text-2xl font-bold mb-4">📌 Importante: Limitaciones del Sistema de Análisis de Ventas</h3>
+          <h3 className="text-2xl font-bold mb-4">📌 Importante: Limitaciones del Sistema</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <h4 className="text-xl font-semibold">🔍 Disponibilidad de Datos</h4>
