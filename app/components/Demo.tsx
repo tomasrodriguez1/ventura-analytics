@@ -20,6 +20,8 @@ interface DemoProps {
 export default function Demo({ playfair }: DemoProps) {
   const [showDemo, setShowDemo] = useState(false)
   const [showRegister, setShowRegister] = useState(false)
+  const [copied, setCopied] = useState<string | null>(null)
+  const [hoveredQuestion, setHoveredQuestion] = useState<string | null>(null)
 
   useEffect(() => {
     // Asegurar que la página se cargue desde la parte superior
@@ -60,11 +62,97 @@ export default function Demo({ playfair }: DemoProps) {
     viewport: { once: true, margin: "-100px" }
   }
 
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text)
+    setCopied(text)
+    setTimeout(() => setCopied(null), 2000) // Clear the copied state after 2 seconds
+  }
+
+  const questions = [
+    {
+      category: "Métricas Específicas",
+      items: [
+        "¿Cuál es el margen de ganancia promedio de los bolsos en la Sucursal 1?",
+        "Muéstrame los 5 productos más vendidos en el último mes.",
+        "¿Cuál ha sido el producto con mayor revenue en los últimos 7 días?"
+      ]
+    },
+    {
+      category: "Análisis Comparativo",
+      items: [
+        "Compara las ventas de la Sucursal 1 y la Sucursal 2 durante el último mes.",
+        "¿Cuál es la diferencia en ventas entre el mejor día de la semana y el peor?"
+      ]
+    },
+    {
+      category: "Resúmenes y Tendencias",
+      items: [
+        "¿Qué tendencias de venta se observan en el último trimestre?",
+        "¿Cómo ha evolucionado el volumen de ventas por canal (Instagram, web, tienda física) en las últimas semanas?",
+        "¿Qué método de pago ha sido el más utilizado en el último mes?"
+      ]
+    },
+    {
+      category: "Preguntas con Gráficos para Insights Visuales",
+      items: [
+        "Muestra un heatmap de ventas por día de la semana en la Sucursal 1.",
+        "¿Qué material ha sido más rentable en los últimos tres meses?",
+        "¿Cuál ha sido el rendimiento de cada vendedor por mes?",
+        "¿Cómo ha cambiado la rotación de categorías en los últimos tres meses?"
+      ]
+    }
+  ]
+
   // Si estamos mostrando la demo, solo mostramos el chat
   if (showDemo) {
     return (
       <div className="max-w-6xl mx-auto bg-gray-800/50 p-8 rounded-lg backdrop-blur-sm">
+        {/* Limitaciones del Sistema de Análisis de Ventas */}
+        <div className="mb-8 bg-gray-900/70 p-6 rounded-lg shadow-lg text-white">
+          <h3 className="text-2xl font-bold mb-4">📌 Importante: Limitaciones del Sistema de Análisis de Ventas</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <h4 className="text-xl font-semibold">🔍 Disponibilidad de Datos</h4>
+              <ul className="list-disc pl-6 text-gray-300">
+                <li>✔️ Los datos están disponibles desde marzo hasta julio.</li>
+                <li>✔️ Se actualizan periódicamente, no en tiempo real.</li>
+                <li>⚠️ Si el período de ventas aún no ha concluido, los datos pueden estar incompletos.</li>
+              </ul>
+              <h4 className="text-xl font-semibold mt-4">🛍️ Productos Incluidos</h4>
+              <p className="text-gray-300">El análisis está basado en los siguientes productos: ✅ Bolsos, Carteras, Gorros, Neceseres, Shoppers y Sombreros.</p>
+              <h4 className="text-xl font-semibold mt-4">📊 Alcance del Análisis</h4>
+              <ul className="list-disc pl-6 text-gray-300">
+                <li>✔️ Puedes comparar ventas entre sucursales y plataformas de venta.</li>
+                <li>✔️ Puedes ver tendencias de productos, colores, tamaños y materiales.</li>
+                <li>⚠️ No se incluyen datos por hora ni combinaciones avanzadas de filtros.</li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="text-xl font-semibold">📈 Gráficos y Representación Visual</h4>
+              <ul className="list-disc pl-6 text-gray-300">
+                <li>✔️ Se muestran tendencias generales y métricas clave.</li>
+                <li>⚠️ Algunas métricas pueden no ser aptas para gráficos si los datos son insuficientes.</li>
+              </ul>
+              <h4 className="text-xl font-semibold mt-4">🌎 Factores Externos No Considerados</h4>
+              <ul className="list-disc pl-6 text-gray-300">
+                <li>⚠️ El análisis no incluye impacto de promociones, cambios de demanda o problemas de stock.</li>
+                <li>⚠️ Para una interpretación completa, es importante considerar el contexto del negocio.</li>
+              </ul>
+              <h4 className="text-xl font-semibold mt-4">⚙️ Cálculo de Métricas y Tendencias</h4>
+              <ul className="list-disc pl-6 text-gray-300">
+                <li>✔️ Se usan fórmulas predefinidas para márgenes, rotaciones y tendencias.</li>
+                <li>⚠️ No se reflejan descuentos específicos ni costos ocultos.</li>
+                <li>⚠️ Las tendencias están basadas en datos históricos y no garantizan proyecciones futuras.</li>
+              </ul>
+            </div>
+          </div>
+          <div className="text-center mt-4">
+            <p className="text-gray-300">📞 ¿Tienes dudas? Si necesitas más información, contacta a nuestro equipo de soporte.</p>
+          </div>
+        </div>
+
         <div className="text-center mb-8">
+          <p className="text-blue-400 text-lg font-bold mb-2">⬇️ Desliza hacia abajo para ver el chat ⬇️</p>
           <h2 className={`${playfair.className} text-4xl font-bold mb-4 text-white`}>
             Agente de Inteligencia Artificial
           </h2>
@@ -73,50 +161,46 @@ export default function Demo({ playfair }: DemoProps) {
           </p>
         </div>
 
-        <div className="flex gap-6">
-          {/* Chat Principal - 75% del ancho */}
+        <div className="flex flex-col md:flex-row gap-6">
           <div className="flex-grow">
-            <div className="bg-white rounded-2xl backdrop-blur-sm p-4 h-[800px]">
+            <div className="bg-white rounded-2xl backdrop-blur-sm p-4 h-[800px] shadow-lg">
               <iframe 
                 src="https://app.relevanceai.com/agents/bcbe5a/fe7fd972a30e-4126-9e21-3a069a8e877c/5b877ece-829f-4cc4-a98a-8e961f2512df/embed-chat?hide_tool_steps=false&hide_file_uploads=false&hide_conversation_list=false&bubble_style=agent&primary_color=%23685FFF&bubble_icon=pd%2Fchat&input_placeholder_text=Type+your+message...&hide_logo=false" 
-                className="w-full h-full bg-white"
+                className="w-full h-full bg-white rounded-lg"
                 frameBorder="0"
                 title="Chat con Asistente IA"
               />
             </div>
           </div>
 
-          {/* Sugerencias - 25% del ancho */}
-          <div className="w-1/4 space-y-4">
-            <div className="bg-gray-700/50 rounded-xl p-6 backdrop-blur-sm">
+          <div className="w-full md:w-1/3 space-y-4">
+            <div className="bg-gray-700/50 rounded-xl p-6 backdrop-blur-sm shadow-lg">
               <h3 className="text-lg font-bold text-white mb-4">Prueba preguntar:</h3>
               
               <div className="space-y-6">
-                <div>
-                  <h4 className="text-blue-400 text-sm mb-2">Métricas Específicas</h4>
-                  <ul className="text-gray-300 text-sm space-y-2">
-                    <li>• "¿Cuál es el margen de ganancia promedio de bolsos en la sucursal 1?"</li>
-                    <li>• "Muéstrame los 5 productos con más unidades vendidas en el último mes."</li>
-                    <li>• "¿Qué vendedor ha generado mayores ventas esta semana?"</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <h4 className="text-blue-400 text-sm mb-2">Análisis Comparativo</h4>
-                  <ul className="text-gray-300 text-sm space-y-2">
-                    <li>• "Compara las ventas de la sucursal 1 y la sucursal 2 durante el último mes."</li>
-                    <li>• "¿Qué categoría de productos genera más ingresos en Instagram frente a la tienda física?"</li>
-                  </ul>
-                </div>
-
-                <div>
-                  <h4 className="text-blue-400 text-sm mb-2">Resúmenes y Tendencias</h4>
-                  <ul className="text-gray-300 text-sm space-y-2">
-                    <li>• "Dame un resumen general de las ventas de la tienda en el último mes."</li>
-                    <li>• "¿Qué tendencias de venta se observan en el último trimestre?"</li>
-                    <li>• "¿Cómo ha evolucionado el volumen de ventas por canal (Instagram, web, tienda física) en las últimas semanas?"</li>
-                  </ul>
-                </div>
+                {questions.map((section, sectionIndex) => (
+                  <div key={sectionIndex}>
+                    <h4 className="text-blue-400 text-sm mb-2">{section.category}</h4>
+                    <ul className="text-gray-300 text-sm space-y-2">
+                      {section.items.map((question, index) => (
+                        <li 
+                          key={index}
+                          onClick={() => copyToClipboard(question)}
+                          onMouseEnter={() => setHoveredQuestion(question)}
+                          onMouseLeave={() => setHoveredQuestion(null)}
+                          className="relative cursor-pointer hover:text-blue-400 transition-colors"
+                        >
+                          • {question} {copied === question && <span className="text-green-400">(Copiado)</span>}
+                          {hoveredQuestion === question && (
+                            <span className="absolute left-full ml-2 bg-black text-white text-xs rounded px-2 py-1">
+                              Haz clic para copiar
+                            </span>
+                          )}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
