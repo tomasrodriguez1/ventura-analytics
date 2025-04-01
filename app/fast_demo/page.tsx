@@ -1,9 +1,7 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Playfair_Display, Lato } from 'next/font/google'
-import { motion } from 'framer-motion'
-import Image from 'next/image'
 
 const playfair = Playfair_Display({ subsets: ['latin'] })
 const lato = Lato({ weight: ['400', '700'], subsets: ['latin'] })
