@@ -43,7 +43,7 @@ export class ContactService {
         
         if (axiosError.response) {
           // El servidor respondió con un status de error
-          const errorData = axiosError.response.data as any;
+          const errorData = axiosError.response.data as { message?: string };
           return {
             success: false,
             message: errorData?.message || `Error del servidor (${axiosError.response.status}). Por favor, inténtalo de nuevo.`

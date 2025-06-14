@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Enviar datos al webhook de N8N desde el servidor
-    const response = await axios.post(WEBHOOK_URL, dataToSend, {
+    await axios.post(WEBHOOK_URL, dataToSend, {
       headers: {
         'Content-Type': 'application/json',
         'User-Agent': 'VenturaAnalytics-Website/1.0'
