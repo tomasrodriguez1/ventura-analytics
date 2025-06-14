@@ -1,12 +1,62 @@
 'use client'
 
 import { NextFont } from 'next/dist/compiled/@next/font'
+import { useState } from 'react'
+import { ContactService, ContactFormData } from '../../services/contactService'
 
 interface ContactProps {
   playfair: NextFont;
 }
 
 export default function Contact({ playfair }: ContactProps) {
+  const [formData, setFormData] = useState<ContactFormData>({
+    nombre: '',
+    empresa: '',
+    email: '',
+    mensaje: ''
+  })
+  
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitMessage, setSubmitMessage] = useState('')
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }))
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    
+    // Validar usando el servicio
+    const validation = ContactService.validateFormData(formData)
+    if (!validation.isValid) {
+      setSubmitMessage(validation.message || 'Por favor, completa todos los campos correctamente')
+      return
+    }
+
+    setIsSubmitting(true)
+    setSubmitMessage('')
+
+    // Usar el servicio para enviar los datos
+    const result = await ContactService.submitContactForm(formData)
+    
+    setSubmitMessage(result.message)
+    
+    if (result.success) {
+      setFormData({
+        nombre: '',
+        empresa: '',
+        email: '',
+        mensaje: ''
+      })
+    }
+    
+    setIsSubmitting(false)
+  }
+
   return (
     <div className="flex flex-col items-center py-12 space-y-16">
       {/* Header Section */}
@@ -48,22 +98,30 @@ export default function Contact({ playfair }: ContactProps) {
 
       {/* Contact Form */}
       <div className="bg-gray-800/50 rounded-2xl p-8 backdrop-blur-sm max-w-2xl w-full mx-auto">
-        <form className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid md:grid-cols-2 gap-6">
             <div>
               <label className="block text-gray-300 mb-2">Nombre</label>
               <input
                 type="text"
+                name="nombre"
+                value={formData.nombre}
+                onChange={handleInputChange}
                 className="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 text-white focus:outline-none focus:border-blue-500"
                 placeholder="Tu nombre"
+                required
               />
             </div>
             <div>
               <label className="block text-gray-300 mb-2">Empresa</label>
               <input
                 type="text"
+                name="empresa"
+                value={formData.empresa}
+                onChange={handleInputChange}
                 className="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 text-white focus:outline-none focus:border-blue-500"
                 placeholder="Nombre de tu empresa"
+                required
               />
             </div>
           </div>
@@ -72,24 +130,47 @@ export default function Contact({ playfair }: ContactProps) {
             <label className="block text-gray-300 mb-2">Email</label>
             <input
               type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleInputChange}
               className="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 text-white focus:outline-none focus:border-blue-500"
               placeholder="tu@email.com"
+              required
             />
           </div>
 
           <div>
             <label className="block text-gray-300 mb-2">Mensaje</label>
             <textarea
+              name="mensaje"
+              value={formData.mensaje}
+              onChange={handleInputChange}
               className="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 text-white focus:outline-none focus:border-blue-500 h-32"
               placeholder="Cuéntanos sobre tu empresa y tus necesidades..."
+              required
             />
           </div>
 
+          {/* Mensaje de respuesta */}
+          {submitMessage && (
+            <div className={`p-4 rounded-lg ${submitMessage.includes('Gracias') || submitMessage.includes('exitosamente') 
+              ? 'bg-green-800/50 text-green-300' 
+              : 'bg-red-800/50 text-red-300'
+            }`}>
+              {submitMessage}
+            </div>
+          )}
+
           <button
             type="submit"
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-xl"
+            disabled={isSubmitting}
+            className={`w-full font-bold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 hover:shadow-xl ${
+              isSubmitting 
+                ? 'bg-gray-600 cursor-not-allowed' 
+                : 'bg-blue-600 hover:bg-blue-700 text-white'
+            }`}
           >
-            Agendar Demostración
+            {isSubmitting ? 'Enviando...' : 'Agendar Demostración'}
           </button>
         </form>
       </div>
@@ -100,11 +181,11 @@ export default function Contact({ playfair }: ContactProps) {
           ¿Prefieres contactarnos directamente?
         </p>
         <div className="flex justify-center space-x-8">
-          <a href="mailto:contacto@venturaanalytic.com" className="text-blue-400 hover:text-blue-300 flex items-center">
-            <span className="mr-2">✉️</span> contacto@venturaanalytic.com
+          <a href="mailto:remates.dev@gmail.com" className="text-blue-400 hover:text-blue-300 flex items-center">
+            <span className="mr-2">✉️</span> remates.dev@gmail.com
           </a>
-          <a href="tel:+56912345678" className="text-blue-400 hover:text-blue-300 flex items-center">
-            <span className="mr-2">📱</span> +56 9 1234 5678
+          <a href="tel:+56981538112" className="text-blue-400 hover:text-blue-300 flex items-center">
+            <span className="mr-2">📱</span> +56 9 8153 8112
           </a>
         </div>
       </div>
