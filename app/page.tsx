@@ -44,7 +44,7 @@ export default function Page() {
           )}
           {currentSection === 'about' && <About playfair={playfair} />}
           {currentSection === 'contact' && <Contact playfair={playfair} />}
-          {currentSection === 'retail' && <RetailDemoCompleta playfair={playfair} userData={null} />}
+          {currentSection === 'retail' && <RetailDemoCompleta playfair={playfair}/>}
           {currentSection === 'callcenter' && <CallCenterDemo playfair={playfair} lato={lato} />}
         </main>
         <Footer />

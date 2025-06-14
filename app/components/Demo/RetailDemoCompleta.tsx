@@ -3,13 +3,13 @@
 import { useState, useEffect } from 'react'
 import { NextFont } from 'next/dist/compiled/@next/font'
 import { motion } from 'framer-motion'
+import Image from 'next/image'
 
 interface DemoProps {
   playfair: NextFont
-  userData: any
 }
 
-export default function Demo({ playfair, userData }: DemoProps) {
+export default function Demo({ playfair }: DemoProps) {
   const [copied, setCopied] = useState<string | null>(null)
   const [openDropdown, setOpenDropdown] = useState<string | null>("Análisis de Ventas")
 
@@ -50,23 +50,7 @@ export default function Demo({ playfair, userData }: DemoProps) {
     viewport: { once: true, margin: "-100px" }
   }
 
-  const benefits = [
-    {
-      title: "Unifica todos tus canales",
-      description: "Conecta tienda física, Instagram, WhatsApp y web en una sola vista para decisiones certeras.",
-      icon: "🎯"
-    },
-    {
-      title: "Descubre patrones ocultos",
-      description: "Identifica qué productos, colores y tallas funcionan mejor en cada sucursal y canal.",
-      icon: "🔍"
-    },
-    {
-      title: "Maximiza tu rentabilidad",
-      description: "Conoce el margen real por producto, vendedor y temporada para optimizar tu negocio.",
-      icon: "💰"
-    }
-  ]
+
 
   const capabilities = [
     "Análisis de ventas por producto, categoría y canal de venta",
@@ -211,9 +195,11 @@ export default function Demo({ playfair, userData }: DemoProps) {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
           <div className="space-y-6">
-            <img 
+            <Image 
               src="/images/img_tiena.png" 
               alt="Imagen de Tienda" 
+              width={600}
+              height={400}
               className="w-full h-auto rounded-lg shadow-lg"
             />
           </div>
@@ -272,9 +258,11 @@ export default function Demo({ playfair, userData }: DemoProps) {
           </div>
           
           <div className="flex items-center justify-center">
-            <img 
+            <Image 
               src="/images/imagen_desafios.png" 
               alt="Imagen de Desafíos" 
+              width={600}
+              height={400}
               className="w-full h-auto rounded-lg shadow-lg"
             />
           </div>
@@ -288,9 +276,11 @@ export default function Demo({ playfair, userData }: DemoProps) {
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           <div className="flex items-center justify-center">
-            <img 
+            <Image 
               src="/images/image_solucion.png" 
               alt="Imagen de Soluciones" 
+              width={600}
+              height={400}
               className="w-full h-auto rounded-lg shadow-lg"
             />
           </div>
