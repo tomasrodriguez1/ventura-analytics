@@ -18,3 +18,161 @@ body {
     backdrop-filter: blur(4px);
   }
 }
+
+/* ===== SISTEMA DE DISEÑO VENTURA ANALYTICS ===== */
+
+@layer components {
+  /* === GRADIENTES REUTILIZABLES === */
+  .gradient-primary {
+    @apply bg-gradient-to-r from-primary-600 to-secondary-600;
+  }
+  
+  .gradient-primary-hover {
+    @apply hover:from-primary-700 hover:to-secondary-700;
+  }
+  
+  .gradient-secondary {
+    @apply bg-gradient-to-r from-secondary-600 to-accent-600;
+  }
+  
+  .gradient-secondary-hover {
+    @apply hover:from-secondary-700 hover:to-accent-700;
+  }
+  
+  .gradient-success {
+    @apply bg-gradient-to-r from-success-600 to-primary-600;
+  }
+  
+  .gradient-warning {
+    @apply bg-gradient-to-r from-danger-600 to-warning-600;
+  }
+  
+  .gradient-accent {
+    @apply bg-gradient-to-r from-accent-600 to-secondary-600;
+  }
+
+  /* === FONDOS DE SECCIÓN === */
+  .section-card {
+    @apply bg-gradient-to-br from-neutral-800/80 to-neutral-900/60 backdrop-blur-sm rounded-3xl p-8 md:p-12 shadow-2xl border border-neutral-600/30 relative overflow-hidden;
+  }
+  
+  .section-card-primary {
+    @apply bg-gradient-to-br from-primary-900/30 to-secondary-900/20 backdrop-blur-sm rounded-3xl p-8 md:p-12 shadow-2xl border border-primary-500/20 relative overflow-hidden;
+  }
+  
+  .section-card-secondary {
+    @apply bg-gradient-to-br from-secondary-900/30 to-primary-900/30 backdrop-blur-sm rounded-3xl p-8 md:p-12 shadow-2xl border border-secondary-500/20 relative overflow-hidden;
+  }
+  
+  .section-card-accent {
+    @apply bg-gradient-to-br from-accent-900/30 to-secondary-900/30 backdrop-blur-sm rounded-3xl p-8 md:p-12 shadow-2xl border border-accent-500/20 relative overflow-hidden;
+  }
+
+  /* === TARJETAS DE CONTENIDO === */
+  .content-card {
+    @apply bg-gradient-to-br from-neutral-800/80 to-neutral-900/60 p-8 rounded-2xl backdrop-blur-sm shadow-xl border border-neutral-600/30 transition-all duration-300;
+  }
+  
+  .content-card-hover {
+    @apply hover:scale-105 hover:shadow-2xl hover:border-primary-400/50 hover:bg-gradient-to-br hover:from-primary-900/40 hover:to-secondary-900/30;
+  }
+  
+  .content-card-interactive {
+    @apply content-card content-card-hover group relative;
+  }
+
+  /* === BOTONES PRINCIPALES === */
+  .btn-primary {
+    @apply gradient-primary gradient-primary-hover text-white font-bold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-xl flex items-center space-x-2 group;
+  }
+  
+  .btn-secondary {
+    @apply gradient-secondary gradient-secondary-hover text-white font-bold py-4 px-8 rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-xl flex items-center space-x-2 group;
+  }
+  
+  .btn-outline {
+    @apply border-2 border-primary-400/50 text-primary-300 hover:bg-primary-400/20 hover:text-white font-semibold py-4 px-8 rounded-full transition-all duration-300 backdrop-blur-sm;
+  }
+  
+  .btn-outline-secondary {
+    @apply border-2 border-secondary-400/50 text-secondary-300 hover:bg-secondary-400/20 hover:text-white font-semibold py-4 px-8 rounded-full transition-all duration-300 backdrop-blur-sm;
+  }
+
+  /* === BADGES/ETIQUETAS === */
+  .badge-primary {
+    @apply inline-flex items-center space-x-2 gradient-primary text-white px-6 py-2 rounded-full text-sm font-semibold;
+  }
+  
+  .badge-secondary {
+    @apply inline-flex items-center space-x-2 gradient-secondary text-white px-6 py-2 rounded-full text-sm font-semibold;
+  }
+  
+  .badge-success {
+    @apply inline-flex items-center space-x-2 gradient-success text-white px-6 py-2 rounded-full text-sm font-semibold;
+  }
+  
+  .badge-warning {
+    @apply inline-flex items-center space-x-2 gradient-warning text-white px-6 py-2 rounded-full text-sm font-semibold;
+  }
+
+  /* === ELEMENTOS DECORATIVOS === */
+  .decorative-dot {
+    @apply absolute w-8 h-8 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full opacity-80 group-hover:opacity-100 transition-opacity duration-300;
+  }
+  
+  .decorative-dot-top {
+    @apply decorative-dot -top-4 left-1/2 transform -translate-x-1/2;
+  }
+  
+  .decorative-circle-bg {
+    @apply absolute inset-0 bg-gradient-to-r from-primary-500/5 to-secondary-500/5;
+  }
+  
+  .decorative-circle-corner {
+    @apply absolute w-24 h-24 bg-gradient-to-br from-secondary-500/10 to-accent-500/10 rounded-full;
+  }
+  
+  .decorative-circle-corner-tr {
+    @apply decorative-circle-corner top-4 right-4;
+  }
+  
+  .decorative-circle-corner-bl {
+    @apply decorative-circle-corner bottom-0 left-0 w-48 h-48 -translate-x-24 translate-y-24;
+  }
+
+  /* === LÍNEAS DE ACENTO === */
+  .accent-line {
+    @apply absolute bottom-0 left-1/2 transform -translate-x-1/2 w-0 h-1 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-full group-hover:w-3/4 transition-all duration-500;
+  }
+
+  /* === FORMULARIOS === */
+  .form-input {
+    @apply w-full px-4 py-2 rounded-lg bg-neutral-700 border border-neutral-600 text-white focus:outline-none focus:border-primary-500 transition-colors duration-200;
+  }
+  
+  .form-label {
+    @apply block text-neutral-300 mb-2;
+  }
+
+  /* === TEXTO Y TIPOGRAFÍA === */
+  .text-gradient-primary {
+    @apply bg-gradient-to-r from-primary-300 to-secondary-300 bg-clip-text text-transparent;
+  }
+  
+  .text-gradient-secondary {
+    @apply bg-gradient-to-r from-secondary-300 to-accent-300 bg-clip-text text-transparent;
+  }
+
+  /* === ANIMACIONES === */
+  .animate-icon-hover {
+    @apply transform group-hover:scale-110 transition-transform duration-300;
+  }
+  
+  .animate-text-hover {
+    @apply group-hover:text-primary-300 transition-colors duration-300;
+  }
+  
+  .animate-slide-right {
+    @apply group-hover:translate-x-1 transition-transform;
+  }
+}
