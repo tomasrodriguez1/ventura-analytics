@@ -1,6 +1,7 @@
 'use client'
 
-// import Link from 'next/link'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { NextFont } from 'next/dist/compiled/@next/font'
 
@@ -12,6 +13,7 @@ interface NavbarProps {
 
 export default function Navbar({ currentSection, setCurrentSection, playfair }: NavbarProps) {
   const [showDropdown, setShowDropdown] = useState(false)
+  const router = useRouter()
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 px-4 py-3">
@@ -19,7 +21,13 @@ export default function Navbar({ currentSection, setCurrentSection, playfair }: 
         <div className="bg-gray-800/70 backdrop-blur-md rounded-full px-3 md:px-6 py-3 flex items-center justify-between">
           <h1 
             className={`${playfair.className} text-lg md:text-2xl cursor-pointer`}
-            onClick={() => setCurrentSection('home')}
+            onClick={() => {
+              if (currentSection === 'retail' || currentSection === 'callcenter') {
+                router.push('/')
+              } else {
+                setCurrentSection('home')
+              }
+            }}
           >
             <span className="hidden sm:inline">Ventura Analytic</span>
             <span className="sm:hidden">VA</span>
@@ -27,7 +35,13 @@ export default function Navbar({ currentSection, setCurrentSection, playfair }: 
           
           <div className="flex gap-2 md:gap-6 items-center">
             <button
-              onClick={() => setCurrentSection('home')}
+              onClick={() => {
+                if (currentSection === 'retail' || currentSection === 'callcenter') {
+                  router.push('/')
+                } else {
+                  setCurrentSection('home')
+                }
+              }}
               className={`hover:text-blue-400 transition-colors px-2 md:px-0 ${currentSection === 'home' ? 'text-blue-400' : 'text-gray-300'}`}
             >
               <span className="hidden md:inline">Inicio</span>
@@ -36,7 +50,13 @@ export default function Navbar({ currentSection, setCurrentSection, playfair }: 
               </svg>
             </button>
             <button
-              onClick={() => setCurrentSection('about')}
+              onClick={() => {
+                if (currentSection === 'retail' || currentSection === 'callcenter') {
+                  router.push('/?section=about')
+                } else {
+                  setCurrentSection('about')
+                }
+              }}
               className={`hover:text-blue-400 transition-colors px-2 md:px-0 ${currentSection === 'about' ? 'text-blue-400' : 'text-gray-300'}`}
             >
               <span className="hidden md:inline">Nosotros</span>
@@ -45,7 +65,13 @@ export default function Navbar({ currentSection, setCurrentSection, playfair }: 
               </svg>
             </button>
             <button
-              onClick={() => setCurrentSection('contact')}
+              onClick={() => {
+                if (currentSection === 'retail' || currentSection === 'callcenter') {
+                  router.push('/?section=contact')
+                } else {
+                  setCurrentSection('contact')
+                }
+              }}
               className={`hover:text-blue-400 transition-colors px-2 md:px-0 ${currentSection === 'contact' ? 'text-blue-400' : 'text-gray-300'}`}
             >
               <span className="hidden md:inline">Contacto</span>
@@ -75,7 +101,7 @@ export default function Navbar({ currentSection, setCurrentSection, playfair }: 
                 <div className="absolute right-0 mt-2 py-2 w-48 bg-gray-800 rounded-lg shadow-xl">
                   <button
                     onClick={() => {
-                      setCurrentSection('retail')
+                      router.push('/RetailDemo')
                       setShowDropdown(false)
                     }}
                     className="block w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white"
@@ -84,7 +110,7 @@ export default function Navbar({ currentSection, setCurrentSection, playfair }: 
                   </button>
                   <button
                     onClick={() => {
-                      setCurrentSection('callcenter')
+                      router.push('/CallCenterDemo')
                       setShowDropdown(false)
                     }}
                     className="block w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white"

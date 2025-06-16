@@ -6,16 +6,26 @@ import { Playfair_Display, Lato } from 'next/font/google'
 const playfair = Playfair_Display({ subsets: ['latin'] })
 const lato = Lato({ weight: ['400', '700'], subsets: ['latin'] })
 
-import Navbar from './components/Common/Navbar'
-import Home from './components/Home/Home'
-import About from './components/Home/About'
-import Contact from './components/Home/Contact'
-import RetailDemoCompleta from './components/Demo/RetailDemoCompleta'
-import CallCenterDemo from './components/Demo/CallCenterDemo'
-import Footer from './components/Common/Footer'
+import Navbar from '../src/components/Common/Navbar'
+import Home from '../src/components/Home/Home'
+import About from '../src/components/Home/About'
+import Contact from '../src/components/Home/Contact'
+import Footer from '../src/components/Common/Footer'
 
 export default function Page() {
   const [currentSection, setCurrentSection] = useState('home')
+
+  useEffect(() => {
+    // Leer parámetro de section de la URL
+    const urlParams = new URLSearchParams(window.location.search)
+    const sectionParam = urlParams.get('section')
+    
+    if (sectionParam && ['home', 'about', 'contact'].includes(sectionParam)) {
+      setCurrentSection(sectionParam)
+    }
+    
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }, [])
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -44,8 +54,6 @@ export default function Page() {
           )}
           {currentSection === 'about' && <About playfair={playfair} />}
           {currentSection === 'contact' && <Contact playfair={playfair} />}
-          {currentSection === 'retail' && <RetailDemoCompleta playfair={playfair}/>}
-          {currentSection === 'callcenter' && <CallCenterDemo playfair={playfair} lato={lato} />}
         </main>
         <Footer />
       </div>
