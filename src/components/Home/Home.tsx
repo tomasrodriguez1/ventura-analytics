@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { NextFont } from 'next/dist/compiled/@next/font'
+import { useRouter } from 'next/navigation'
 
 interface HomeProps {
   playfair: NextFont;
@@ -8,9 +9,14 @@ interface HomeProps {
 
 export default function Home({ playfair, setCurrentSection }: HomeProps) {
   const [showDemoMenu, setShowDemoMenu] = useState(false)
+  const router = useRouter()
 
   const handleDemoOption = (demoType: string) => {
-    setCurrentSection(demoType)
+    if (demoType === 'callcenter') {
+      router.push('/CallCenterDemo')
+    } else if (demoType === 'retail') {
+      router.push('/RetailDemo')
+    }
     setShowDemoMenu(false)
   }
 

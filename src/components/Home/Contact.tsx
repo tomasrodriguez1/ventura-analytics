@@ -184,9 +184,6 @@ export default function Contact({ playfair }: ContactProps) {
           <a href="mailto:remates.dev@gmail.com" className="text-blue-400 hover:text-blue-300 flex items-center">
             <span className="mr-2">✉️</span> remates.dev@gmail.com
           </a>
-          <a href="tel:+56981538112" className="text-blue-400 hover:text-blue-300 flex items-center">
-            <span className="mr-2">📱</span> +56 9 8153 8112
-          </a>
         </div>
       </div>
     </div>

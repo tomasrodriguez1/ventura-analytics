@@ -27,7 +27,6 @@ export class ContactService {
         timeout: 15000, // 15 segundos de timeout
       });
 
-      // La respuesta viene de nuestra API
       return response.data;
     } catch (error) {
       if (axios.isAxiosError(error)) {
