@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import axios from 'axios'
 
-const WEBHOOK_URL = 'https://venturanalytics.app.n8n.cloud/webhook/e95f8f28-fd1e-4e41-9fc0-3676382f1bd3'
+const WEBHOOK_URL = 'https://n8n.venturanalytic.com/webhook/95513fc5-bf2c-4d4f-b5d8-e5ab229e8629'
 
 export async function POST(request: NextRequest) {
   try {
