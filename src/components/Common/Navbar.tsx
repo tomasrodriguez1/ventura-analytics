@@ -116,6 +116,15 @@ export default function Navbar({ currentSection, setCurrentSection, playfair }: 
                   >
                     Demo Call Center
                   </button>
+                  <button
+                    onClick={() => {
+                      router.push('/DashboardMinero')
+                      setShowDropdown(false)
+                    }}
+                    className="block w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700 hover:text-white"
+                  >
+                    Dashboard Minero
+                  </button>
                 </div>
               )}
             </div>
