@@ -34,15 +34,6 @@ export async function GET() {
     
   } catch (error) {
     console.error('Error obteniendo equipos top:', error);
-    console.log('⚠️ Usando datos de ejemplo para equipos top en API');
-    // Devolver datos de ejemplo en lugar de error 500
-    const equiposEjemplo = [
-      { id: 'EQ-3001', modelo: 'CAT 320D', fabricante: 'Caterpillar', cliente: 'Minera Los Andes', horasUso: 12, critico: true },
-      { id: 'EQ-3002', modelo: 'Komatsu HD785-7', fabricante: 'Komatsu', cliente: 'Minera Patagónica', horasUso: 11, critico: true },
-      { id: 'EQ-3005', modelo: 'Hitachi EX1200', fabricante: 'Hitachi', cliente: 'Ventura Mining', horasUso: 10, critico: true },
-      { id: 'EQ-3010', modelo: 'CAT D10T2', fabricante: 'Caterpillar', cliente: 'Minera Sur', horasUso: 9, critico: false },
-      { id: 'EQ-3015', modelo: 'Volvo L350H', fabricante: 'Volvo', cliente: 'Minera Los Andes', horasUso: 8, critico: false }
-    ];
-    return NextResponse.json(equiposEjemplo);
+    return NextResponse.json([], { status: 500 });
   }
 }

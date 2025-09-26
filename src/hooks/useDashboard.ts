@@ -27,6 +27,7 @@ export function useDashboard() {
       setError(null);
       const dashboardData = await dashboardService.getDashboardData();
       console.log('✅ Datos del dashboard obtenidos:', dashboardData);
+      console.log('🔍 Primer mantenimiento recibido:', dashboardData.proximosMantenimientos[0]);
       setData(dashboardData);
       setLastUpdated(new Date());
     } catch (err) {
@@ -128,16 +129,8 @@ export function useTopEquipment() {
       setEquipos(data || []);
     } catch (err) {
       console.error('Error fetching top equipment data:', err);
-      console.log('⚠️ Usando datos de ejemplo para equipos top en hook');
       setError('Error al cargar los datos de equipos top');
-      // Usar datos de ejemplo cuando falla
-      setEquipos([
-        { id: 'EQ-3001', modelo: 'CAT 320D', cliente: 'Minera Los Andes', horasUso: 12, critico: true },
-        { id: 'EQ-3002', modelo: 'Komatsu HD785-7', cliente: 'Minera Patagónica', horasUso: 11, critico: true },
-        { id: 'EQ-3005', modelo: 'Hitachi EX1200', cliente: 'Ventura Mining', horasUso: 10, critico: true },
-        { id: 'EQ-3010', modelo: 'CAT D10T2', cliente: 'Minera Sur', horasUso: 9, critico: false },
-        { id: 'EQ-3015', modelo: 'Volvo L350H', cliente: 'Minera Los Andes', horasUso: 8, critico: false }
-      ]);
+      setEquipos([]);
     } finally {
       setLoading(false);
     }

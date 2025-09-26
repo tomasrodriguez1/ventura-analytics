@@ -123,26 +123,7 @@ async function getCriticalAlerts() {
     
   } catch (error) {
     console.error('Error obteniendo alertas críticas:', error);
-    console.log('⚠️ Usando alertas de ejemplo debido a error de BD');
-    // Retornar alertas de ejemplo cuando falla la conexión
-    return [
-      {
-        tipo: 'critico' as const,
-        mensaje: 'Stock crítico: Filtro de aceite hidráulico - 18 unidades (180% del mínimo)',
-        repuesto: 'RPT-001',
-        stock_actual: 18,
-        punto_reorden: 10,
-        porcentaje: 180
-      },
-      {
-        tipo: 'advertencia' as const,
-        mensaje: 'Stock bajo: Kit pastillas de freno CAT 777F - 6 unidades (75% del mínimo)',
-        repuesto: 'RPT-002',
-        stock_actual: 6,
-        punto_reorden: 8,
-        porcentaje: 75
-      }
-    ];
+    return [];
   }
   
   return alertas;
@@ -151,16 +132,36 @@ async function getCriticalAlerts() {
 async function getUpcomingMaintenance() {
   try {
     const maintenanceQuery = `
-      SELECT 
+       SELECT
         crp.cal_id,
         crp.peh_id,
         crp.cliente_id,
-        c.nombre as cliente_nombre,
+        c.nombre AS cliente_nombre,
+        e.equipo_id,
+        e.modelo AS equipo_modelo,
         crp.actividad,
         crp.dias_restantes_est,
         crp.due_date_est,
-        e.modelo as equipo_modelo,
-        ARRAY_AGG(DISTINCT r.descripcion) as repuestos_necesarios
+        CASE
+          WHEN crp.dias_restantes_est < 0 THEN 'atrasado'
+          WHEN crp.dias_restantes_est = 0 THEN 'vence_hoy'
+          WHEN crp.dias_restantes_est <= 7 THEN 'critico'
+          WHEN crp.dias_restantes_est <= 14 THEN 'proximo'
+          ELSE 'planificado'
+        END AS estado_programacion,
+        COALESCE(
+          json_agg(
+             DISTINCT jsonb_build_object(
+               'repuesto_id', r.repuesto_id,
+               'descripcion', r.descripcion,
+               'stock_u', r.stock_u,
+               'punto_reorden', r.punto_reorden,
+               'lead_time_dias', r.lead_time_dias,
+               'proveedor', r.proveedor
+             )
+          ) FILTER (WHERE r.repuesto_id IS NOT NULL),
+          '[]'::json
+        ) AS repuestos
       FROM calendario_repuestos_plan crp
       JOIN cliente c ON crp.cliente_id = c.cliente_id
       JOIN plan_equipo_hito peh ON crp.peh_id = peh.peh_id
@@ -168,46 +169,84 @@ async function getUpcomingMaintenance() {
       LEFT JOIN plan_equipo_hito_repuesto pehr ON peh.peh_id = pehr.peh_id
       LEFT JOIN repuesto r ON pehr.repuesto_id = r.repuesto_id
       WHERE crp.dias_restantes_est >= 0
-      GROUP BY crp.cal_id, crp.peh_id, crp.cliente_id, c.nombre, crp.actividad, 
-               crp.dias_restantes_est, crp.due_date_est, e.modelo
-      ORDER BY crp.dias_restantes_est ASC
+      GROUP BY
+        crp.cal_id,
+        crp.peh_id,
+        crp.cliente_id,
+        c.nombre,
+        e.equipo_id,
+        e.modelo,
+        crp.actividad,
+        crp.dias_restantes_est,
+        crp.due_date_est
+      ORDER BY crp.dias_restantes_est ASC, crp.due_date_est ASC
       LIMIT 10
     `;
     
     const result = await query(maintenanceQuery);
     
-    return result.rows.map(row => ({
-      equipo: row.equipo_modelo || row.peh_id,
-      cliente: row.cliente_nombre,
-      actividad: row.actividad,
-      dias: parseInt(row.dias_restantes_est) || 0,
-      fecha: row.due_date_est ? new Date(row.due_date_est).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
-      repuestos: row.repuestos_necesarios && row.repuestos_necesarios[0] !== null 
-        ? row.repuestos_necesarios.filter((r: string) => r !== null && r !== '') 
-        : []
-    }));
+    return result.rows.map(row => {
+      // Parsear el JSON de repuestos de forma más robusta
+      let repuestosData = [];
+      
+      if (row.repuestos) {
+        try {
+          // Si ya es un array u objeto, usarlo directamente
+          if (Array.isArray(row.repuestos)) {
+            repuestosData = row.repuestos;
+          } else if (typeof row.repuestos === 'object') {
+            repuestosData = [row.repuestos];
+          } else if (typeof row.repuestos === 'string') {
+            // Si es string, intentar parsearlo
+            const parsed = JSON.parse(row.repuestos);
+            repuestosData = Array.isArray(parsed) ? parsed : [parsed];
+          } else {
+            repuestosData = [];
+          }
+        } catch (error) {
+          console.error('Error parsing repuestos:', error);
+          repuestosData = [];
+        }
+      }
+      
+      // Generar lista simple de nombres de repuestos
+      const repuestos = repuestosData.map((r: any) => r.descripcion);
+      
+      // Generar repuestosDetalle con información completa
+      const repuestosDetalle = repuestosData.map((repuesto: any) => {
+        const stockDisponible = parseInt(repuesto.stock_u) || 0;
+        const puntoReorden = parseInt(repuesto.punto_reorden) || 0;
+        const leadTime = parseInt(repuesto.lead_time_dias) || 0;
+        
+        // Para mantener compatibilidad, asumimos cantidad necesaria = 1
+        // (esto se puede ajustar si la BD incluye cantidad específica)
+        const cantidadNecesaria = 1;
+        
+        return {
+          id: repuesto.repuesto_id,
+          descripcion: repuesto.descripcion,
+          cantidadNecesaria,
+          stockDisponible,
+          proveedor: repuesto.proveedor || 'Sin proveedor',
+          leadTime
+        };
+      });
+      
+      return {
+        equipo: row.equipo_modelo || 'Sin modelo',
+        cliente: row.cliente_nombre || 'Sin cliente',
+        actividad: row.actividad || 'Sin actividad',
+        dias: parseInt(row.dias_restantes_est) || 0,
+        fecha: row.due_date_est ? new Date(row.due_date_est).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
+        estado: row.estado_programacion || 'planificado',
+        repuestos,
+        repuestosDetalle: repuestosDetalle.length > 0 ? repuestosDetalle : undefined
+      };
+    });
     
   } catch (error) {
     console.error('Error obteniendo próximos mantenimientos:', error);
-    console.log('⚠️ Usando mantenimientos de ejemplo debido a error de BD');
-    return [
-      { 
-        equipo: 'Hitachi EX1200', 
-        cliente: 'Ventura Mining', 
-        actividad: 'Servicio excavadora y lubricación', 
-        dias: 4, 
-        fecha: '2025-09-19',
-        repuestos: ['Sellos hidráulicos Hitachi ZX470']
-      },
-      { 
-        equipo: 'CAT 320D', 
-        cliente: 'Minera Los Andes', 
-        actividad: 'Servicio excavadora y lubricación', 
-        dias: 24, 
-        fecha: '2025-10-08',
-        repuestos: ['Filtro de aceite hidráulico', 'Sensor de temperatura']
-      }
-    ];
+    return [];
   }
 }
 
@@ -243,25 +282,7 @@ async function getEquipmentInfo() {
     
   } catch (error) {
     console.error('Error obteniendo información de equipos:', error);
-    console.log('⚠️ Usando equipos de ejemplo debido a error de BD');
-    return [
-      { 
-        id: 'CLI-001', 
-        cliente: 'Minera Los Andes', 
-        totalEquipos: 15, 
-        equiposCriticos: 8, 
-        promedioHorasUso: 12,
-        modelosPrincipales: 'CAT 320D, Komatsu PC400, Volvo EC380'
-      },
-      { 
-        id: 'CLI-002', 
-        cliente: 'Minera Patagónica', 
-        totalEquipos: 12, 
-        equiposCriticos: 5, 
-        promedioHorasUso: 10,
-        modelosPrincipales: 'Komatsu HD785-7, CAT 777D, Liebherr T282C'
-      }
-    ];
+    return [];
   }
 }
 

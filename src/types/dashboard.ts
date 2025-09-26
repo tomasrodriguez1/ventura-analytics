@@ -12,13 +12,24 @@ export interface Alerta {
   dias_restantes?: number;
 }
 
+export interface RepuestoNecesario {
+  id: string;
+  descripcion: string;
+  cantidadNecesaria: number;
+  stockDisponible: number;
+  proveedor?: string;
+  leadTime?: number;
+}
+
 export interface ProximoMantenimiento {
   equipo: string;
   cliente: string;
   actividad: string;
   dias: number;
   fecha: string;
+  estado?: 'atrasado' | 'vence_hoy' | 'critico' | 'proximo' | 'planificado';
   repuestos?: string[]; // Lista de nombres de repuestos necesarios
+  repuestosDetalle?: RepuestoNecesario[]; // Información detallada de repuestos
 }
 
 export interface Equipo {
