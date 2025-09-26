@@ -1,7 +1,7 @@
 import { Pool, PoolClient } from 'pg';
 
 // URL de conexión - usar variable de entorno en producción, fallback para desarrollo
-const CONNECTION_STRING = process.env.LINK_BDD_VA_MINERO;
+const CONNECTION_STRING = process.env.LINK_BDD_VA_MINERO || '';
 
 // Crear pool de conexiones usando connection string
 const pool = new Pool({
