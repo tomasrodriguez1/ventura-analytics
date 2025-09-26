@@ -1,7 +1,7 @@
 import { Pool, PoolClient } from 'pg';
 
 // URL de conexión - usar variable de entorno en producción, fallback para desarrollo
-const CONNECTION_STRING = process.env.DATABASE_URL || 'postgresql://venturanalytic_demo_user:ytlUCNCGSyIj9QuZ6B6FW1SV8F4mENvq@dpg-cua4b5rqf0us73c6iplg-a.oregon-postgres.render.com/VA_minero';
+const CONNECTION_STRING = process.env.LINK_BDD_VA_MINERO;
 
 // Crear pool de conexiones usando connection string
 const pool = new Pool({

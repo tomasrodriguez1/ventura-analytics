@@ -210,12 +210,11 @@ async function getUpcomingMaintenance() {
       }
       
       // Generar lista simple de nombres de repuestos
-      const repuestos = repuestosData.map((r: any) => r.descripcion);
+      const repuestos = repuestosData.map((r: { descripcion: string }) => r.descripcion);
       
       // Generar repuestosDetalle con información completa
-      const repuestosDetalle = repuestosData.map((repuesto: any) => {
+      const repuestosDetalle = repuestosData.map((repuesto: { repuesto_id: string; descripcion: string; stock_u: string; lead_time_dias: string; proveedor?: string }) => {
         const stockDisponible = parseInt(repuesto.stock_u) || 0;
-        const puntoReorden = parseInt(repuesto.punto_reorden) || 0;
         const leadTime = parseInt(repuesto.lead_time_dias) || 0;
         
         // Para mantener compatibilidad, asumimos cantidad necesaria = 1

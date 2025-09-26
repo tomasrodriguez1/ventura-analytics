@@ -32,11 +32,7 @@ export default function OverviewTab({ data }: OverviewTabProps) {
   // Calcular estadísticas adicionales
   const totalStock = data.repuestos.reduce((sum, r) => sum + r.stock, 0);
   const totalUsado = data.repuestos.reduce((sum, r) => sum + r.usado, 0);
-  const promedioHoras = data.equipos.length > 0 
-    ? data.equipos.reduce((sum, e) => sum + e.promedioHorasUso, 0) / data.equipos.length 
-    : 0;
   const clientesUnicos = data.equipos.length;
-  const repuestosCriticos = data.repuestos.filter(r => r.stock <= r.puntoReorden).length;
   const mantenimientosUrgentes = data.proximosMantenimientos.filter(m => m.dias <= 7).length;
 
   // Funciones para abrir modales
