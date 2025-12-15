@@ -1,0 +1,38 @@
+name: Deploy to cPanel (static export)
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - run: npm ci
+      - run: npm run build
+      - run: test -d out && test -f out/index.html
+
+      - run: sudo apt-get update && sudo apt-get install -y lftp
+
+      - name: Deploy via SFTP
+        env:
+          HOST: ${{ secrets.CPANEL_HOST }}
+          USER: ${{ secrets.CPANEL_USER }}
+          PASS: ${{ secrets.CPANEL_PASS }}
+          PORT: ${{ secrets.CPANEL_PORT }}
+          REMOTE_PATH: ${{ secrets.CPANEL_PATH }}
+        run: |
+          lftp -e "
+            set sftp:auto-confirm yes;
+            open -u $USER,$PASS -p $PORT sftp://$HOST;
+            mirror -R --delete --verbose out/ $REMOTE_PATH;
+            bye
+          "
