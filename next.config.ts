@@ -4,11 +4,17 @@ const nextConfig: NextConfig = {
   // Activar react strict mode para mejor debugging en desarrollo
   reactStrictMode: true,
   
-  // Optimizaciones de imágenes
+  // ⚠️ CONFIGURACIÓN PARA EXPORT ESTÁTICO (cPanel/BanaHosting)
+  // Genera carpeta 'out/' lista para subir a public_html
+  output: "export",
+  
+  // Trailing slash recomendado para Apache/cPanel
+  trailingSlash: true,
+  
+  // Desactivar optimización de imágenes (requerido para export estático)
+  // Las imágenes se servirán directamente sin procesamiento del servidor
   images: {
-    formats: ['image/avif', 'image/webp'],
-    deviceSizes: [360, 768, 1024, 1280, 1920],
-    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    unoptimized: true,
   },
   
   // Configuración de webpack para optimización

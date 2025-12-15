@@ -1,13 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Playfair_Display } from 'next/font/google'
 import { ContactService, ContactFormData } from '../../services/contactService'
-
-const playfair = Playfair_Display({ 
-  subsets: ['latin'],
-  display: 'swap',
-})
 
 // Componente SVG inline simple y ligero para checkmark
 const CheckIcon = ({ className }: { className?: string }) => (

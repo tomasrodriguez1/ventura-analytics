@@ -1,4 +1,7 @@
+'use client'
+
 import { Suspense } from 'react'
+import { useSearchParams } from 'next/navigation'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
 import Hero from '@/components/sections/Hero'
@@ -10,11 +13,15 @@ import CTAFinal from '@/components/sections/CTAFinal'
 import AboutSection from '@/components/sections/AboutSection'
 import ContactSection from '@/components/sections/ContactSection'
 
-interface PageProps {
-  searchParams: Promise<{ section?: string }>
-}
+function PageContent() {
+  // ⚠️ MODIFICADO: Usar useSearchParams() del cliente para compatibilidad con export estático
+  // En export estático, los searchParams del servidor no están disponibles
+  const searchParams = useSearchParams()
+  const sectionParam = searchParams.get('section')
+  const section = sectionParam && ['home', 'about', 'contact'].includes(sectionParam)
+    ? sectionParam
+    : 'home'
 
-function PageContent({ section }: { section: string }) {
   return (
     <div className="min-h-screen flex flex-col font-[family-name:var(--font-inter)]">
       <Suspense fallback={<div className="h-16" aria-label="Cargando navegación" />}>
@@ -39,11 +46,10 @@ function PageContent({ section }: { section: string }) {
   )
 }
 
-export default async function Page({ searchParams }: PageProps) {
-  const params = await searchParams
-  const section = params.section && ['home', 'about', 'contact'].includes(params.section) 
-    ? params.section 
-    : 'home'
-
-  return <PageContent section={section} />
+export default function Page() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Cargando...</div>}>
+      <PageContent />
+    </Suspense>
+  )
 }
