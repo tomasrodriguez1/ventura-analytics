@@ -1,6 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+// Ejemplo de uso de LogoLockup (ya integrado en Navbar en app/page.tsx):
+// import LogoLockup from '@/components/Brand/LogoLockup'
+// <LogoLockup size="md" priority asLinkHref="/" />
 
 const inter = Inter({ 
   subsets: ['latin'],

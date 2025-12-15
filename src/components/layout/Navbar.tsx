@@ -3,6 +3,7 @@
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { LINKS } from '@/lib/constants'
+import LogoLockup from '@/components/Brand/LogoLockup'
 
 export default function Navbar() {
   const searchParams = useSearchParams()
@@ -12,14 +13,13 @@ export default function Navbar() {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-[rgba(11,42,60,0.08)]" role="navigation" aria-label="Navegación principal">
       <div className="w-full px-2 sm:px-4 md:px-12 lg:px-16">
         <div className="max-w-[1400px] mx-auto flex items-center justify-between h-16 md:h-20">
-          {/* Logo */}
-          <Link 
-            href={LINKS.home}
-            className="font-[family-name:var(--font-inter)] text-base sm:text-lg md:text-xl lg:text-2xl cursor-pointer text-[#0B2A3C] font-bold focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0B2A3C] focus-visible:ring-offset-2 rounded flex-shrink-0"
-            aria-label="zalantos - Inicio"
-          >
-            zalantos
-          </Link>
+          {/* Logo Lockup */}
+          <LogoLockup 
+            size="sm" 
+            priority 
+            asLinkHref={LINKS.home}
+            className="flex-shrink-0"
+          />
           
           {/* Links y CTA */}
           <div className="flex gap-1.5 sm:gap-2 lg:gap-8 items-center flex-shrink-0">
