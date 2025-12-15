@@ -3,18 +3,168 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 255, 255, 255;
-  --background-start-rgb: 0, 0, 0;
-  --background-end-rgb: 0, 0, 0;
+  /* Paleta zalantos - FUENTE ÚNICA DE VERDAD */
+  --z-primary: #0B2A3C;        /* Azul primario */
+  --z-value: #2FBF71;          /* Verde valor/ROI */
+  --z-neutral: #6F7A83;        /* Gris neutro */
+  --z-white: #FFFFFF;          /* Blanco */
+  --z-accent: #3FA9F5;         /* Acento innovación (limitado) */
+  
+  /* Bordes y fondos derivados */
+  --z-border: rgba(11, 42, 60, 0.1);
+  --z-surface: #FAFBFC;
+  
+  /* Espaciado 8pt grid */
+  --space-1: 8px;
+  --space-2: 16px;
+  --space-3: 24px;
+  --space-4: 32px;
+  --space-6: 48px;
+  --space-8: 64px;
+  --space-12: 96px;
+  
+  /* Tipografía */
+  --text-xs: 0.75rem;    /* 12px */
+  --text-sm: 0.875rem;   /* 14px */
+  --text-base: 1rem;     /* 16px */
+  --text-lg: 1.125rem;   /* 18px */
+  --text-xl: 1.25rem;    /* 20px */
+  --text-2xl: 1.75rem;   /* 28px */
+  --text-3xl: 2.25rem;   /* 36px */
+  --text-4xl: 3rem;      /* 48px */
+  --text-5xl: 4rem;      /* 64px */
+  
+  /* Radios moderados (flat) */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-pill: 9999px;
+  
+  /* Sombras muy sutiles o none */
+  --shadow-subtle: 0 1px 2px rgba(11, 42, 60, 0.04);
+  --shadow-sm: 0 2px 4px rgba(11, 42, 60, 0.06);
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: rgba(47, 191, 113, 0.1);
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: #000;
+  color: var(--z-primary);
+  background: var(--z-white);
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* Patrón de grilla sutil reutilizable */
+.pattern-grid {
+  background-image: 
+    linear-gradient(rgba(11, 42, 60, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(11, 42, 60, 0.03) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.pattern-dots {
+  background-image: radial-gradient(circle, rgba(11, 42, 60, 0.04) 1px, transparent 1px);
+  background-size: 24px 24px;
 }
 
 @layer utilities {
   .backdrop-blur-sm {
     backdrop-filter: blur(4px);
+  }
+}
+
+/* ===== SISTEMA FULL-BLEED ZALANTOS ===== */
+
+@layer components {
+  /* === SECCIONES FULL-BLEED === */
+  .section-full {
+    @apply w-full relative py-16 md:py-24;
+  }
+  
+  .section-full-hero {
+    @apply w-full relative py-20 md:py-32;
+  }
+  
+  .section-inner {
+    @apply w-full px-6 md:px-12 lg:px-16 max-w-[1400px] mx-auto;
+  }
+  
+  .section-inner-narrow {
+    @apply w-full px-6 md:px-12 max-w-[900px] mx-auto;
+  }
+
+  /* === BOTONES FULL-BLEED STYLE === */
+  .btn-primary {
+    @apply bg-[#0B2A3C] hover:bg-[#0B2A3C]/90 text-white font-semibold px-8 py-3.5 rounded-[var(--radius-lg)] transition-all duration-150 inline-flex items-center justify-center gap-2 min-h-[44px] min-w-[44px] touch-manipulation;
+  }
+  
+  .btn-primary:focus-visible {
+    @apply outline-none ring-2 ring-[#0B2A3C] ring-offset-2;
+  }
+  
+  .btn-secondary {
+    @apply bg-[#2FBF71] hover:bg-[#2FBF71]/90 text-white font-semibold px-8 py-3.5 rounded-[var(--radius-pill)] transition-all duration-150 inline-flex items-center justify-center gap-2 min-h-[44px] min-w-[44px] touch-manipulation;
+  }
+  
+  .btn-secondary:focus-visible {
+    @apply outline-none ring-2 ring-[#2FBF71] ring-offset-2;
+  }
+  
+  .btn-outline {
+    @apply border-2 border-[#0B2A3C] text-[#0B2A3C] hover:bg-[#0B2A3C] hover:text-white font-semibold px-8 py-3.5 rounded-[var(--radius-lg)] transition-all duration-150 inline-flex items-center justify-center gap-2 min-h-[44px] min-w-[44px] touch-manipulation;
+  }
+  
+  .btn-outline:focus-visible {
+    @apply outline-none ring-2 ring-[#0B2A3C] ring-offset-2;
+  }
+
+  /* === CARDS PLANAS (SIN BORDES FUERTES) === */
+  .card-flat {
+    @apply bg-white p-8 rounded-[var(--radius-lg)] border border-[rgba(11,42,60,0.08)] transition-all duration-150;
+  }
+
+  /* === FORMULARIOS === */
+  .form-input {
+    @apply w-full px-4 py-3 min-h-[44px] rounded-[var(--radius-md)] bg-white border border-[rgba(11,42,60,0.15)] text-[#0B2A3C] focus:outline-none focus:border-[#3FA9F5] focus:ring-2 focus:ring-[#3FA9F5]/10 transition-colors duration-150 touch-manipulation;
+  }
+  
+  .form-label {
+    @apply block text-[#6F7A83] mb-2 font-medium text-sm;
+  }
+
+  /* === ANIMACIONES SUTILES === */
+  .animate-fade-in {
+    @apply opacity-0 animate-[fadeIn_0.3s_ease-out_forwards];
+  }
+  
+  @keyframes fadeIn {
+    to {
+      opacity: 1;
+    }
   }
 }

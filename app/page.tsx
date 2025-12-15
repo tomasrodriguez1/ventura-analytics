@@ -1,76 +1,55 @@
 'use client'
 
-import { useState } from 'react'
-import { Playfair_Display, Lato } from 'next/font/google'
+import { Suspense } from 'react'
+import { useSearchParams } from 'next/navigation'
+import Navbar from '@/components/layout/Navbar'
+import Footer from '@/components/layout/Footer'
+import Hero from '@/components/sections/Hero'
+import Pillars from '@/components/sections/Pillars'
+import Process from '@/components/sections/Process'
+import Clients from '@/components/sections/Clients'
+import UseCases from '@/components/sections/UseCases'
+import CTAFinal from '@/components/sections/CTAFinal'
+import AboutSection from '@/components/sections/AboutSection'
+import ContactSection from '@/components/sections/ContactSection'
 
-const playfair = Playfair_Display({ subsets: ['latin'] })
-const lato = Lato({ weight: ['400', '700'], subsets: ['latin'] })
-
-import Navbar from './components/Navbar'
-import Home from './components/Home'
-import About from './components/About'
-import Contact from './components/Contact'
-import Register from './components/Register'
-import Demo from './components/Demo'
-import Footer from './components/Footer'
-
-export default function Page() {
-  const [currentSection, setCurrentSection] = useState('home')
-  const [isRegistered, setIsRegistered] = useState(false)
-  const [userData, setUserData] = useState(null)
-
-  const handleRegister = (data: any) => {
-    setIsRegistered(true)
-    setUserData(data)
-    setCurrentSection('demo')
-  }
-
-  // Función para manejar la navegación a demo
-  const handleDemoNavigation = () => {
-    setIsRegistered(true)
-    setCurrentSection('demo')
-  }
+function PageContent() {
+  // ⚠️ MODIFICADO: Usar useSearchParams() del cliente para compatibilidad con export estático
+  // En export estático, los searchParams del servidor no están disponibles
+  const searchParams = useSearchParams()
+  const sectionParam = searchParams.get('section')
+  const section = sectionParam && ['home', 'about', 'contact'].includes(sectionParam)
+    ? sectionParam
+    : 'home'
 
   return (
-    <div className={`min-h-screen flex flex-col text-white ${lato.className} relative`}>
-      {/* Background Image */}
-      <div 
-        className="fixed inset-0 z-0"
-        style={{
-          backgroundImage: 'url("./images/image.png")',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          opacity: '0.2'
-        }}
-      />
-      
-      {/* Overlay gradient */}
-      <div 
-        className="fixed inset-0 z-0 bg-gradient-to-b from-black/50 to-black/70"
-      />
-
-      {/* Content */}
-      <div className="relative z-10">
-        <Navbar 
-          currentSection={currentSection} 
-          setCurrentSection={setCurrentSection}
-          playfair={playfair} 
-        />
-        <main className="flex-grow container mx-auto px-4 pt-24 pb-8">
-          {currentSection === 'home' && (
-            <Home 
-              playfair={playfair} 
-              setCurrentSection={handleDemoNavigation}
-            />
-          )}
-          {currentSection === 'about' && <About playfair={playfair} />}
-          {currentSection === 'contact' && <Contact playfair={playfair} />}
-          {currentSection === 'demo' && <Demo playfair={playfair} userData={userData} />}
-        </main>
-        <Footer />
-      </div>
+    <div className="min-h-screen flex flex-col font-[family-name:var(--font-inter)]">
+      <Suspense fallback={<div className="h-16" aria-label="Cargando navegación" />}>
+        <Navbar />
+      </Suspense>
+      <main id="main-content" className="flex-grow w-full pt-20">
+        {section === 'home' && (
+          <>
+            <Hero />
+            <Pillars />
+            <Process />
+            <Clients />
+            <UseCases />
+            <CTAFinal />
+          </>
+        )}
+        {section === 'about' && <AboutSection />}
+        {section === 'contact' && <ContactSection />}
+      </main>
+      <Footer />
     </div>
   )
 }
 
+export default function Page() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Cargando...</div>}>
+      <PageContent />
+    </Suspense>
+  )
+}
