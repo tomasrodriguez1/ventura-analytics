@@ -1,63 +1,49 @@
-'use client'
+import { Suspense } from 'react'
+import Navbar from '@/components/layout/Navbar'
+import Footer from '@/components/layout/Footer'
+import Hero from '@/components/sections/Hero'
+import Pillars from '@/components/sections/Pillars'
+import Process from '@/components/sections/Process'
+import Clients from '@/components/sections/Clients'
+import UseCases from '@/components/sections/UseCases'
+import CTAFinal from '@/components/sections/CTAFinal'
+import AboutSection from '@/components/sections/AboutSection'
+import ContactSection from '@/components/sections/ContactSection'
 
-import { useState, useEffect } from 'react'
-import { Playfair_Display, Lato } from 'next/font/google'
+interface PageProps {
+  searchParams: Promise<{ section?: string }>
+}
 
-const playfair = Playfair_Display({ subsets: ['latin'] })
-const lato = Lato({ weight: ['400', '700'], subsets: ['latin'] })
-
-import Navbar from '../src/components/Common/Navbar'
-import Home from '../src/components/Home/Home'
-import About from '../src/components/Home/About'
-import Contact from '../src/components/Home/Contact'
-import Footer from '../src/components/Common/Footer'
-
-export default function Page() {
-  const [currentSection, setCurrentSection] = useState('home')
-
-  useEffect(() => {
-    // Leer parámetro de section de la URL
-    const urlParams = new URLSearchParams(window.location.search)
-    const sectionParam = urlParams.get('section')
-    
-    if (sectionParam && ['home', 'about', 'contact'].includes(sectionParam)) {
-      setCurrentSection(sectionParam)
-    }
-    
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }, [])
-
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }, [currentSection])
-
+function PageContent({ section }: { section: string }) {
   return (
-    <div className={`min-h-screen flex flex-col text-white ${lato.className} relative`}>
-      {/* Overlay gradient */}
-      <div 
-        className="fixed inset-0 z-0 bg-gradient-to-b from-black/50 to-black/70"
-      />
-
-      {/* Content */}
-      <div className="relative z-10">
-        <Navbar 
-          currentSection={currentSection} 
-          setCurrentSection={setCurrentSection}
-          playfair={playfair} 
-        />
-        <main className="flex-grow container mx-auto px-4 pt-24 pb-8">
-          {currentSection === 'home' && (
-            <Home 
-              playfair={playfair} 
-              setCurrentSection={setCurrentSection}
-            />
-          )}
-          {currentSection === 'about' && <About playfair={playfair} />}
-          {currentSection === 'contact' && <Contact playfair={playfair} />}
-        </main>
-        <Footer />
-      </div>
+    <div className="min-h-screen flex flex-col font-[family-name:var(--font-inter)]">
+      <Suspense fallback={<div className="h-16" aria-label="Cargando navegación" />}>
+        <Navbar />
+      </Suspense>
+      <main id="main-content" className="flex-grow w-full pt-20">
+        {section === 'home' && (
+          <>
+            <Hero />
+            <Pillars />
+            <Process />
+            <Clients />
+            <UseCases />
+            <CTAFinal />
+          </>
+        )}
+        {section === 'about' && <AboutSection />}
+        {section === 'contact' && <ContactSection />}
+      </main>
+      <Footer />
     </div>
   )
 }
 
+export default async function Page({ searchParams }: PageProps) {
+  const params = await searchParams
+  const section = params.section && ['home', 'about', 'contact'].includes(params.section) 
+    ? params.section 
+    : 'home'
+
+  return <PageContent section={section} />
+}

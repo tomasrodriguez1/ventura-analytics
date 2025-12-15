@@ -1,20 +1,42 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Inter } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
+const inter = Inter({ 
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter'
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+}
 
 export const metadata: Metadata = {
-  title: "Ventura Analytic",
-  description: "Análisis de datos para tu negocio",
+  title: {
+    default: 'zalantos - Convertimos datos en decisiones',
+    template: '%s | zalantos'
+  },
+  description: 'Ayudamos a líderes ejecutivos a transformar la complejidad de la información en rentabilidad medible mediante Inteligencia Artificial gobernada y estructuras de datos escalables',
+  openGraph: {
+    type: 'website',
+    locale: 'es_ES',
+    siteName: 'zalantos',
+    title: 'zalantos - Convertimos datos en decisiones',
+    description: 'Ayudamos a líderes ejecutivos a transformar datos en rentabilidad medible mediante IA gobernada',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'zalantos - Convertimos datos en decisiones',
+    description: 'Transformamos datos en rentabilidad medible mediante IA gobernada',
+  },
+  robots: { 
+    index: true, 
+    follow: true 
+  },
 };
 
 export default function RootLayout({
@@ -23,22 +45,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {/* Background Image */}
-      <div 
-        className="fixed inset-0 z-0"
-        style={{
-          backgroundImage: 'url("./images/image.png")',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          opacity: '0.1'
-        }}
-      />
-      
+    <html lang="es">
+      <body className={`${inter.variable} font-sans antialiased`}>
         {children}
       </body>
     </html>

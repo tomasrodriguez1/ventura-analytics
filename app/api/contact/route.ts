@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
     await axios.post(WEBHOOK_URL, dataToSend, {
       headers: {
         'Content-Type': 'application/json',
-        'User-Agent': 'VenturaAnalytics-Website/1.0'
+        'User-Agent': 'zalantos-Website/1.0'
       },
       timeout: 15000,
       validateStatus: (status) => status < 500 // Aceptar códigos < 500

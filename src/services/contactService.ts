@@ -13,21 +13,32 @@ export interface ContactServiceResponse {
 }
 
 export class ContactService {
-  // Usar URL completa para evitar problemas de contexto
-  private static readonly ENDPOINT = typeof window !== 'undefined' 
-    ? `${window.location.origin}/api/contact`
-    : '/api/contact';
+  // Webhook de n8n
+  private static readonly ENDPOINT = 'https://n8n.venturanalytic.com/webhook/95513fc5-bf2c-4d4f-b5d8-e5ab229e8629';
 
   static async submitContactForm(formData: ContactFormData): Promise<ContactServiceResponse> {
     try {
-      const response = await axios.post(this.ENDPOINT, formData, {
+      // Preparar el body en el formato esperado por n8n
+      const requestBody = {
+        name: formData.nombre,
+        empresa: formData.empresa,
+        email: formData.email,
+        mensaje: formData.mensaje,
+        fecha: new Date().toISOString()
+      };
+
+      await axios.post(this.ENDPOINT, requestBody, {
         headers: {
           'Content-Type': 'application/json',
         },
-        timeout: 15000, // 15 segundos de timeout
+        timeout: 30000, // 30 segundos de timeout
       });
 
-      return response.data;
+      // El webhook de n8n debería retornar exitosamente
+      return {
+        success: true,
+        message: 'Tu solicitud ha sido enviada exitosamente. Nos pondremos en contacto contigo pronto.'
+      };
     } catch (error) {
       if (axios.isAxiosError(error)) {
         const axiosError = error as AxiosError;

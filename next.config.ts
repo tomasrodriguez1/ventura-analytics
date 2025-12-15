@@ -1,18 +1,23 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Activar react strict mode para mejor debugging en desarrollo
+  reactStrictMode: true,
   
-  // Desactivar react strict mode para evitar re-renders dobles
-  reactStrictMode: false,
+  // Optimizaciones de imágenes
+  images: {
+    formats: ['image/avif', 'image/webp'],
+    deviceSizes: [360, 768, 1024, 1280, 1920],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+  },
   
-  // Configuración mínima para desactivar auto-refresh sin romper webpack
+  // Configuración de webpack para optimización
   webpack: (config, { dev, isServer }) => {
-    if (dev && !isServer) {
-      // Solo desactivar watch polling para reducir auto-refresh
-      config.watchOptions = {
-        poll: false,
-        ignored: /node_modules/,
+    if (!dev && !isServer) {
+      // Optimizaciones de producción
+      config.optimization = {
+        ...config.optimization,
+        moduleIds: 'deterministic',
       };
     }
     return config;
