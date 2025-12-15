@@ -2,37 +2,49 @@ name: Deploy to cPanel (static export)
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]   # cambia a "master" si tu rama principal es master
   workflow_dispatch:
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
           node-version: "20"
           cache: "npm"
 
-      - run: npm ci
-      - run: npm run build
-      - run: test -d out && test -f out/index.html
+      - name: Install dependencies
+        run: npm ci
 
-      - run: sudo apt-get update && sudo apt-get install -y lftp
+      - name: Build (Next static export -> out/)
+        run: npm run build
 
-      - name: Deploy via SFTP
+      - name: Verify build output
+        run: test -d out && test -f out/index.html
+
+      - name: Install lftp
+        run: sudo apt-get update && sudo apt-get install -y lftp
+
+      - name: Deploy via FTPS (out/ -> public_html)
         env:
-          HOST: ${{ secrets.CPANEL_HOST }}
-          USER: ${{ secrets.CPANEL_USER }}
+          HOST: ${{ secrets.CPANEL_HOST }}     # ftp.zalantos.com
+          USER: ${{ secrets.CPANEL_USER }}     # deploy@zalantos.com
           PASS: ${{ secrets.CPANEL_PASS }}
-          PORT: ${{ secrets.CPANEL_PORT }}
-          REMOTE_PATH: ${{ secrets.CPANEL_PATH }}
+          REMOTE_PATH: ${{ secrets.CPANEL_PATH }}  # ./
         run: |
           lftp -e "
-            set sftp:auto-confirm yes;
-            open -u $USER,$PASS -p $PORT sftp://$HOST;
-            mirror -R --delete --verbose out/ $REMOTE_PATH;
+            set ftp:ssl-force true;
+            set ftp:ssl-protect-data true;
+            set ssl:verify-certificate no;
+            set net:max-retries 2;
+            set net:timeout 20;
+            open -u $USER,$PASS ftp://$HOST;
+            mirror -R --delete --verbose --parallel=5 out/ $REMOTE_PATH;
             bye
           "
