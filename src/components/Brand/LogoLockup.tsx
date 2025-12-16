@@ -2,8 +2,6 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { LINKS } from '@/lib/constants'
-
 /**
  * LogoLockup - Componente reutilizable para el logo lockup de zalantos
  * 

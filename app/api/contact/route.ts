@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+export const dynamic = 'force-static'
 import axios from 'axios'
 
 const WEBHOOK_URL = 'https://n8n.venturanalytic.com/webhook/95513fc5-bf2c-4d4f-b5d8-e5ab229e8629'
