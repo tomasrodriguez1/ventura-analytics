@@ -71,8 +71,8 @@ export default function LogoLockup({
 }: LogoLockupProps) {
   const config = SIZE_CONFIG[size]
   
-  // Determinar qué imagen usar (por defecto la normal, podría detectar dark mode si es necesario)
-  const iconSrc = '/images/Icono_zalantos.jpeg'
+  // Usar la imagen icono_zalantos_sf.png para todos los casos (light mode y dark mode)
+  const iconSrc = '/images/icono_zalantos_sf.png'
   
   // Si variant es iconOnly, forzar showText a false
   const shouldShowText = variant === 'iconOnly' ? false : showText
