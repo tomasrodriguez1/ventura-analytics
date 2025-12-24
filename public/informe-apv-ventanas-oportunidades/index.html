@@ -1,0 +1,1251 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>zalantos × APV Ventanas | Tablero de Priorización de Oportunidades</title>
+    <link rel="icon" href="./assets/logo-zalantos.png">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="zalantos × APV Ventanas | Tablero de Priorización">
+    <meta property="og:site_name" content="zalantos × APV Ventanas">
+    <meta property="og:image" content="./assets/logo-zalantos.png">
+    <meta property="og:type" content="website">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        stone: { 50: '#fafaf9', 100: '#f5f5f4', 200: '#e7e5e4', 800: '#292524' },
+                        slate: { 800: '#1e293b', 600: '#475569' },
+                        brand: { green: 'var(--brand-green)', navy: 'var(--brand-navy)' },
+                        apv: { orange: 'var(--apv-orange)', navy: 'var(--apv-navy)' }
+                    },
+                    fontFamily: { sans: ['Inter', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* Brand Color Variables */
+        :root {
+            --brand-green: #22C55E;
+            --brand-navy: #0B1F36;
+            --apv-orange: #F7941D;
+            --apv-navy: #003366;
+        }
+        
+        /* Utilidad para flechas conectoras */
+        .connector-line {
+            width: 2px;
+            background-color: #cbd5e1; /* slate-300 */
+            margin-left: auto;
+            margin-right: auto;
+            height: 24px;
+        }
+
+        /* Brand Color Utilities */
+        .text-brandGreen { color: var(--brand-green); }
+        .bg-brandGreen { background-color: var(--brand-green); }
+        .text-brandNavy { color: var(--brand-navy); }
+        .bg-brandNavy { background-color: var(--brand-navy); }
+        .border-brandGreen { border-color: var(--brand-green); }
+        .border-brandNavy { border-color: var(--brand-navy); }
+        .text-apvOrange { color: var(--apv-orange); }
+        .text-apvNavy { color: var(--apv-navy); }
+        
+        body { font-family: 'Inter', sans-serif; }
+        .phase-connector {
+            position: absolute;
+            left: 1.25rem;
+            top: 2rem;
+            bottom: -2rem;
+            width: 2px;
+            background-color: #e5e7eb;
+            z-index: 0;
+        }
+        .animate-fade-in-up {
+            animation: fadeInUp 0.5s ease-out;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .logo-hover:hover {
+            opacity: 0.8;
+            cursor: pointer;
+        }
+        
+        /* Drag and Drop Styles */
+        .draggable {
+            cursor: grab;
+            transition: all 0.2s ease;
+        }
+        .draggable:active {
+            cursor: grabbing;
+            opacity: 0.5;
+        }
+        .draggable.dragging {
+            opacity: 0.3;
+            transform: scale(0.95);
+        }
+        .drag-over {
+            border-color: var(--brand-green) !important;
+            background-color: #f0fdf4 !important;
+        }
+        .priority-badge {
+            min-width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            border-radius: 50%;
+            font-size: 14px;
+        }
+        
+        /* Side Navigation Dots */
+        .scroll-nav {
+            position: fixed;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            z-index: 40;
+            padding: 20px 10px;
+        }
+        .scroll-line {
+            display: none;
+        }
+        .scroll-item {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 16px;
+            cursor: pointer;
+            width: 240px;
+            margin-right: -10px;
+            opacity: 0.6;
+            transition: all 0.3s ease;
+        }
+        .scroll-item:hover, .scroll-item.active {
+            opacity: 1;
+        }
+        .scroll-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background-color: white;
+            border: 3px solid #cbd5e1;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 10;
+        }
+        .scroll-item.active .scroll-dot {
+            background-color: var(--brand-green);
+            border-color: var(--brand-green);
+            transform: scale(1.3);
+            box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.2);
+        }
+        .scroll-label {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            text-align: right;
+            background-color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border: 1px solid #e2e8f0;
+            
+            /* Hidden by default state */
+            opacity: 0;
+            transform: translateX(10px);
+            transition: all 0.3s ease;
+        }
+        .scroll-title {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--brand-navy);
+            line-height: 1.2;
+        }
+        .scroll-desc {
+            font-size: 0.65rem;
+            font-weight: 500;
+            color: #64748b;
+            margin-top: 2px;
+        }
+        /* Show labels on hover or active */
+        .scroll-item:hover .scroll-label,
+        .scroll-item.active .scroll-label {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        /* Hide on mobile */
+        @media (max-width: 1280px) {
+            .scroll-nav { display: none; }
+        }
+
+        /* Security Layer Styles */
+        .content-locked {
+            filter: blur(10px);
+            pointer-events: none;
+            user-select: none;
+        }
+        
+        #security-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(11, 31, 54, 0.95), rgba(0, 51, 102, 0.95));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            backdrop-filter: blur(5px);
+        }
+        
+        .security-card {
+            background: white;
+            padding: 3rem;
+            border-radius: 1rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 400px;
+            width: 90%;
+            animation: slideIn 0.5s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .security-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .security-input:focus {
+            outline: none;
+            border-color: var(--brand-green);
+            box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+        }
+        
+        .security-error {
+            color: #ef4444;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+        
+        .security-error.show {
+            display: block;
+            animation: shake 0.5s ease;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+    </style>
+</head>
+<body class="bg-stone-50 text-slate-800">
+
+    <!-- Security Overlay -->
+    <div id="security-overlay">
+        <div class="security-card">
+            <div class="text-center mb-6">
+                <div class="inline-block p-3 bg-gradient-to-br from-green-100 to-blue-100 rounded-full mb-4">
+                    <svg class="w-8 h-8 text-brandNavy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                    </svg>
+                </div>
+                <h2 class="text-2xl font-bold text-brandNavy mb-2">Documento Confidencial</h2>
+                <p class="text-sm text-slate-600">zalantos × APV Ventanas</p>
+            </div>
+            
+            <form onsubmit="return checkPassword(event)">
+                <label class="block text-sm font-semibold text-slate-700 mb-2">Contraseña de acceso</label>
+                <input 
+                    type="password" 
+                    id="password-input" 
+                    class="security-input" 
+                    placeholder="Ingrese la contraseña"
+                    autocomplete="off"
+                />
+                <p id="password-error" class="security-error">❌ Contraseña incorrecta. Inténtelo nuevamente.</p>
+                
+                <button 
+                    type="submit" 
+                    class="w-full mt-4 bg-brandGreen text-white font-semibold py-3 rounded-lg hover:opacity-90 transition"
+                >
+                    Acceder
+                </button>
+            </form>
+            
+            <p class="text-xs text-center text-slate-500 mt-6">
+                🔒 Contenido protegido para uso interno
+            </p>
+        </div>
+    </div>
+
+    <!-- Main Content (initially blurred) -->
+    <div id="main-content" class="content-locked">
+
+    <!-- Navigation / Header -->
+    <nav class="bg-white border-b border-stone-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center gap-3">
+                    <img src="./assets/logo-zalantos.png" 
+                         alt="Zalantos" 
+                         class="h-7 w-auto logo-hover" 
+                         onclick="scrollToSection('oportunidades')" />
+                    <span class="text-2xl font-bold text-slate-800 tracking-tight">
+                        <span class="font-extrabold">zalantos</span> × <span class="text-apvOrange">APV</span><span class="text-apvNavy">Ventanas</span>
+                    </span>
+                    <span class="ml-4 px-3 py-1 rounded-full text-xs font-semibold bg-stone-100 text-stone-500 hidden sm:block">Informe de Consultoría</span>
+                </div>
+                <div class="flex items-center space-x-4"></div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+
+        <!-- Header Intro -->
+        <div class="text-center max-w-5xl mx-auto mb-12">
+            <h1 class="text-3xl font-bold text-slate-900 mb-4">Informe de Priorización de Oportunidades</h1>
+            <div class="text-left mb-6 max-w-3xl mx-auto bg-white p-5 rounded-lg border border-stone-200 shadow-sm">
+                <p class="text-slate-700 leading-relaxed">
+                    Este informe consolida los hallazgos del diagnóstico operativo en <strong>APV Ventanas</strong>. Aunque la empresa cuenta con herramientas técnicas sólidas como <strong>Preference</strong>, el flujo de información depende de traspasos manuales a Excel y coordinación verbal. Se presentan 5 oportunidades para conectar digitalmente estas etapas y potenciar la eficiencia operativa.
+                </p>
+            </div>
+            
+            <p class="text-center text-slate-600 font-medium mb-4">
+                📋 A continuación, las instrucciones para entender el documento:
+            </p>
+            
+            <!-- Instrucciones en 3 pasos -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-left max-w-4xl mx-auto">
+                <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-5 rounded-lg border-2 border-blue-200 shadow-sm" onclick="scrollToSection('diagnostico')">
+                    <div class="flex items-center gap-2 mb-2">
+                        <div class="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center font-bold text-sm">1</div>
+                        <h3 class="font-bold text-blue-900 text-sm">Ver Levantamiento</h3>
+                    </div>
+                    <p class="text-xs text-blue-800">Revise el diagnóstico detallado del proceso actual (AS-IS) y sus puntos críticos.</p>
+                </div>
+                
+                <div class="bg-gradient-to-br from-emerald-50 to-emerald-100 p-5 rounded-lg border-2 border-emerald-200 shadow-sm" onclick="scrollToSection('oportunidades')">
+                    <div class="flex items-center gap-2 mb-2">
+                        <div class="w-8 h-8 bg-emerald-500 text-white rounded-full flex items-center justify-center font-bold text-sm">2</div>
+                        <h3 class="font-bold text-emerald-900 text-sm">Analizar Oportunidades</h3>
+                    </div>
+                    <p class="text-xs text-emerald-800">Descubra las 5 oportunidades de mejora digital y su impacto en la operación.</p>
+                </div>
+
+                <div class="bg-gradient-to-br from-indigo-50 to-indigo-100 p-5 rounded-lg border-2 border-indigo-200 shadow-sm cursor-pointer hover:shadow-md transition" onclick="document.getElementById('feedback').scrollIntoView({behavior: 'smooth'})">
+                    <div class="flex items-center gap-2 mb-2">
+                        <div class="w-8 h-8 bg-indigo-500 text-white rounded-full flex items-center justify-center font-bold text-sm">3</div>
+                        <h3 class="font-bold text-indigo-900 text-sm">Validar y Priorizar</h3>
+                    </div>
+                    <p class="text-xs text-indigo-800">Ordene las prioridades y envíe su feedback para validar el plan de acción.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 1: Diagnóstico de Procesos (Levantamiento) -->
+        <section id="diagnostico" class="animate-fade-in-up">
+             <h2 class="text-2xl font-bold text-slate-900 mb-6 flex items-center border-b border-stone-200 pb-4">
+                <span class="bg-slate-800 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm mr-3">1</span>
+                Levantamiento de Procesos (Diagnóstico)
+            </h2>
+            
+            <p class="text-slate-600 mb-6 max-w-3xl">
+                A continuación se detalla el flujo actual detectado. Haga clic en cada etapa para desplegar o colapsar el detalle del proceso.
+            </p>
+
+            <!-- SIMBOLOGÍA -->
+            <div class="bg-stone-100 rounded-lg p-4 border border-stone-200 shadow-sm mb-8">
+                <h3 class="text-xs font-bold text-slate-500 mb-3 uppercase tracking-wide">Guía de Simbología</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-4 h-4 bg-sky-50 border border-sky-600 rounded flex-shrink-0"></div>
+                        <span class="text-xs md:text-sm text-slate-700 font-medium">Sistema Digital (Software)</span>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <div class="w-4 h-4 bg-orange-50 border border-orange-500 rounded flex-shrink-0"></div>
+                        <span class="text-xs md:text-sm text-slate-700 font-medium">Proceso Manual / Físico</span>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <div class="w-4 h-4 bg-red-50 border border-dashed border-red-400 rounded flex-shrink-0"></div>
+                        <span class="text-xs md:text-sm text-slate-700 font-medium">Dolor / Riesgo Crítico</span>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <div class="w-4 h-4 bg-yellow-50 border border-yellow-400 rounded flex-shrink-0"></div>
+                        <span class="text-xs md:text-sm text-slate-700 font-medium">Insight / Contexto</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CONTENEDOR FLUIDO -->
+            <div id="process-container">
+
+                <!-- DIAGRAMA DE FLUJO (AS-IS) -->
+                <div class="space-y-4 pt-4">
+                
+                <div class="flex items-center justify-between border-b border-stone-200 pb-2 mb-6">
+                    <h2 class="text-2xl font-bold text-apv-navy">Flujo del Proceso (AS-IS)</h2>
+                    <span class="bg-blue-100 text-blue-800 text-xs font-medium px-3 py-1 rounded-full border border-blue-200">Vista Detallada</span>
+                </div>
+
+                <!-- ETAPA 1 -->
+                <div class="bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden">
+                    <button onclick="toggleStage('stage-1')" class="w-full flex items-center justify-between p-6 bg-stone-50 hover:bg-stone-100 transition text-left focus:outline-none">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-full bg-apv-navy text-white flex items-center justify-center font-bold text-lg ring-4 ring-white shadow-sm">1</div>
+                            <h3 class="text-xl font-bold text-brand-navy">Etapa 1: Comercial y Técnica</h3>
+                        </div>
+                        <span id="icon-stage-1" class="text-stone-400 text-2xl transform transition-transform">▼</span>
+                    </button>
+                    
+                    <div id="stage-1" class="hidden border-t border-stone-200 p-6 bg-white">
+                        <div class="flex flex-col md:flex-row gap-8">
+                            <div class="flex-grow space-y-6">
+
+
+                            <div class="bg-yellow-50 border-l-4 border-yellow-400 p-5 rounded-r-lg shadow-sm">
+                                <div class="flex items-start">
+                                    <span class="text-2xl mr-4">📝</span>
+                                    <div>
+                                        <p class="text-xs font-bold text-yellow-800 uppercase mb-1">Entendimiento Actual</p>
+                                        <p class="text-sm text-slate-700 leading-relaxed">
+                                            El flujo comieza cuando llega una solicitud por un cliente ya sea B2B o B2C. Luego, se hace la cotización en Preference y se manda el presupuesto inicial. Una vez que el cliente aprueba el presupuesto, se hace la rectificación de medidas en obra de manera manual. Finalmente el departamento de diseño técnico genera la OT tanto para producción como para hacer el seguimiento interno
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="space-y-0"> 
+                                <div class="flex flex-col md:flex-row items-start gap-4">
+                                    <div class="w-full md:w-1/2 bg-sky-50 border-l-4 border-sky-600 p-4 rounded-r-md shadow-sm hover:shadow-md transition-shadow">
+                                        <div class="flex justify-between items-start mb-2">
+                                            <p class="text-sky-900 font-bold text-xs uppercase bg-sky-100 px-2 py-0.5 rounded">Sistema</p>
+                                        </div>
+                                        <p class="text-slate-800 font-bold text-lg">Cotizar y Vender</p>
+                                        <p class="text-slate-600 text-sm mt-1">El vendedor ingresa las dimensiones preliminares en el software Preference para generar el presupuesto inicial para el cliente.</p>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col md:flex-row gap-4 py-2">
+                                    <div class="w-full md:w-1/2 flex justify-center"><span class="text-stone-400 text-xl">↓</span></div>
+                                </div>
+                                <div class="flex flex-col md:flex-row items-start gap-4">
+                                    <div class="w-full md:w-1/2 bg-orange-50 border-l-4 border-orange-500 p-4 rounded-r-md shadow-sm hover:shadow-md transition-shadow">
+                                        <div class="flex justify-between items-start mb-2">
+                                            <p class="text-orange-900 font-bold text-xs uppercase bg-orange-100 px-2 py-0.5 rounded">Manual</p>
+                                        </div>
+                                        <p class="text-slate-800 font-bold text-lg">Medir en Terreno</p>
+                                        <p class="text-slate-600 text-sm mt-1">Visita técnica a obra con huincha y papel. Se anotan las medidas reales de los ventanales.</p>
+                                    </div>
+                                    <div class="w-full md:w-1/2 bg-red-50 border-2 border-dashed border-red-300 p-4 rounded-lg flex items-start gap-3 mt-4 md:mt-0">
+                                        <span class="text-2xl">🔥</span>
+                                        <div>
+                                            <p class="text-xs font-bold text-red-800 uppercase mb-1">Dolor Crítico</p>
+                                            <p class="text-sm text-slate-800 font-medium">Error de Transcripción y Retrabajo</p>
+                                            <p class="text-sm text-slate-600 mt-1">Al pasar los datos al papel, se puede cometer errores de transcipcion. A su vez, cuando se pasa al Excel, es posible que ocurran errores de digitación (ej. escribir 1200 en lugar de 2100). Esto genera OTs con medidas erróneas desde el origen.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col md:flex-row gap-4 py-2">
+                                    <div class="w-full md:w-1/2 flex justify-center"><span class="text-stone-400 text-xl">↓</span></div>
+                                </div>
+                                <div class="flex flex-col md:flex-row items-start gap-4">
+                                    <div class="w-full md:w-1/2 bg-orange-50 border-l-4 border-orange-500 p-4 rounded-r-md shadow-sm hover:shadow-md transition-shadow">
+                                        <div class="flex justify-between items-start mb-2">
+                                            <p class="text-orange-900 font-bold text-xs uppercase bg-orange-100 px-2 py-0.5 rounded">Manual</p>
+                                        </div>
+                                        <p class="text-slate-800 font-bold text-lg">Generar Orden de Trabajo (OT)</p>
+                                        <p class="text-slate-600 text-sm mt-1">Oficina Técnica consolida la información y crea la OT en el "Excel Maestro", que servirá como la biblia de producción.</p>
+                                    </div>
+                                    <div class="w-full md:w-1/2 bg-red-50 border-2 border-dashed border-red-300 p-4 rounded-lg flex items-start gap-3 mt-4 md:mt-0">
+                                        <span class="text-2xl">⚠️</span>
+                                        <div>
+                                            <p class="text-xs font-bold text-red-800 uppercase mb-1">Riesgo Operativo</p>
+                                            <p class="text-sm text-slate-800 font-medium">Pérdida de Seguimiento</p>
+                                            <p class="text-sm text-slate-600 mt-1">Una vez que la OT entra en el Excel, se vuelve difícil de rastrear. Saber "en qué etapa está la ventana 4 de la casa 2" requiere consultas verbales y revisiones visuales.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ETAPA 2 -->
+                <div class="bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden">
+                    <button onclick="toggleStage('stage-2')" class="w-full flex items-center justify-between p-6 bg-stone-50 hover:bg-stone-100 transition text-left focus:outline-none">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-full bg-apv-navy text-white flex items-center justify-center font-bold text-lg ring-4 ring-white shadow-sm">2</div>
+                            <h3 class="text-xl font-bold text-brand-navy">Etapa 2: Logística y Abastecimiento</h3>
+                        </div>
+                        <span id="icon-stage-2" class="text-stone-400 text-2xl transform transition-transform">▼</span>
+                    </button>
+                    
+                    <div id="stage-2" class="hidden border-t border-stone-200 p-6 bg-white">
+                        <div class="flex flex-col md:flex-row gap-8">
+                            <div class="flex-grow space-y-6">
+
+                            <div class="bg-yellow-50 border-l-4 border-yellow-400 p-5 rounded-r-lg shadow-sm">
+                                <div class="flex items-start">
+                                    <span class="text-2xl mr-4">📝</span>
+                                    <div>
+                                        <p class="text-xs font-bold text-yellow-800 uppercase mb-1">Entendimiento Actual</p>
+                                        <p class="text-sm text-slate-700 leading-relaxed">
+                                            El equipo de bodega realiza una adaptación operativa clave al recibir la receta técnica. Homologan manualmente los requerimientos teóricos del sistema con los materiales físicos disponibles (alternativos o importados), registrando los movimientos en vales de papel que posteriormente se digitan en las planillas de control, asegurando así la continuidad de la producción.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="space-y-0">
+                                <div class="flex flex-col md:flex-row items-start gap-4">
+                                    <div class="w-full md:w-1/2 bg-sky-50 border-l-4 border-sky-600 p-4 rounded-r-md shadow-sm hover:shadow-md transition-shadow">
+                                        <div class="flex justify-between items-start mb-2">
+                                            <p class="text-sky-900 font-bold text-xs uppercase bg-sky-100 px-2 py-0.5 rounded">Sistema</p>
+                                        </div>
+                                        <p class="text-slate-800 font-bold text-lg">Cálculo de Materiales Teóricos</p>
+                                        <p class="text-slate-600 text-sm mt-1">El software Preference calcula cuántos metros de perfil y m² de vidrio se necesitan teóricamente para la orden.</p>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col md:flex-row gap-4 py-2"><div class="w-full md:w-1/2 flex justify-center"><span class="text-stone-400 text-xl">↓</span></div></div>
+
+                                <div class="flex flex-col md:flex-row items-start gap-4">
+                                    <div class="w-full md:w-1/2 bg-orange-50 border-l-4 border-orange-500 p-4 rounded-r-md shadow-sm hover:shadow-md transition-shadow">
+                                        <div class="flex justify-between items-start mb-2">
+                                            <p class="text-orange-900 font-bold text-xs uppercase bg-orange-100 px-2 py-0.5 rounded">Manual</p>
+                                        </div>
+                                        <p class="text-slate-800 font-bold text-lg">Traducir Receta (Homologación)</p>
+                                        <p class="text-slate-600 text-sm mt-1">Entre John y Daisy deciden que materiales/insumos ocupar para elaborar el ventanal. Esto lo hacen en base a su experiencia y conocimiento de la empresa</p>
+                                    </div>
+                                    <div class="w-full md:w-1/2 bg-red-50 border-2 border-dashed border-red-300 p-4 rounded-lg flex items-start gap-3 mt-4 md:mt-0">
+                                        <span class="text-2xl">🔥</span>
+                                        <div>
+                                            <p class="text-xs font-bold text-red-800 uppercase mb-1">Dolor Financiero</p>
+                                            <p class="text-sm text-slate-800 font-medium">Pérdida de Trazabilidad de Costos</p>
+                                            <p class="text-sm text-slate-600 mt-1">Esta homologación manual casi nunca queda registrada en el Centro de Costos correcto. Se pierde la relación entre lo que se compró para el proyecto y lo que realmente se usó.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col md:flex-row gap-4 py-2"><div class="w-full md:w-1/2 flex justify-center"><span class="text-stone-400 text-xl">↓</span></div></div>
+
+                                <div class="flex flex-col md:flex-row items-start gap-4">
+                                    <div class="w-full md:w-1/2 bg-orange-50 border-l-4 border-orange-500 p-4 rounded-r-md shadow-sm hover:shadow-md transition-shadow">
+                                        <div class="flex justify-between items-start mb-2">
+                                            <p class="text-orange-900 font-bold text-xs uppercase bg-orange-100 px-2 py-0.5 rounded">Manual</p>
+                                        </div>
+                                        <p class="text-slate-800 font-bold text-lg">Pickear y Buscar en Bodega</p>
+                                        <p class="text-slate-600 text-sm mt-1">Búsqueda física de los perfiles y accesorios en los estantes, confiando en la memoria espacial del bodeguero más que en un sistema de ubicación.</p>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col md:flex-row gap-4 py-2"><div class="w-full md:w-1/2 flex justify-center"><span class="text-stone-400 text-xl">↓</span></div></div>
+
+                                <div class="flex flex-col md:flex-row items-start gap-4">
+                                    <div class="w-full md:w-1/2 bg-orange-50 border-l-4 border-orange-500 p-4 rounded-r-md shadow-sm hover:shadow-md transition-shadow">
+                                        <div class="flex justify-between items-start mb-2">
+                                            <p class="text-orange-900 font-bold text-xs uppercase bg-orange-100 px-2 py-0.5 rounded">Manual</p>
+                                        </div>
+                                        <p class="text-slate-800 font-bold text-lg">Registrar Salida de Material</p>
+                                        <p class="text-slate-600 text-sm mt-1">Se anota la salida en una libreta o papel. Al final del día (o de la semana), alguien digita estos movimientos en el Excel de inventario.</p>
+                                    </div>
+                                    <div class="w-full md:w-1/2 bg-red-50 border-2 border-dashed border-red-300 p-4 rounded-lg flex items-start gap-3 mt-4 md:mt-0">
+                                        <span class="text-2xl">⚠️</span>
+                                        <div>
+                                            <p class="text-xs font-bold text-red-800 uppercase mb-1">Dolor Operativo</p>
+                                            <p class="text-sm text-slate-800 font-medium">Proceso Tedioso y Desfasado</p>
+                                            <p class="text-sm text-slate-600 mt-1">El registro manual es lento, propenso a olvidos y genera un "Inventario Fantasma": el sistema dice que hay stock, pero la bodega está vacía porque la salida aún no se digita.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ETAPA 3 -->
+                <div class="bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden">
+                    <button onclick="toggleStage('stage-3')" class="w-full flex items-center justify-between p-6 bg-stone-50 hover:bg-stone-100 transition text-left focus:outline-none">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-full bg-apv-navy text-white flex items-center justify-center font-bold text-lg ring-4 ring-white shadow-sm">3</div>
+                            <h3 class="text-xl font-bold text-brand-navy">Etapa 3: Producción (Manufactura)</h3>
+                        </div>
+                        <span id="icon-stage-3" class="text-stone-400 text-2xl transform transition-transform">▼</span>
+                    </button>
+                    
+                    <div id="stage-3" class="hidden border-t border-stone-200 p-6 bg-white">
+                        <div class="flex flex-col md:flex-row gap-8">
+                            <div class="flex-grow space-y-6">
+
+                            <div class="bg-yellow-50 border-l-4 border-yellow-400 p-5 rounded-r-lg shadow-sm">
+                                <div class="flex items-start">
+                                    <span class="text-2xl mr-4">📝</span>
+                                    <div>
+                                        <p class="text-xs font-bold text-yellow-800 uppercase mb-1">Entendimiento Actual</p>
+                                        <p class="text-sm text-slate-700 leading-relaxed">
+                                            El proceso de manufactura se organiza en dos líneas especializadas que operan en paralelo: la línea de Perfiles (PVC) y la línea de Cristales. Los materiales avanzan a través de sus respectivas estaciones de transformación —incluyendo corte, mecanizado, soldado y limpieza— hasta converger en el punto de ensamblaje. Allí, el equipo realiza la integración final del marco con el vidrio, validando la calidad del producto terminado antes de su ingreso físico a la bodega para el posterior despacho.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="space-y-0">
+                                <div class="flex flex-col md:flex-row items-start gap-4">
+                                    <div class="w-full md:w-1/2 bg-orange-50 border-l-4 border-orange-500 p-4 rounded-r-md shadow-sm hover:shadow-md transition-shadow">
+                                        <div class="flex justify-between items-start mb-2">
+                                            <p class="text-orange-900 font-bold text-xs uppercase bg-orange-100 px-2 py-0.5 rounded">Manual</p>
+                                        </div>
+                                        <p class="text-slate-800 font-bold text-lg">Fabricar y Ensamblar</p>
+                                        <p class="text-slate-600 text-sm mt-1">Ejecución física: Corte de perfiles, mecanizado de desagües, corte de vidrio y armado final. Todo guiado por la hoja de papel impresa de la OT.</p>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col md:flex-row gap-4 py-2"><div class="w-full md:w-1/2 flex justify-center"><span class="text-stone-400 text-xl">↓</span></div></div>
+
+                                <div class="flex flex-col md:flex-row items-start gap-4">
+                                    <div class="w-full md:w-1/2 bg-orange-50 border-l-4 border-orange-500 p-4 rounded-r-md shadow-sm hover:shadow-md transition-shadow">
+                                        <div class="flex justify-between items-start mb-2">
+                                            <p class="text-orange-900 font-bold text-xs uppercase bg-orange-100 px-2 py-0.5 rounded">Manual</p>
+                                        </div>
+                                        <p class="text-slate-800 font-bold text-lg">Control de Calidad Final</p>
+                                        <p class="text-slate-600 text-sm mt-1">Inspección visual al final de la línea antes de paletizar. Si hay defectos, la ventana vuelve atrás para reproceso, pero este retrabajo rara vez se registra.</p>
+                                    </div>
+                                    <div class="w-full md:w-1/2 bg-indigo-50 border-2 border-dashed border-indigo-300 p-4 rounded-lg flex items-start gap-3 mt-4 md:mt-0">
+                                        <span class="text-2xl">🚀</span>
+                                        <div>
+                                            <p class="text-xs font-bold text-indigo-800 uppercase mb-1">Oportunidad de Mejora</p>
+                                            <p class="text-sm text-slate-800 font-medium">Gestión de Mermas y Scrap</p>
+                                            <p class="text-sm text-slate-600 mt-1">Falta visibilidad para gestionar el desperdicio. Digitalizar el scrap permitiría entender qué cortador está desperdiciando más material o qué perfiles tienen fallas recurrentes.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ETAPA 4 -->
+                <div class="bg-white rounded-xl border border-stone-200 shadow-sm overflow-hidden">
+                    <button onclick="toggleStage('stage-4')" class="w-full flex items-center justify-between p-6 bg-stone-50 hover:bg-stone-100 transition text-left focus:outline-none">
+                        <div class="flex items-center gap-4">
+                            <div class="w-10 h-10 rounded-full bg-apv-navy text-white flex items-center justify-center font-bold text-lg ring-4 ring-white shadow-sm">4</div>
+                            <h3 class="text-xl font-bold text-brand-navy">Etapa 4: Entrega y Finanzas</h3>
+                        </div>
+                        <span id="icon-stage-4" class="text-stone-400 text-2xl transform transition-transform">▼</span>
+                    </button>
+                    
+                    <div id="stage-4" class="hidden border-t border-stone-200 p-6 bg-white">
+                        <div class="flex flex-col md:flex-row gap-8">
+                            <div class="flex-grow space-y-6">
+
+                            <div class="bg-yellow-50 border-l-4 border-yellow-400 p-5 rounded-r-lg shadow-sm">
+                                <div class="flex items-start">
+                                    <span class="text-2xl mr-4">📝</span>
+                                    <div>
+                                        <p class="text-xs font-bold text-yellow-800 uppercase mb-1">Entendimiento Actual</p>
+                                        <p class="text-sm text-slate-700 leading-relaxed">
+                                            La etapa final se orquesta a partir de dos momentos de decisión. Primero, en una reunión de coordinación semanal, el equipo define estratégicamente qué pedidos se despachan y cuáles se retienen. Por otro lado, la facturación corre por un carril separado: Finanzas solo emite el cobro cuando el cliente aprueba el 'Estado de Pago' en terreno. Es decir, aunque se decida qué enviar en la reunión, es el cliente quien finalmente autoriza qué se cobra según las ventanas correctamente instaladas
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="space-y-0">
+                                <div class="flex flex-col md:flex-row items-start gap-4">
+                                    <div class="w-full md:w-1/2 bg-orange-50 border-l-4 border-orange-500 p-4 rounded-r-md shadow-sm hover:shadow-md transition-shadow">
+                                        <div class="flex justify-between items-start mb-2">
+                                            <p class="text-orange-900 font-bold text-xs uppercase bg-orange-100 px-2 py-0.5 rounded">Manual</p>
+                                        </div>
+                                        <p class="text-slate-800 font-bold text-lg">Despacho Físico</p>
+                                        <p class="text-slate-600 text-sm mt-1">Generación de la Guía de Despacho manual. El chofer lleva las ventanas y el cliente firma el papel de recepción.</p>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col md:flex-row gap-4 py-2"><div class="w-full md:w-1/2 flex justify-center"><span class="text-stone-400 text-xl">↓</span></div></div>
+
+                                <div class="flex flex-col md:flex-row items-start gap-4">
+                                    <div class="w-full md:w-1/2 bg-sky-50 border-l-4 border-sky-600 p-4 rounded-r-md shadow-sm hover:shadow-md transition-shadow">
+                                        <div class="flex justify-between items-start mb-2">
+                                            <p class="text-sky-900 font-bold text-xs uppercase bg-sky-100 px-2 py-0.5 rounded">Sistema</p>
+                                        </div>
+                                        <p class="text-slate-800 font-bold text-lg">Facturación Financiera</p>
+                                        <p class="text-slate-600 text-sm mt-1">Uso de Facturacion.cl. Se factura según el porcentaje de avance acordado en el contrato, a menudo desconectado de la realidad física de la entrega.</p>
+                                    </div>
+                                    <div class="w-full md:w-1/2 bg-red-50 border-2 border-dashed border-red-300 p-4 rounded-lg flex items-start gap-3 mt-4 md:mt-0">
+                                        <span class="text-2xl">⚠️</span>
+                                        <div>
+                                            <p class="text-xs font-bold text-red-800 uppercase mb-1">Riesgo de Cobro</p>
+                                            <p class="text-sm text-slate-800 font-medium">Descalce Factura vs Entrega</p>
+                                            <p class="text-sm text-slate-600 mt-1">Dado que el cliente decide qué pagos autorizar tras validar la instalación, cualquier rechazo genera un vacío operativo. Las unidades que no superan este filtro se convierten en "saldos ciegos": productos que han salido del inventario pero que no han sido aceptados por el receptor. Al carecer de un proceso formal de reingreso o gestión, se pierde el rastro físico y financiero de estas piezas, lo que provoca que se clasifiquen erróneamente como pérdida o merma.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div> <!-- End of space-y-4 -->
+            </div> <!-- End of process-container -->
+        </section>
+
+        <!-- Section 2: Detailed Opportunities Cards -->
+        <section id="oportunidades" class="animate-fade-in-up">
+            <h2 class="text-2xl font-bold text-slate-900 mb-6 flex items-center border-b border-stone-200 pb-4">
+                <span class="bg-slate-800 text-white w-8 h-8 rounded-full flex items-center justify-center text-sm mr-3">2</span>
+                Catálogo de Oportunidades Detectadas
+            </h2>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8" id="opportunities-container">
+                <!-- Cards will be injected via JS for cleaner code -->
+            </div>
+        </section>
+
+        <!-- Section 3: Feedback & Prioritization Request -->
+        <section id="feedback" class="rounded-xl p-8 border-2 border-brandGreen text-center shadow-sm" style="background-color: #f0fdf4;">
+            <div class="max-w-3xl mx-auto">
+                <h2 class="text-2xl font-bold text-brandNavy mb-4 flex items-center justify-center">
+                    <span class="bg-brandNavy text-white w-8 h-8 rounded-full flex items-center justify-center text-sm mr-3">3</span>
+                    Solicitud de Validación
+                </h2>
+                <p class="text-brandNavy mb-8 text-lg">
+                    Con todo el detalle del diagnóstico operativo, por favor, compartan su opinión sobre los puntos presentados.
+                </p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left mb-8">
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-brandGreen">
+                        <div class="text-2xl mb-2">🔎</div>
+                        <h3 class="font-bold text-slate-800 mb-2">Validación de Dolores</h3>
+                        <p class="text-sm text-slate-600">¿Reflejan estos 5 puntos la realidad operativa que ustedes perciben en el día a día? ¿Tienen algún comentario adicional?</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-brandGreen">
+                        <div class="text-2xl mb-2">⚖️</div>
+                        <h3 class="font-bold text-slate-800 mb-2">Prioridades del Directorio</h3>
+                        <p class="text-sm text-slate-600">¿Qué urgencia asignarían ustedes a cada oportunidad presentada? Ordena la prioridad de cada oportunidad de mayor a menor urgencia.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-brandGreen">
+                        <div class="text-2xl mb-2">📝</div>
+                        <h3 class="font-bold text-slate-800 mb-2">Comentarios</h3>
+                        <p class="text-sm text-slate-600">¿Existe algún otro proceso crítico o restricción que no hayamos considerado?</p>
+                    </div>
+                </div>
+
+                <!-- Prioritization Section -->
+                <div class="bg-white p-8 rounded-xl shadow-sm border-2 border-brandGreen mb-8 text-left">
+                    <h3 class="text-xl font-bold text-brandNavy mb-4 text-center">
+                        ⚖️ Asigne su Priorización (Arrastre para Ordenar)
+                    </h3>
+                    <p class="text-sm text-slate-600 text-center mb-6">
+                        🔄 <strong>Arrastre las tarjetas</strong> para ordenar de mayor a menor prioridad. La primera será la más urgente (1) y la última la menos urgente (5).
+                    </p>
+                    
+                    <div id="prioritization-container" class="space-y-3">
+                        <!-- Will be populated by JS -->
+                    </div>
+                    
+                    <div class="mt-6 p-4 bg-green-50 border border-green-300 rounded text-green-700 text-sm text-center">
+                        ✅ Cuando esté listo, presione el botón para enviar su priorización por email
+                    </div>
+                </div>
+
+                <!-- Meeting Proposal -->
+                <div class="bg-blue-50 border-l-4 border-blue-500 p-6 mb-8 text-left rounded-r-lg">
+                    <p class="text-blue-900 font-medium mb-4">
+                        💡 Para tener una mejor certeza, se recomienda agendar una reunión breve para discutir esta priorización, aunque es clave contar primero con esta aproximación inicial.
+                    </p>
+                    
+                    <label class="block text-sm font-bold text-blue-800 mb-2">
+                        📅 Propuesta tentativa de Reunión (Opcional):
+                    </label>
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <input type="text" id="meeting-proposal" 
+                            class="flex-grow p-3 border border-blue-200 rounded focus:ring-2 focus:ring-blue-500 outline-none text-sm"
+                            placeholder="Ej: Próximo martes a las 13:00 hrs (Idealmente hora de almuerzo)">
+                    </div>
+                    <p class="text-xs text-blue-600 mt-2">
+                        * Sugerimos horario de almuerzo para facilitar la coincidencia de agendas.
+                    </p>
+                </div>
+
+                <button onclick="sendFeedbackEmail()" class="bg-brandGreen text-white px-10 py-4 rounded-lg font-bold hover:opacity-90 transition shadow-lg hover:shadow-xl transform hover:-translate-y-1 flex items-center mx-auto">
+                    <span>💬 Enviar Feedback y Prioridades</span>
+                </button>
+            </div>
+        </section>
+
+
+    </main>
+
+    <footer class="bg-white border-t border-stone-200 mt-12 py-8">
+        <div class="max-w-7xl mx-auto px-4 text-center text-stone-500 text-sm">
+            <p>© 2025 <strong class="text-brandNavy">zalantos</strong> × APV Ventanas — Documento Confidencial de Trabajo</p>
+            <p class="mt-2 font-medium">Ayudamos a líderes ejecutivos a transformar la complejidad de la información en rentabilidad medible mediante Inteligencia Artificial gobernada</p>
+        </div>
+    </footer>
+
+    <!-- Side Navigation Dots -->
+    <div class="scroll-nav hidden lg:flex">
+        <div class="scroll-line"></div>
+        
+        <div class="scroll-item active" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+            <div class="scroll-label">
+                <span class="scroll-title">Inicio</span>
+                <span class="scroll-desc">Introducción</span>
+            </div>
+            <div class="scroll-dot"></div>
+        </div>
+
+        <div class="scroll-item" onclick="document.getElementById('diagnostico').scrollIntoView({behavior: 'smooth'})">
+            <div class="scroll-label">
+                <span class="scroll-title">Diagnóstico</span>
+                <span class="scroll-desc">Flujo Actual</span>
+            </div>
+            <div class="scroll-dot"></div>
+        </div>
+
+        <div class="scroll-item" onclick="document.getElementById('oportunidades').scrollIntoView({behavior: 'smooth'})">
+            <div class="scroll-label">
+                <span class="scroll-title">Oportunidades</span>
+                <span class="scroll-desc">5 Hallazgos Clave</span>
+            </div>
+            <div class="scroll-dot"></div>
+        </div>
+
+        <div class="scroll-item" onclick="document.getElementById('feedback').scrollIntoView({behavior: 'smooth'})">
+            <div class="scroll-label">
+                <span class="scroll-title">Priorización</span>
+                <span class="scroll-desc">Tu Feedback</span>
+            </div>
+            <div class="scroll-dot"></div>
+        </div>
+    </div>
+
+    </div> <!-- End of main-content -->
+
+    <script>
+        // Toggle Individual Stage Visibility
+        function toggleStage(stageId) {
+            const container = document.getElementById(stageId);
+            const icon = document.getElementById(`icon-${stageId}`);
+            
+            if (container.classList.contains('hidden')) {
+                container.classList.remove('hidden');
+                // Simple animation
+                container.style.opacity = '0';
+                container.style.transform = 'translateY(-10px)';
+                container.style.transition = 'all 0.3s ease';
+                
+                requestAnimationFrame(() => {
+                    container.style.opacity = '1';
+                    container.style.transform = 'translateY(0)';
+                });
+                
+                // Rotate icon
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                container.classList.add('hidden');
+                icon.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        // Full Data with explicit Pain vs Solution text
+        const opportunities = [
+    {
+        id: "O1",
+        title: "Visibilidad en Tiempo Real del Estado de la OT",
+        process: "Oficina Técnica → Producción",
+        impactText: "Alto",
+        pain: "Actualmente, el seguimiento de la OT requiere pasos manuales (transcribir de Preference a Excel) lo que hace dificil el trackeo de la OT. Una vez en producción, obtener el estatus exacto de un pedido implica consultas verbales, lo que demora tanto la obtención del dato como la proyección de la fecha de entrega.",
+        solution: "<strong>Trazabilidad vía Plataforma Web.</strong> Implementar una interfaz centralizada que digitalice el flujo. Esto permitirá al equipo visualizar el avance diario sin depender de planillas manuales, facilitando que el jefe de producción reporte el progreso de forma ágil y directa.",
+        color: "emerald"
+    },
+    {
+        id: "O2",
+        title: "Se cometen errores al transcribir las medidas del papel al sistema",
+        process: "Operación en Terreno → Validación Técnica",
+        impactText: "Alto",
+        pain: "El proceso de toma de medidas es fundamental y actualmente depende de anotaciones manuales que luego deben digitarse. Al digitalizar este paso, se puede blindar la operación contra variaciones involuntarias y asegurar que la información llegue íntegra desde la obra a la fábrica.",
+        solution: "<strong>Captura Digital Directa (Láser a App).</strong> Integración de tecnología de medición que respalde la información en el acto para su descarga directa al sistema. Esto elimina la carga administrativa de la transcripción y garantiza la máxima precisión en los datos.",
+        color: "orange"
+    },
+    {
+        id: "O3",
+        title: "Sincronización Total entre Despacho, Aceptación y Facturación",
+        process: "Logística → Instalación → Finanzas",
+        impactText: "Crítico",
+        pain: "Hoy no hay una forma simple y consistente de rastrear cuántas ventanas de una OT fueron efectivamente entregadas y aceptadas en obra. Dado que la aprobación del pago ocurre en terreno (según criterio de calidad/instalación), a veces queda un desfase natural entre lo despachado y lo finalmente facturado.",
+        solution: "<strong>Trazabilidad de Envíos y Aceptación.</strong> Un sistema que registre unitariamente lo que sube al camión y permita imputar en terreno lo aprobado por el cliente. La plataforma conciliará automáticamente la información para apoyar la gestión financiera y logística. Alertando y haciendole seguimiento a las ventanas residuales.",
+        color: "orange"
+    },
+    {
+        id: "O4",
+        title: "Digitalización del Inventario de Materiales",
+        process: "Abastecimiento → Inventario → Bodega",
+        impactText: "Crítico",
+        pain: "El conocimiento del inventario reside principalmente en expertos clave (como John). Al centralizar y digitalizar este registro, podemos democratizar la información para que toda la organización tenga visibilidad en tiempo real, facilitando la planificación de OTs con la certeza de que los materiales están disponibles.",
+        solution: "<strong>Inventario Digital Colaborativo.</strong> Sistema de bodega (WMS ligero) que permite registrar movimientos en una plataforma web al instante, eliminando el desfase de los registros en papel y empoderando al equipo con datos actualizados. El sistema facilitara el proceso de las entradas y salidas de materiales.",
+        color: "blue"
+    },
+    {
+        id: "O5",
+        title: "Automatización del Mapeo de Materiales (lo que Preference pide vs lo que se usa realmente)",
+        process: "Diseño Técnico → Compras de Materiales",
+        impactText: "Medio",
+        pain: "Preference entrega una receta técnica teórica, pero la realidad es que se utilizan materiales alternativos optimizados. Automatizar esta 'traducción' (que hoy se hace con gran experticia manual) agilizará el proceso de compras y nos dará un control de costos mucho más preciso y automático.",
+        solution: "<strong>Motor de Homologación Inteligente.</strong> Un módulo que vincule automáticamente el requerimiento de diseño técnico con el catálogo real de compras, puenteando la brecha entre el diseño teórico y la gestión logística real.",
+        color: "orange"
+    }
+];
+
+        const container = document.getElementById('opportunities-container');
+
+        opportunities.forEach(op => {
+            const card = document.createElement('div');
+            // Border and text color based on impact level
+            let borderColor, impactColor;
+            const impact = op.impactText.toLowerCase();
+            
+            if (impact === 'crítico' || impact === 'critico') {
+                borderColor = 'border-red-500';
+                impactColor = 'text-red-600';
+            } else if (impact === 'alto') {
+                borderColor = 'border-emerald-500';
+                impactColor = 'text-emerald-600';
+            } else if (impact === 'medio') {
+                borderColor = 'border-blue-500';
+                impactColor = 'text-blue-600';
+            } else {
+                borderColor = 'border-stone-400';
+                impactColor = 'text-stone-600';
+            }
+            
+            card.className = `bg-white rounded-xl shadow-md border-t-4 ${borderColor} overflow-hidden hover:shadow-lg transition-shadow flex flex-col`;
+            
+            card.innerHTML = `
+                <!-- Header -->
+                <div class="p-6 pb-4 flex justify-between items-start border-b border-stone-100">
+                    <div>
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="text-xl font-bold text-slate-800">${op.title}</span>
+                            <span class="bg-stone-100 text-stone-600 text-xs font-bold px-2 py-1 rounded border border-stone-200">${op.id}</span>
+                        </div>
+                        <span class="text-xs font-semibold text-white bg-brandNavy px-2 py-1 rounded inline-block">
+                            ${op.process}
+                        </span>
+                    </div>
+                    <div class="text-right">
+                        <span class="block text-xs font-bold uppercase text-stone-400">Impacto</span>
+                        <span class="block font-bold ${impactColor}">${op.impactText}</span>
+                    </div>
+                </div>
+
+                <!-- Content Body -->
+                <div class="flex-grow flex flex-col md:flex-row">
+                    <!-- Pain Column -->
+                    <div class="md:w-1/2 p-6 bg-red-50/50 border-r border-stone-100">
+                        <h4 class="text-xs font-bold text-red-700 mb-3 flex items-center">
+                            <span class="bg-red-200 text-red-700 w-5 h-5 rounded-full flex items-center justify-center text-[10px] mr-2">!</span>
+                            Oportunidad de Mejora (Descripción del Dolor Original)
+                        </h4>
+                        <p class="text-sm text-stone-700 leading-relaxed">
+                            ${op.pain}
+                        </p>
+                    </div>
+
+                    <!-- Solution Column -->
+                    <div class="md:w-1/2 p-6 bg-emerald-50/50">
+                        <h4 class="text-xs font-bold text-emerald-700 uppercase mb-3 flex items-center">
+                            <span class="bg-emerald-200 text-emerald-700 w-5 h-5 rounded-full flex items-center justify-center text-[10px] mr-2">✓</span>
+                            La Oportunidad (Solución)
+                        </h4>
+                        <p class="text-sm text-stone-700 leading-relaxed">
+                            ${op.solution}
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Footer Comments -->
+                <div class="bg-stone-50 px-6 py-4 border-t border-stone-100">
+                    <label class="block text-xs font-bold text-stone-500 mb-2">💬 Comenta sobre este dolor (Opcional):</label>
+                    <textarea 
+                        id="comment-${op.id}"
+                        class="w-full p-2 text-sm border border-stone-300 rounded focus:border-brandGreen focus:ring-1 focus:ring-brandGreen outline-none transition"
+                        rows="2"
+                        placeholder="Escribe aquí tu opinión, corrección o detalle adicional..."></textarea>
+                </div>
+            `;
+            
+            container.appendChild(card);
+        });
+
+        // Populate Prioritization Section with Drag and Drop
+        const prioritizationContainer = document.getElementById('prioritization-container');
+        let draggedElement = null;
+
+        opportunities.forEach((op, index) => {
+            const row = document.createElement('div');
+            row.className = 'draggable flex items-center gap-4 p-4 bg-stone-50 rounded-lg border-2 border-stone-300 hover:border-brandGreen transition';
+            row.draggable = true;
+            row.dataset.id = op.id;
+            
+            row.innerHTML = `
+                <div class="priority-badge bg-brandGreen text-white">
+                    ${index + 1}
+                </div>
+                <div class="flex-grow">
+                    <div class="flex items-center gap-2 mb-1">
+                        <span class="font-bold text-brandNavy text-sm">${op.id}</span>
+                        <span class="text-sm text-slate-700">${op.title}</span>
+                    </div>
+                    <span class="text-xs text-slate-500">${op.process}</span>
+                </div>
+                <div class="text-gray-400 text-xl">
+                    ⋮⋮
+                </div>
+            `;
+            
+            // Drag events
+            row.addEventListener('dragstart', handleDragStart);
+            row.addEventListener('dragend', handleDragEnd);
+            row.addEventListener('dragover', handleDragOver);
+            row.addEventListener('drop', handleDrop);
+            row.addEventListener('dragenter', handleDragEnter);
+            row.addEventListener('dragleave', handleDragLeave);
+            
+            prioritizationContainer.appendChild(row);
+        });
+
+        function handleDragStart(e) {
+            draggedElement = this;
+            this.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/html', this.innerHTML);
+        }
+
+        function handleDragEnd(e) {
+            this.classList.remove('dragging');
+            // Remove all drag-over classes
+            document.querySelectorAll('.draggable').forEach(item => {
+                item.classList.remove('drag-over');
+            });
+            updatePriorityNumbers();
+        }
+
+        function handleDragOver(e) {
+            if (e.preventDefault) {
+                e.preventDefault();
+            }
+            e.dataTransfer.dropEffect = 'move';
+            return false;
+        }
+
+        function handleDragEnter(e) {
+            if (this !== draggedElement) {
+                this.classList.add('drag-over');
+            }
+        }
+
+        function handleDragLeave(e) {
+            this.classList.remove('drag-over');
+        }
+
+        function handleDrop(e) {
+            if (e.stopPropagation) {
+                e.stopPropagation();
+            }
+            
+            if (draggedElement !== this) {
+                // Get all draggable items
+                const allItems = [...prioritizationContainer.querySelectorAll('.draggable')];
+                const draggedIndex = allItems.indexOf(draggedElement);
+                const targetIndex = allItems.indexOf(this);
+                
+                if (draggedIndex < targetIndex) {
+                    this.parentNode.insertBefore(draggedElement, this.nextSibling);
+                } else {
+                    this.parentNode.insertBefore(draggedElement, this);
+                }
+            }
+            
+            return false;
+        }
+
+        function updatePriorityNumbers() {
+            const items = prioritizationContainer.querySelectorAll('.draggable');
+            items.forEach((item, index) => {
+                const badge = item.querySelector('.priority-badge');
+                badge.textContent = index + 1;
+            });
+        }
+
+        // Send feedback email with High-Tech formatting
+        function sendFeedbackEmail() {
+            // Timestamp generation
+            const now = new Date();
+            const timestamp = now.toLocaleDateString('es-CL', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+            
+            // Get meeting proposal
+            const meetingProposal = document.getElementById('meeting-proposal').value.trim();
+
+            // Collect priorities
+            const items = prioritizationContainer.querySelectorAll('.draggable');
+            const priorities = [];
+            
+            items.forEach((item, index) => {
+                const opId = item.dataset.id;
+                const opportunity = opportunities.find(op => op.id === opId);
+                const comment = document.getElementById(`comment-${opId}`).value.trim();
+                
+                if (opportunity) {
+                    priorities.push({
+                        priority: index + 1,
+                        id: opportunity.id,
+                        title: opportunity.title,
+                        process: opportunity.process,
+                        impact: opportunity.impactText,
+                        comment: comment
+                    });
+                }
+            });
+
+            // --- BUILD SIMPLE REPORT ---
+            let report = `REPORTE DE PRIORIZACIÓN - APV VENTANAS\n`;
+            report += `Fecha: ${timestamp}\n`;
+            if (meetingProposal) {
+                report += `Reunión propuesta: ${meetingProposal}\n`;
+            }
+            report += `\n---\n\n`;
+
+            report += `PRIORIZACIÓN DE OPORTUNIDADES:\n`;
+            report += `(Ordenadas por nivel de urgencia)\n\n`;
+
+            priorities.forEach(item => {
+                report += `${item.priority}. ${item.title}\n`;
+                report += `   Impacto: ${item.impact}\n`;
+                report += `   Proceso: ${item.process}\n`;
+                
+                if (item.comment) {
+                    report += `   Comentario: "${item.comment}"\n`;
+                }
+                report += `\n`;
+            });
+
+            report += `\n---\n\n`;
+            report += `OBSERVACIONES ADICIONALES:\n\n`;
+            
+            if (meetingProposal) {
+                report += `Propuesta de reunión: ${meetingProposal}\n\n`;
+            }
+            
+            report += `[ Agregue aquí cualquier comentario adicional ]\n\n`;
+            
+            report += `---\n`;
+            report += `Generado por zalantos\n`;
+
+            // Create mailto link
+            const subject = encodeURIComponent(`Priorización Estratégica - APV Ventanas - ${new Date().toLocaleDateString()}`);
+            const body = encodeURIComponent(report);
+            const mailtoLink = `mailto:tomas.rodriguez@zalantos.com?subject=${subject}&body=${body}`;
+
+            // Open email client
+            window.location.href = mailtoLink;
+        }
+
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Scroll Spy for Side Navigation
+        window.addEventListener('scroll', () => {
+            const items = document.querySelectorAll('.scroll-item');
+            const sections = [
+                { id: 'top', offset: 0 },
+                { id: 'diagnostico', offset: document.getElementById('diagnostico').offsetTop - 300 },
+                { id: 'oportunidades', offset: document.getElementById('oportunidades').offsetTop - 300 },
+                { id: 'feedback', offset: document.getElementById('feedback').offsetTop - 400 }
+            ];
+            
+            const scrollPos = window.scrollY;
+
+            // Logic to determine active section
+            let activeIndex = 0;
+            if (scrollPos >= sections[3].offset) {
+                activeIndex = 3;
+            } else if (scrollPos >= sections[2].offset) {
+                activeIndex = 2;
+            } else if (scrollPos >= sections[1].offset) {
+                activeIndex = 1;
+            } else {
+                activeIndex = 0;
+            }
+
+            // Update classes
+            items.forEach((item, index) => {
+                if (index === activeIndex) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+        });
+
+        // Security Password Check
+        function checkPassword(event) {
+            event.preventDefault();
+            
+            const correctPassword = 'ZalantosxAPV2026!#$';
+            const inputPassword = document.getElementById('password-input').value;
+            const errorElement = document.getElementById('password-error');
+            
+            if (inputPassword === correctPassword) {
+                // Correct password - unlock content
+                const overlay = document.getElementById('security-overlay');
+                const mainContent = document.getElementById('main-content');
+                
+                // Fade out overlay
+                overlay.style.transition = 'opacity 0.5s ease';
+                overlay.style.opacity = '0';
+                
+                setTimeout(() => {
+                    overlay.style.display = 'none';
+                    mainContent.classList.remove('content-locked');
+                }, 500);
+                
+            } else {
+                // Wrong password - show error
+                errorElement.classList.add('show');
+                document.getElementById('password-input').value = '';
+                document.getElementById('password-input').focus();
+                
+                // Hide error after 3 seconds
+                setTimeout(() => {
+                    errorElement.classList.remove('show');
+                }, 3000);
+            }
+            
+            return false;
+        }
+    </script>
+</body>
+</html>
+
