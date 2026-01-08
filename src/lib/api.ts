@@ -375,7 +375,7 @@ export async function sendChatMessage(payload: ChatMessagePayload): Promise<Chat
         page: payload.page,
         consent: payload.consent,
       },
-      20000
+      120000 // 2 minutos de timeout para respuestas del agente
     )
 
     console.log('[API] Respuesta chat (raw):', { status, rawData })
