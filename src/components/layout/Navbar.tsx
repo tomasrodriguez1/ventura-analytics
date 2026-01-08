@@ -4,6 +4,7 @@ import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { LINKS } from '@/lib/constants'
 import LogoLockup from '@/components/Brand/LogoLockup'
+import AiCtaButton from '@/components/ui/AiCtaButton'
 
 export default function Navbar() {
   const searchParams = useSearchParams()
@@ -67,6 +68,14 @@ export default function Navbar() {
                 <span className="hidden lg:block">Nosotros</span>
               </Link>
             </div>
+
+            {/* Botón Consultor IA */}
+            <AiCtaButton 
+              href={LINKS.aiConsultant} 
+              variant="navbar"
+            >
+              Consultor IA
+            </AiCtaButton>
 
             {/* CTA Pill Verde */}
             <Link

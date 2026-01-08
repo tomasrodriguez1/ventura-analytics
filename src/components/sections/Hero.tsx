@@ -1,5 +1,6 @@
 import LinkButton from '../ui/LinkButton'
 import Section from '../ui/Section'
+import AiCtaButton from '../ui/AiCtaButton'
 import { LINKS } from '@/lib/constants'
 
 export default function Hero() {
@@ -15,6 +16,10 @@ export default function Hero() {
         </p>
         
         <div className="flex flex-wrap gap-4">
+          <AiCtaButton href={LINKS.aiConsultant} variant="hero">
+            Habla con el Consultor IA
+          </AiCtaButton>
+          
           <LinkButton href={LINKS.contact} variant="primary">
             Habla con un experto
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
