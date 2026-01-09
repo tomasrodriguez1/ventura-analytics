@@ -339,7 +339,7 @@ export default function AiChatWidget({ isReady, onRegistrationRequired }: AiChat
               <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
               </svg>
-              Reintentar
+              Reintentar (Beta)
             </button>
           )}
         </div>
@@ -349,6 +349,12 @@ export default function AiChatWidget({ isReady, onRegistrationRequired }: AiChat
 
   return (
     <div className="flex flex-col h-full">
+      <div className="mb-3 flex items-center gap-2 text-xs uppercase tracking-wide text-gray-500">
+        <span>Consultor AI</span>
+        <span className="rounded-full bg-violet-100 px-2 py-0.5 font-semibold text-[10px] text-violet-700">
+          Beta
+        </span>
+      </div>
       {/* Banner de rate limiting */}
       {rateLimitedUntil && rateLimitCountdown > 0 && (
         <div className="mb-4 p-4 bg-yellow-50 border border-yellow-300 rounded-lg flex items-center gap-3">

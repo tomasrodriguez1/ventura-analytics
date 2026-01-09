@@ -8,25 +8,35 @@ interface InputProps {
   placeholder?: string
   required?: boolean
   className?: string
+  id?: string
+  ariaInvalid?: boolean
+  ariaDescribedBy?: string
 }
 
-export default function Input({ 
-  type = 'text', 
-  name, 
-  value, 
-  onChange, 
-  placeholder, 
+export default function Input({
+  type = 'text',
+  name,
+  value,
+  onChange,
+  placeholder,
   required = false,
-  className = '' 
+  className = '',
+  id,
+  ariaInvalid,
+  ariaDescribedBy,
 }: InputProps) {
+  const inputId = id || name
   return (
     <input
       type={type}
       name={name}
+      id={inputId}
       value={value}
       onChange={onChange}
       placeholder={placeholder}
       required={required}
+      aria-invalid={ariaInvalid ? 'true' : undefined}
+      aria-describedby={ariaDescribedBy}
       className={`form-input ${className}`}
     />
   )

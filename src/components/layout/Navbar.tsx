@@ -73,6 +73,7 @@ export default function Navbar() {
             <AiCtaButton 
               href={LINKS.aiConsultant} 
               variant="navbar"
+              betaLabel="Beta"
             >
               Consultor IA
             </AiCtaButton>

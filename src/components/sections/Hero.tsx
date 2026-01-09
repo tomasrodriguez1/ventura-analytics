@@ -16,7 +16,7 @@ export default function Hero() {
         </p>
         
         <div className="flex flex-wrap gap-4">
-          <AiCtaButton href={LINKS.aiConsultant} variant="hero">
+          <AiCtaButton href={LINKS.aiConsultant} variant="hero" betaLabel="Beta">
             Habla con el Consultor IA
           </AiCtaButton>
           
