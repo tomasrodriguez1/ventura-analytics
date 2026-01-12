@@ -6,13 +6,14 @@ import DOMPurify from 'dompurify'
 import { sendChatMessage, ApiError, getErrorMapping } from '@/lib/api'
 import { getLeadContext } from '@/lib/zalantosSession'
 import type { Message, AiChatWidgetProps, RetryMessageData } from '@/types'
+import ChatEmptyState from './ChatEmptyState'
 
 // Constantes
 const STORAGE_KEYS = {
   HISTORY: 'zalantos_ai_chat_history'
 }
 
-export default function AiChatWidget({ isReady, onRegistrationRequired }: AiChatWidgetProps) {
+export default function AiChatWidget({ isReady, onRegistrationRequired, onExampleClick }: AiChatWidgetProps) {
   // Estado del chat
   const [messages, setMessages] = useState<Message[]>([])
   const [inputMessage, setInputMessage] = useState('')
@@ -29,6 +30,16 @@ export default function AiChatWidget({ isReady, onRegistrationRequired }: AiChat
   const inputRef = useRef<HTMLTextAreaElement>(null)
   const didHydrateRef = useRef(false)
   const previousMessageCountRef = useRef(0)
+
+  // Efecto para llenar el input cuando se recibe un ejemplo desde el parent
+  useEffect(() => {
+    if (onExampleClick && isReady) {
+      setInputMessage(onExampleClick)
+      if (inputRef.current) {
+        inputRef.current.focus()
+      }
+    }
+  }, [onExampleClick, isReady])
 
   // Efecto para los mensajes de carga
   useEffect(() => {
@@ -282,6 +293,16 @@ export default function AiChatWidget({ isReady, onRegistrationRequired }: AiChat
     })
   }
 
+  // Manejar clic en sugerencia o ejemplo
+  const handleSuggestionClick = (text: string) => {
+    if (!isReady || isLoading) return
+    setInputMessage(text)
+    // Hacer foco en el input para que el usuario pueda editar o enviar
+    if (inputRef.current) {
+      inputRef.current.focus()
+    }
+  }
+
   // Resetear chat
   const handleResetChat = () => {
     if (confirm('¿Estás seguro de que deseas resetear el chat? Se borrará todo el historial.')) {
@@ -349,24 +370,15 @@ export default function AiChatWidget({ isReady, onRegistrationRequired }: AiChat
 
   return (
     <div className="flex flex-col h-full">
-      <div className="mb-3 flex items-center gap-2 text-xs uppercase tracking-wide text-gray-500">
-        <span>Consultor AI</span>
-        <span className="rounded-full bg-violet-100 px-2 py-0.5 font-semibold text-[10px] text-violet-700">
-          Beta
-        </span>
-      </div>
       {/* Banner de rate limiting */}
       {rateLimitedUntil && rateLimitCountdown > 0 && (
-        <div className="mb-4 p-4 bg-yellow-50 border border-yellow-300 rounded-lg flex items-center gap-3">
-          <svg className="w-5 h-5 text-yellow-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div className="mb-3 p-3 bg-yellow-50 border border-yellow-300 rounded-lg flex items-center gap-2">
+          <svg className="w-4 h-4 text-yellow-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
           <div className="flex-1">
-            <p className="text-sm font-medium text-yellow-800">
-              Demasiados mensajes
-            </p>
-            <p className="text-xs text-yellow-700">
-              Podrás enviar mensajes nuevamente en {rateLimitCountdown} segundos
+            <p className="text-xs font-medium text-yellow-800">
+              Demasiados mensajes. Podrás enviar nuevamente en {rateLimitCountdown}s
             </p>
           </div>
         </div>
@@ -374,126 +386,110 @@ export default function AiChatWidget({ isReady, onRegistrationRequired }: AiChat
 
       {/* Banner de errores graves */}
       {bannerError && (
-        <div className="mb-4 p-4 bg-red-50 border border-red-300 rounded-lg flex items-center gap-3">
-          <svg className="w-5 h-5 text-red-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div className="mb-3 p-3 bg-red-50 border border-red-300 rounded-lg flex items-center gap-2">
+          <svg className="w-4 h-4 text-red-600 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
           </svg>
           <div className="flex-1">
-            <p className="text-sm text-red-800">{bannerError}</p>
+            <p className="text-xs text-red-800">{bannerError}</p>
           </div>
           <button
             onClick={() => setBannerError(null)}
             className="text-red-600 hover:text-red-800"
           >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
         </div>
       )}
 
-      {/* Instrucciones */}
-      {messages.length === 0 && (
-        <div className="mb-6 p-4 bg-white rounded-xl border border-gray-200">
-          <h3 className="text-base font-semibold text-[#0B2A3C] mb-3">
-            ¿Cómo puedo ayudarte?
-          </h3>
-          <ul className="space-y-2 text-sm text-[#6F7A83]">
-            <li className="flex items-start gap-2">
-              <span className="text-violet-500 mt-0.5">•</span>
-              <span>Consulta sobre servicios de análisis de datos</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-violet-500 mt-0.5">•</span>
-              <span>Información sobre implementación de IA</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-violet-500 mt-0.5">•</span>
-              <span>Preguntas sobre casos de uso específicos</span>
-            </li>
-          </ul>
-        </div>
-      )}
-
-      {/* Panel de chat */}
-      <div 
+      {/* Panel de chat con scroll */}
+      <div
         ref={chatContainerRef}
-        className="flex-1 overflow-y-auto mb-4 bg-white rounded-xl border border-gray-200 p-4 min-h-[400px] max-h-[600px]"
+        className="flex-1 overflow-y-auto mb-3 bg-gray-50 rounded-xl p-3"
       >
-        {messages.map(renderMessage)}
-        
-        {/* Loading state */}
-        {isLoading && (
-          <div className="flex justify-start mb-4">
-            <div className="bg-gray-100 border border-gray-200 rounded-2xl px-4 py-3">
-              <div className="flex items-center gap-2">
-                <div className="flex gap-1">
-                  <span className="w-2 h-2 bg-violet-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></span>
-                  <span className="w-2 h-2 bg-violet-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></span>
-                  <span className="w-2 h-2 bg-violet-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></span>
+        {messages.length === 0 ? (
+          <ChatEmptyState onSuggestionClick={handleSuggestionClick} />
+        ) : (
+          <>
+            {messages.map(renderMessage)}
+            
+            {/* Loading state */}
+            {isLoading && (
+              <div className="flex justify-start mb-4">
+                <div className="bg-gray-100 border border-gray-200 rounded-2xl px-4 py-3">
+                  <div className="flex items-center gap-2">
+                    <div className="flex gap-1">
+                      <span className="w-2 h-2 bg-violet-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></span>
+                      <span className="w-2 h-2 bg-violet-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></span>
+                      <span className="w-2 h-2 bg-violet-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></span>
+                    </div>
+                    <span className="text-sm text-gray-600 animate-pulse">{loadingMessage}...</span>
+                  </div>
                 </div>
-                <span className="text-sm text-gray-600 animate-pulse">{loadingMessage}...</span>
               </div>
-            </div>
-          </div>
+            )}
+          </>
         )}
-        
       </div>
 
-      {/* Error */}
+      {/* Error inline */}
       {error && (
-        <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
-          <p className="text-sm text-red-800">{error}</p>
+        <div className="mb-3 p-2 bg-red-50 border border-red-200 rounded-lg">
+          <p className="text-xs text-red-800">{error}</p>
         </div>
       )}
 
-      {/* Input */}
-      <form onSubmit={handleSendMessage} className="flex gap-2">
-        <textarea
-          ref={inputRef}
-          value={inputMessage}
-          onChange={(e) => setInputMessage(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' && !e.shiftKey) {
-              e.preventDefault()
-              handleSendMessage(e)
+      {/* Input sticky abajo */}
+      <div className="flex-shrink-0">
+        <form onSubmit={handleSendMessage} className="flex gap-2">
+          <textarea
+            ref={inputRef}
+            value={inputMessage}
+            onChange={(e) => setInputMessage(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault()
+                handleSendMessage(e)
+              }
+            }}
+            disabled={!isReady || isLoading || (rateLimitedUntil !== null && Date.now() < rateLimitedUntil)}
+            placeholder={
+              rateLimitedUntil && Date.now() < rateLimitedUntil
+                ? `Espera ${rateLimitCountdown}s...`
+                : isReady
+                ? "Escribe tu mensaje..."
+                : "Completa el registro para comenzar"
             }
-          }}
-          disabled={!isReady || isLoading || (rateLimitedUntil !== null && Date.now() < rateLimitedUntil)}
-          placeholder={
-            rateLimitedUntil && Date.now() < rateLimitedUntil
-              ? `Espera ${rateLimitCountdown}s...`
-              : isReady
-              ? "Escribe tu mensaje..."
-              : "Completa el registro para comenzar"
-          }
-          className="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent resize-none disabled:bg-gray-100 disabled:cursor-not-allowed"
-          rows={2}
-          maxLength={1200}
-        />
-        <button
-          type="submit"
-          disabled={
-            !isReady ||
-            !inputMessage.trim() ||
-            isLoading ||
-            (rateLimitedUntil !== null && Date.now() < rateLimitedUntil)
-          }
-          className="px-6 py-3 bg-gradient-to-r from-cyan-500 to-violet-500 text-white rounded-lg font-medium hover:shadow-lg hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
-        >
-          {rateLimitedUntil && Date.now() < rateLimitedUntil ? `${rateLimitCountdown}s` : 'Enviar'}
-        </button>
-      </form>
+            className="flex-1 px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent resize-none disabled:bg-gray-100 disabled:cursor-not-allowed text-sm"
+            rows={2}
+            maxLength={1200}
+          />
+          <button
+            type="submit"
+            disabled={
+              !isReady ||
+              !inputMessage.trim() ||
+              isLoading ||
+              (rateLimitedUntil !== null && Date.now() < rateLimitedUntil)
+            }
+            className="px-5 py-3 bg-gradient-to-r from-cyan-500 to-violet-500 text-white rounded-xl font-medium hover:shadow-lg hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex-shrink-0 text-sm"
+          >
+            {rateLimitedUntil && Date.now() < rateLimitedUntil ? `${rateLimitCountdown}s` : 'Enviar'}
+          </button>
+        </form>
 
-      {/* Reset button */}
-      {messages.length > 0 && (
-        <button
-          onClick={handleResetChat}
-          className="mt-4 text-sm text-gray-600 hover:text-gray-800 underline"
-        >
-          Resetear chat
-        </button>
-      )}
+        {/* Reset button */}
+        {messages.length > 0 && (
+          <button
+            onClick={handleResetChat}
+            className="mt-2 text-xs text-gray-500 hover:text-gray-700 underline"
+          >
+            Resetear chat
+          </button>
+        )}
+      </div>
     </div>
   )
 }

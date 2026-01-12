@@ -72,14 +72,8 @@ export default function Footer() {
               href="/privacy"
               className="text-gray-500 hover:text-[#2FBF71] transition-colors min-h-[44px] flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2FBF71] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B2A3C] rounded"
             >
-              Privacidad
+              Privacidas y términos
             </Link>
-            <a
-              href="#"
-              className="text-gray-500 hover:text-[#2FBF71] transition-colors min-h-[44px] flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2FBF71] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B2A3C] rounded"
-            >
-              Términos
-            </a>
           </div>
         </div>
       </div>

@@ -33,4 +33,5 @@ export interface RetryMessageData {
 export interface AiChatWidgetProps {
   isReady: boolean
   onRegistrationRequired: () => void
+  onExampleClick?: string | null
 }

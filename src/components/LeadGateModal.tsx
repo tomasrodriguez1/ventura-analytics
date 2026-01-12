@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { registerLead, ApiError, getErrorMapping } from '@/lib/api'
 import { getLeadContext } from '@/lib/zalantosSession'
 import Button from '@/components/ui/Button'
@@ -67,6 +68,7 @@ export default function LeadGateModal({ pageUrl, onReady }: LeadGateModalProps) 
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>(initialFieldErrors)
   const [generalError, setGeneralError] = useState<string | null>(null)
   const [isRegistered, setIsRegistered] = useState(false)
+  const router = useRouter()
 
   useEffect(() => {
     const context = getLeadContext()
@@ -165,6 +167,11 @@ export default function LeadGateModal({ pageUrl, onReady }: LeadGateModalProps) 
     }
   }
 
+  const handleClose = () => {
+    setIsVisible(false)
+    router.push('/')
+  }
+
   if (!isVisible && isRegistered) {
     return (
       <div className="fixed bottom-4 right-4 z-50 max-w-sm rounded-2xl border border-green-200 bg-white/90 shadow-2xl p-4">
@@ -185,7 +192,15 @@ export default function LeadGateModal({ pageUrl, onReady }: LeadGateModalProps) 
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-      <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 sm:p-8">
+      <div className="relative bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 sm:p-8">
+        <button
+          type="button"
+          onClick={handleClose}
+          aria-label="Cerrar registro y volver al inicio de Zalantos"
+          className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full border border-gray-200 bg-white text-2xl font-light text-gray-500 hover:border-gray-300 hover:text-gray-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-violet-500"
+        >
+          ×
+        </button>
         <div className="text-center mb-6">
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-cyan-100 to-violet-100 rounded-full mb-4">
             <svg

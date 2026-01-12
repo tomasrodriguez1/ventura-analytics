@@ -69,23 +69,60 @@ export default function Navbar() {
               </Link>
             </div>
 
-            {/* Botón Consultor IA */}
-            <AiCtaButton 
-              href={LINKS.aiConsultant} 
-              variant="navbar"
-              betaLabel="Beta"
-            >
-              Consultor IA
-            </AiCtaButton>
+            {/* CTA con versión responsive */}
+            <div className="flex flex-wrap items-center gap-2 sm:gap-3 justify-end w-full sm:w-auto">
+              <AiCtaButton 
+                href={LINKS.aiConsultant} 
+                variant="navbar"
+                betaLabel="Beta"
+                className="hidden sm:inline-flex"
+              >
+                Consultor IA
+              </AiCtaButton>
 
-            {/* CTA Pill Verde */}
-            <Link
-              href={LINKS.contact}
-              className="btn-secondary text-xs sm:text-sm px-3 sm:px-4 lg:px-6 py-2.5 whitespace-nowrap flex-shrink-0"
-              aria-label="Ir a página de contacto"
-            >
-              Contacto
-            </Link>
+              <AiCtaButton
+                href={LINKS.aiConsultant}
+                variant="navbar"
+                iconOnly
+                className="sm:hidden"
+              >
+                Consultor IA
+              </AiCtaButton>
+
+              <Link
+                href={LINKS.contact}
+                className="btn-secondary hidden sm:inline-flex text-xs sm:text-sm px-3 sm:px-4 lg:px-6 py-2.5 whitespace-nowrap"
+                aria-label="Ir a página de contacto"
+              >
+                Contacto
+              </Link>
+
+              <Link
+                href={LINKS.contact}
+                className="sm:hidden inline-flex w-14 h-14 rounded-full bg-gradient-to-br from-[#2FBF71] to-[#1C9F5C] shadow-lg items-center justify-center text-white border border-[#17a359]/40"
+                aria-label="Ir a página de contacto"
+              >
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={2.2}
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M3 8.5A4.5 4.5 0 017.5 4h9A4.5 4.5 0 0121 8.5v6a4.5 4.5 0 01-4.5 4.5H9.5L5 22v-3.5A4.5 4.5 0 013 8.5zM7.5 7.25h9"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M9 11.5h6"
+                  />
+                </svg>
+              </Link>
+            </div>
           </div>
         </div>
       </div>
