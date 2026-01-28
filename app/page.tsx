@@ -10,7 +10,7 @@ import Process from '@/components/sections/Process'
 import Clients from '@/components/sections/Clients'
 import UseCases from '@/components/sections/UseCases'
 import CTAFinal from '@/components/sections/CTAFinal'
-import AboutSection from '@/components/sections/AboutSection'
+// import AboutSection from '@/components/sections/AboutSection' // DESACTIVADO: Página about desactivada temporalmente
 import ContactSection from '@/components/sections/ContactSection'
 
 function PageContent() {
@@ -18,7 +18,7 @@ function PageContent() {
   // En export estático, los searchParams del servidor no están disponibles
   const searchParams = useSearchParams()
   const sectionParam = searchParams.get('section')
-  const section = sectionParam && ['home', 'about', 'contact'].includes(sectionParam)
+  const section = sectionParam && ['home', 'contact'].includes(sectionParam) // 'about' removido temporalmente
     ? sectionParam
     : 'home'
 
@@ -38,7 +38,7 @@ function PageContent() {
             <CTAFinal />
           </>
         )}
-        {section === 'about' && <AboutSection />}
+        {/* {section === 'about' && <AboutSection />} DESACTIVADO: Página about desactivada temporalmente */}
         {section === 'contact' && <ContactSection />}
       </main>
       <Footer />

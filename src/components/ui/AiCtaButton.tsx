@@ -24,24 +24,24 @@ export default function AiCtaButton({
   // Estilos específicos por variante
   const variantClasses = {
     navbar: 'text-xs sm:text-sm px-3 sm:px-4 lg:px-5 py-2.5 whitespace-nowrap',
-    hero: 'text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-4'
+    hero: 'text-base sm:text-lg md:text-xl px-6 sm:px-8 py-3 sm:py-4'
   }
   
   const iconOnlyClasses = iconOnly ? 'w-12 h-12 px-0 py-0 rounded-full justify-center text-center' : ''
   
-  // Estilos AI con gradiente y glow effect
+  // Estilos AI con color verde Zalantos
   const aiStyles = `
-    bg-gradient-to-r from-cyan-500 via-violet-500 to-fuchsia-500
+    bg-[#2FBF71]
     text-white
-    shadow-lg shadow-violet-500/30
-    hover:shadow-xl hover:shadow-violet-500/50
+    shadow-lg shadow-[#2FBF71]/30
+    hover:shadow-xl hover:shadow-[#2FBF71]/50
     hover:scale-105
     active:scale-100
-    focus-visible:ring-violet-500
+    focus-visible:ring-[#2FBF71]
     relative
     overflow-hidden
     before:absolute before:inset-0
-    before:bg-gradient-to-r before:from-cyan-400 before:via-violet-400 before:to-fuchsia-400
+    before:bg-[#26a662]
     before:opacity-0 before:transition-opacity before:duration-300
     hover:before:opacity-30
   `
@@ -54,7 +54,7 @@ export default function AiCtaButton({
     >
       {/* Icono de IA / Sparkles */}
       <svg
-        className="w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0"
+        className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0"
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"

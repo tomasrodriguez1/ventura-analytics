@@ -328,7 +328,7 @@ export default function AiChatWidget({ isReady, onRegistrationRequired, onExampl
               isUser
                 ? hasFailed
                   ? 'bg-red-100 border border-red-300 text-gray-800'
-                  : 'bg-gradient-to-r from-cyan-500 to-violet-500 text-white'
+                  : 'bg-[#2FBF71] text-white'
                 : 'bg-gray-100 text-gray-800 border border-gray-200'
             }`}
           >
@@ -354,7 +354,7 @@ export default function AiChatWidget({ isReady, onRegistrationRequired, onExampl
           {hasFailed && message.originalPayload && (
             <button
               onClick={() => handleRetryMessage(message.id, message.originalPayload!)}
-              className="mt-2 text-xs text-violet-600 hover:text-violet-700 underline flex items-center gap-1"
+              className="mt-2 text-xs text-[#2FBF71] hover:text-[#26a662] underline flex items-center gap-1"
               disabled={isLoading}
             >
               <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -421,9 +421,9 @@ export default function AiChatWidget({ isReady, onRegistrationRequired, onExampl
                 <div className="bg-gray-100 border border-gray-200 rounded-2xl px-4 py-3">
                   <div className="flex items-center gap-2">
                     <div className="flex gap-1">
-                      <span className="w-2 h-2 bg-violet-500 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></span>
-                      <span className="w-2 h-2 bg-violet-500 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></span>
-                      <span className="w-2 h-2 bg-violet-500 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></span>
+                      <span className="w-2 h-2 bg-[#2FBF71] rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></span>
+                      <span className="w-2 h-2 bg-[#2FBF71] rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></span>
+                      <span className="w-2 h-2 bg-[#2FBF71] rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></span>
                     </div>
                     <span className="text-sm text-gray-600 animate-pulse">{loadingMessage}...</span>
                   </div>
@@ -462,7 +462,7 @@ export default function AiChatWidget({ isReady, onRegistrationRequired, onExampl
                 ? "Escribe tu mensaje..."
                 : "Completa el registro para comenzar"
             }
-            className="flex-1 px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent resize-none disabled:bg-gray-100 disabled:cursor-not-allowed text-sm"
+            className="flex-1 px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#2FBF71] focus:border-transparent resize-none disabled:bg-gray-100 disabled:cursor-not-allowed text-sm"
             rows={2}
             maxLength={1200}
           />
@@ -474,7 +474,7 @@ export default function AiChatWidget({ isReady, onRegistrationRequired, onExampl
               isLoading ||
               (rateLimitedUntil !== null && Date.now() < rateLimitedUntil)
             }
-            className="px-5 py-3 bg-gradient-to-r from-cyan-500 to-violet-500 text-white rounded-xl font-medium hover:shadow-lg hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex-shrink-0 text-sm"
+            className="px-5 py-3 bg-[#2FBF71] text-white rounded-xl font-medium hover:shadow-lg hover:scale-105 transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex-shrink-0 text-sm"
           >
             {rateLimitedUntil && Date.now() < rateLimitedUntil ? `${rateLimitCountdown}s` : 'Enviar'}
           </button>

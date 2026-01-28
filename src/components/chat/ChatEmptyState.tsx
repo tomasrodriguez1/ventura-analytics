@@ -18,9 +18,9 @@ export default function ChatEmptyState({ onSuggestionClick }: ChatEmptyStateProp
       <div className="max-w-md mx-auto text-center space-y-3 px-4">
         {/* Icono decorativo más pequeño */}
         <div className="flex justify-center">
-          <div className="w-12 h-12 rounded-full bg-gradient-to-r from-cyan-100 to-violet-100 flex items-center justify-center">
+          <div className="w-12 h-12 rounded-full bg-[#2FBF71]/20 flex items-center justify-center">
             <svg
-              className="w-6 h-6 text-violet-600"
+              className="w-6 h-6 text-[#2FBF71]"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -51,7 +51,7 @@ export default function ChatEmptyState({ onSuggestionClick }: ChatEmptyStateProp
             <button
               key={idx}
               onClick={() => onSuggestionClick(suggestion)}
-              className="text-xs px-3 py-1 bg-white hover:bg-gradient-to-r hover:from-cyan-50 hover:to-violet-50 border border-gray-200 hover:border-violet-300 rounded-full text-[#0B2A3C] transition-all hover:shadow-md hover:scale-105"
+              className="text-xs px-3 py-1 bg-white hover:bg-[#2FBF71]/10 border border-gray-200 hover:border-[#2FBF71]/50 rounded-full text-[#0B2A3C] transition-all hover:shadow-md hover:scale-105"
             >
               {suggestion}
             </button>

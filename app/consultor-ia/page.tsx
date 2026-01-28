@@ -48,9 +48,9 @@ export default function ConsultorIAPage() {
       <main className="flex-1 w-full px-4 sm:px-6 md:px-8 lg:px-12 py-6 md:py-10">
         {/* Header de la página */}
         <div className="max-w-[1200px] mx-auto mb-6 md:mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-2 bg-gradient-to-r from-cyan-100 to-violet-100 rounded-full w-fit mb-4">
+          <div className="inline-flex items-center gap-2 px-3 py-2 bg-[#2FBF71]/20 rounded-full w-fit mb-4">
             <svg
-              className="w-5 h-5 text-violet-600"
+              className="w-5 h-5 text-[#2FBF71]"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -63,7 +63,7 @@ export default function ConsultorIAPage() {
                 d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"
               />
             </svg>
-            <span className="text-xs font-semibold uppercase tracking-wide text-violet-900">
+            <span className="text-xs font-semibold uppercase tracking-wide text-[#0B2A3C]">
               Consultor IA · beta
             </span>
           </div>

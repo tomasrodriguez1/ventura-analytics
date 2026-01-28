@@ -25,7 +25,7 @@ export default function OnboardingPanel({ onExampleClick }: OnboardingPanelProps
         <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
           <h3 className="text-lg font-bold text-[#0B2A3C] mb-4 flex items-center gap-2">
           <svg 
-            className="w-5 h-5 text-violet-600" 
+            className="w-5 h-5 text-[#2FBF71]" 
             fill="none" 
             stroke="currentColor" 
             viewBox="0 0 24 24"
@@ -41,7 +41,7 @@ export default function OnboardingPanel({ onExampleClick }: OnboardingPanelProps
         </h3>
         <ul className="space-y-3">
           <li className="flex items-start gap-3">
-            <div className="flex-shrink-0 w-6 h-6 rounded-full bg-gradient-to-r from-cyan-500 to-violet-500 flex items-center justify-center text-white text-xs font-bold">
+            <div className="flex-shrink-0 w-6 h-6 rounded-full bg-[#2FBF71] flex items-center justify-center text-white text-xs font-bold">
               1
             </div>
             <div className="flex-1 text-sm text-[#6F7A83]">
@@ -49,7 +49,7 @@ export default function OnboardingPanel({ onExampleClick }: OnboardingPanelProps
             </div>
           </li>
           <li className="flex items-start gap-3">
-            <div className="flex-shrink-0 w-6 h-6 rounded-full bg-gradient-to-r from-cyan-500 to-violet-500 flex items-center justify-center text-white text-xs font-bold">
+            <div className="flex-shrink-0 w-6 h-6 rounded-full bg-[#2FBF71] flex items-center justify-center text-white text-xs font-bold">
               2
             </div>
             <div className="flex-1 text-sm text-[#6F7A83]">
@@ -57,7 +57,7 @@ export default function OnboardingPanel({ onExampleClick }: OnboardingPanelProps
             </div>
           </li>
           <li className="flex items-start gap-3">
-            <div className="flex-shrink-0 w-6 h-6 rounded-full bg-gradient-to-r from-cyan-500 to-violet-500 flex items-center justify-center text-white text-xs font-bold">
+            <div className="flex-shrink-0 w-6 h-6 rounded-full bg-[#2FBF71] flex items-center justify-center text-white text-xs font-bold">
               3
             </div>
             <div className="flex-1 text-sm text-[#6F7A83]">
@@ -71,7 +71,7 @@ export default function OnboardingPanel({ onExampleClick }: OnboardingPanelProps
         <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
           <h3 className="text-lg font-bold text-[#0B2A3C] mb-4 flex items-center gap-2">
           <svg 
-            className="w-5 h-5 text-violet-600" 
+            className="w-5 h-5 text-[#2FBF71]" 
             fill="none" 
             stroke="currentColor" 
             viewBox="0 0 24 24"
@@ -93,7 +93,7 @@ export default function OnboardingPanel({ onExampleClick }: OnboardingPanelProps
             <button
               key={idx}
               onClick={() => onExampleClick(question)}
-              className="text-left text-xs sm:text-sm px-3 py-2 bg-gradient-to-r from-cyan-50 to-violet-50 hover:from-cyan-100 hover:to-violet-100 border border-violet-200 rounded-lg text-[#0B2A3C] transition-all hover:shadow-md hover:scale-[1.02]"
+              className="text-left text-xs sm:text-sm px-3 py-2 bg-[#2FBF71]/10 hover:bg-[#2FBF71]/20 border border-[#2FBF71]/30 rounded-lg text-[#0B2A3C] transition-all hover:shadow-md hover:scale-[1.02]"
             >
               {question}
             </button>
@@ -103,10 +103,10 @@ export default function OnboardingPanel({ onExampleClick }: OnboardingPanelProps
       </div>
 
       {/* Privacidad */}
-      <div className="bg-gradient-to-r from-cyan-50 to-violet-50 rounded-2xl border border-violet-200 p-4 flex-shrink-0 mt-auto">
+      <div className="bg-[#2FBF71]/10 rounded-2xl border border-[#2FBF71]/30 p-4 flex-shrink-0 mt-auto">
         <div className="flex items-start gap-3">
           <svg 
-            className="w-5 h-5 text-violet-600 flex-shrink-0 mt-0.5" 
+            className="w-5 h-5 text-[#2FBF71] flex-shrink-0 mt-0.5" 
             fill="none" 
             stroke="currentColor" 
             viewBox="0 0 24 24"
@@ -126,7 +126,7 @@ export default function OnboardingPanel({ onExampleClick }: OnboardingPanelProps
               No compartimos información con terceros.{' '}
               <Link 
                 href="/privacy" 
-                className="text-violet-600 hover:text-violet-700 underline font-medium"
+                className="text-[#2FBF71] hover:text-[#26a662] underline font-medium"
               >
                 Ver política de privacidad
               </Link>

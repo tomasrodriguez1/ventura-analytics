@@ -29,14 +29,15 @@ export default function Footer() {
                   Inicio
                 </Link>
               </li>
-              <li>
+              {/* DESACTIVADO: Página about desactivada temporalmente */}
+              {/* <li>
                 <Link 
                   href="/?section=about" 
                   className="text-gray-400 hover:text-[#2FBF71] transition-colors text-sm inline-block min-h-[44px] flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2FBF71] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B2A3C] rounded"
                 >
                   Nosotros
                 </Link>
-              </li>
+              </li> */}
               <li>
                 <Link 
                   href="/?section=contact" 

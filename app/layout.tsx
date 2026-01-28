@@ -20,10 +20,10 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: {
-    default: 'zalantos - Convertimos datos en decisiones',
+    default: 'zalantos.com',
     template: '%s | zalantos'
   },
-  description: 'Ayudamos a líderes ejecutivos a transformar la complejidad de la información en rentabilidad medible mediante Inteligencia Artificial gobernada y estructuras de datos escalables',
+  description: 'Ayudamos a visibilizar la información para mejorar la toma de decisiones, monitorear la gestión del negocio y aumentar el crecimiento.',
   icons: {
     icon: '/icon.png',
     shortcut: '/icon.png',
@@ -33,8 +33,8 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'es_ES',
     siteName: 'zalantos',
-    title: 'zalantos - Convertimos datos en decisiones',
-    description: 'Ayudamos a líderes ejecutivos a transformar datos en rentabilidad medible mediante IA gobernada',
+    title: 'zalantos.com',
+    description: 'En zalantos te ayudamos a visibilizar la información para mejorar la toma de decisiones, monitorear la gestión del negocio y aumentar el crecimiento.',
     images: [
       {
         url: '/icon.png',
@@ -46,8 +46,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'zalantos - Convertimos datos en decisiones',
-    description: 'Transformamos datos en rentabilidad medible mediante IA gobernada',
+    title: 'zalantos.com',
+    description: 'En zalantos te ayudamos a visibilizar la información para mejorar la toma de decisiones, monitorear la gestión del negocio y aumentar el crecimiento.',
     images: ['/icon.png'],
   },
   robots: { 

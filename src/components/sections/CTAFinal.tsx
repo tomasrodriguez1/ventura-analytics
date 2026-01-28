@@ -7,7 +7,7 @@ export default function CTAFinal() {
     <Section variant="dark">
       <div className="text-center">
         <h2 className="font-[family-name:var(--font-inter)] text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 px-4">
-          ¿Listo para transformar sus datos en decisiones?
+          ¿Listo para transformar tus datos en decisiones?
         </h2>
         <p className="text-lg sm:text-xl md:text-2xl text-gray-300 mb-8 md:mb-12 max-w-[800px] mx-auto px-4">
           Hable con un experto y descubra cómo zalantos puede generar ROI medible en su organización

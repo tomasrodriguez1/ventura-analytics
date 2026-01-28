@@ -120,7 +120,7 @@ body {
 
   /* === BOTONES FULL-BLEED STYLE === */
   .btn-primary {
-    @apply bg-[#0B2A3C] hover:bg-[#0B2A3C]/90 text-white font-semibold px-8 py-3.5 rounded-[var(--radius-lg)] transition-all duration-150 inline-flex items-center justify-center gap-2 min-h-[44px] min-w-[44px] touch-manipulation;
+    @apply bg-[#0B2A3C] hover:bg-[#0B2A3C]/90 hover:scale-105 active:scale-100 shadow-lg shadow-[#0B2A3C]/30 hover:shadow-xl hover:shadow-[#0B2A3C]/50 text-white font-semibold px-8 py-4 rounded-[var(--radius-lg)] transition-all duration-300 inline-flex items-center justify-center gap-2 min-h-[52px] min-w-[44px] touch-manipulation;
   }
   
   .btn-primary:focus-visible {

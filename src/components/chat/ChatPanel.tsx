@@ -15,10 +15,10 @@ export default function ChatPanel({ isReady, onRegistrationRequired, exampleToFi
       style={{ minHeight: '70vh', maxHeight: '85vh' }}
     >
       {/* Header del chat */}
-      <div className="flex-shrink-0 px-6 py-4 border-b border-gray-200 bg-gradient-to-r from-cyan-50 to-violet-50">
+      <div className="flex-shrink-0 px-6 py-4 border-b border-gray-200 bg-[#2FBF71]/10">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-r from-cyan-500 to-violet-500 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-full bg-[#2FBF71] flex items-center justify-center">
               <svg
                 className="w-6 h-6 text-white"
                 fill="none"
@@ -38,7 +38,7 @@ export default function ChatPanel({ isReady, onRegistrationRequired, exampleToFi
               <p className="text-xs text-[#6F7A83]">Respuestas en tiempo real</p>
             </div>
           </div>
-          <span className="rounded-full bg-violet-100 px-3 py-1 text-xs font-semibold text-violet-700">
+          <span className="rounded-full bg-[#2FBF71]/20 px-3 py-1 text-xs font-semibold text-[#2FBF71]">
             Beta
           </span>
         </div>

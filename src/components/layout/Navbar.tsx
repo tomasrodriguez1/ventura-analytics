@@ -47,14 +47,13 @@ export default function Navbar() {
                 <span className="hidden lg:block">Inicio</span>
               </Link>
               
-              {/* Link Nosotros */}
-              <Link
+              {/* Link Nosotros - DESACTIVADO: Página about desactivada temporalmente */}
+              {/* <Link
                 href={LINKS.about}
                 className={`text-sm font-medium transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0B2A3C] focus-visible:ring-offset-2 rounded px-1.5 sm:px-2 lg:px-0 flex-shrink-0 ${currentSection === 'about' ? 'text-[#0B2A3C]' : 'text-[#6F7A83] hover:text-[#0B2A3C]'}`}
                 aria-current={currentSection === 'about' ? 'page' : undefined}
                 aria-label="Nosotros"
               >
-                {/* Icono personas - visible hasta 1024px, oculto en desktop grande */}
                 <svg 
                   className="w-5 h-5 block lg:hidden flex-shrink-0" 
                   fill="none" 
@@ -64,9 +63,8 @@ export default function Navbar() {
                 >
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
-                {/* Texto - oculto hasta 1024px, visible en desktop grande */}
                 <span className="hidden lg:block">Nosotros</span>
-              </Link>
+              </Link> */}
             </div>
 
             {/* CTA con versión responsive */}
@@ -91,7 +89,7 @@ export default function Navbar() {
 
               <Link
                 href={LINKS.contact}
-                className="btn-secondary hidden sm:inline-flex text-xs sm:text-sm px-3 sm:px-4 lg:px-6 py-2.5 whitespace-nowrap"
+                className="btn-primary hidden sm:inline-flex text-xs sm:text-sm px-3 sm:px-4 lg:px-6 py-2.5 whitespace-nowrap"
                 aria-label="Ir a página de contacto"
               >
                 Contacto
