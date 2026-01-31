@@ -7,10 +7,10 @@ export default function CTAFinal() {
     <Section variant="dark">
       <div className="text-center">
         <h2 className="font-[family-name:var(--font-inter)] text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 px-4">
-          ¿Listo para transformar tus datos en decisiones?
+          ¿La falta de información te limita avanzar?
         </h2>
         <p className="text-lg sm:text-xl md:text-2xl text-gray-300 mb-8 md:mb-12 max-w-[800px] mx-auto px-4">
-          Hable con un experto y descubra cómo zalantos puede generar ROI medible en su organización
+          Agenda 45 minutos para iniciar diagnóstico y entender tu negocio; detectamos quick wins y definimos los próximos pasos contigo.
         </p>
         
         <LinkButton
@@ -18,14 +18,14 @@ export default function CTAFinal() {
           variant="secondary"
           className="text-base sm:text-lg py-4 px-8 sm:px-12"
         >
-          Solicitar consultoría gratuita
+          Agendar sesión de diagnóstico
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
           </svg>
         </LinkButton>
         
         <p className="text-gray-400 text-xs sm:text-sm mt-6 px-4">
-          Sin compromisos • Soporte en español • Servicio personalizado
+          Sin costo ni compromiso • Respuesta en menos de 24h • Equipo en español o ingles
         </p>
       </div>
     </Section>

@@ -97,27 +97,23 @@ export default function Navbar() {
 
               <Link
                 href={LINKS.contact}
-                className="sm:hidden inline-flex w-14 h-14 rounded-full bg-gradient-to-br from-[#2FBF71] to-[#1C9F5C] shadow-lg items-center justify-center text-white border border-[#17a359]/40"
+                className="sm:hidden inline-flex w-14 h-14 rounded-full bg-[#0B2A3C] shadow-lg items-center justify-center text-white border border-[#0B2A3C]/25"
                 aria-label="Ir a página de contacto"
               >
                 <svg
-                  className="w-6 h-6"
+                  className="w-7 h-7"
+                  viewBox="0 0 64 64"
                   fill="none"
                   stroke="currentColor"
-                  strokeWidth={2.2}
-                  viewBox="0 0 24 24"
+                  strokeWidth={3}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                   aria-hidden="true"
+                  role="img"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M3 8.5A4.5 4.5 0 017.5 4h9A4.5 4.5 0 0121 8.5v6a4.5 4.5 0 01-4.5 4.5H9.5L5 22v-3.5A4.5 4.5 0 013 8.5zM7.5 7.25h9"
-                  />
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M9 11.5h6"
-                  />
+                  <circle cx="32" cy="32" r="28" />
+                  <path d="M16 24h32c2.2 0 4 1.8 4 4v14c0 2.2-1.8 4-4 4H16c-2.2 0-4-1.8-4-4V28c0-2.2 1.8-4 4-4z" />
+                  <path d="M12 26l20 12 20-12" />
                 </svg>
               </Link>
             </div>

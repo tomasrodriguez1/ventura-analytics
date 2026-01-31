@@ -23,7 +23,8 @@ export default function Pillars() {
             Sistemas de Gestión de Información
           </h3>
           <p className="text-[#6F7A83] leading-relaxed text-sm sm:text-base">
-            Organiza y centraliza tus datos para visualizar métricas clave en un solo lugar y tomar decisiones con información confiable.
+          Organiza tus datos para monitorear los <strong>indicadores clave</strong> de tu negocio desde un solo lugar y <strong>tomar decisiones estratégicas con información confiable.</strong> 
+
           </p>
         </Card>
 
@@ -35,7 +36,7 @@ export default function Pillars() {
             Automatización de Procesos
           </h3>
           <p className="text-[#6F7A83] leading-relaxed text-sm sm:text-base">
-            Ahorra tiempo automatizando reportes, flujos y tareas operativas, reduciendo la carga manual.
+            <strong>Ahorra tiempo</strong> mediante la automatización de actividades, flujos y tareas operativas, <strong>impulsando la productividad</strong> y la eficiencia de tu equipo.
           </p>
         </Card>
 
@@ -44,10 +45,10 @@ export default function Pillars() {
             <Image src="/images/ia.png" alt="Soluciones de IA" width={120} height={120} className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 object-contain" />
           </div>
           <h3 className="font-semibold text-lg sm:text-xl text-[#0B2A3C] mb-3">
-            Soluciones de IA
+            Soluciones de Inteligencia Artificial
           </h3>
           <p className="text-[#6F7A83] leading-relaxed text-sm sm:text-base">
-            Adopta IA para analizar datos, hacer proyecciones, encontrar oportunidades y optimizar procesos clave.
+          <strong>Adaptamos la IA a las necesidades de tu negocio</strong>, desde agentes que atienden consultas de clientes hasta herramientas que generan insights estratégicos, entre otras soluciones.
           </p>
         </Card>
       </div>
