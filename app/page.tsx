@@ -5,6 +5,7 @@ import { useSearchParams } from 'next/navigation'
 import Navbar from '@/components/layout/Navbar'
 import Footer from '@/components/layout/Footer'
 import Hero from '@/components/sections/Hero'
+import Sprint0Section from '@/components/sections/Sprint0Section'
 import Pillars from '@/components/sections/Pillars'
 import Process from '@/components/sections/Process'
 import Clients from '@/components/sections/Clients'
@@ -31,6 +32,7 @@ function PageContent() {
         {section === 'home' && (
           <>
             <Hero />
+            <Sprint0Section />
             <Pillars />
             <Process />
             <Clients />

@@ -19,12 +19,14 @@ export default function Pillars() {
           <div className="mb-6 flex justify-center">
             <Image src="/images/control_gestion.png" alt="Sistemas de Gestión de Información" width={120} height={120} className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 object-contain" />
           </div>
-          <h3 className="font-semibold text-lg sm:text-xl text-[#0B2A3C] mb-3">
+          <h3 className="font-semibold text-lg sm:text-xl text-[#0B2A3C] mb-1">
             Sistemas de Gestión de Información
           </h3>
+          <p className="text-sm sm:text-base font-semibold text-[#2FBF71] mb-3">
+            Datos y BI
+          </p>
           <p className="text-[#6F7A83] leading-relaxed text-sm sm:text-base">
-          Organiza tus datos para monitorear los <strong>indicadores clave</strong> de tu negocio desde un solo lugar y <strong>tomar decisiones estratégicas con información confiable.</strong> 
-
+            Dejamos atrás las planillas infinitas para darte <strong>tableros de control con datos consistentes</strong> y una <strong>fuente única de verdad</strong> para decidir sin depender de &quot;la persona que sabe&quot;.
           </p>
         </Card>
 
@@ -32,11 +34,14 @@ export default function Pillars() {
           <div className="mb-6 flex justify-center">
             <Image src="/images/automtizacion.png" alt="Automatización de Procesos" width={120} height={120} className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 object-contain" />
           </div>
-          <h3 className="font-semibold text-lg sm:text-xl text-[#0B2A3C] mb-3">
+          <h3 className="font-semibold text-lg sm:text-xl text-[#0B2A3C] mb-1">
             Automatización de Procesos
           </h3>
+          <p className="text-sm sm:text-base font-semibold text-[#2FBF71] mb-3">
+            Automatización (n8n + Integraciones)
+          </p>
           <p className="text-[#6F7A83] leading-relaxed text-sm sm:text-base">
-            <strong>Ahorra tiempo</strong> mediante la automatización de actividades, flujos y tareas operativas, <strong>impulsando la productividad</strong> y la eficiencia de tu equipo.
+            Conectamos tus sistemas aislados para <strong>eliminar la carga manual</strong> y reducir <strong>errores por traspasos</strong>, automatizando flujos operativos de punta a punta.
           </p>
         </Card>
 
@@ -44,11 +49,14 @@ export default function Pillars() {
           <div className="mb-6 flex justify-center">
             <Image src="/images/ia.png" alt="Soluciones de IA" width={120} height={120} className="w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 object-contain" />
           </div>
-          <h3 className="font-semibold text-lg sm:text-xl text-[#0B2A3C] mb-3">
+          <h3 className="font-semibold text-lg sm:text-xl text-[#0B2A3C] mb-1">
             Soluciones de Inteligencia Artificial
           </h3>
+          <p className="text-sm sm:text-base font-semibold text-[#2FBF71] mb-3">
+            IA aplicada
+          </p>
           <p className="text-[#6F7A83] leading-relaxed text-sm sm:text-base">
-          <strong>Adaptamos la IA a las necesidades de tu negocio</strong>, desde agentes que atienden consultas de clientes hasta herramientas que generan insights estratégicos, entre otras soluciones.
+            Aplicamos IA donde realmente aporta: <strong>asistentes internos</strong>, búsqueda en documentación (RAG) y automatizaciones inteligentes, con <strong>límites y control</strong> para evitar humo.
           </p>
         </Card>
       </div>

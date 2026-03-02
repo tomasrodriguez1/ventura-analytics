@@ -6,6 +6,7 @@ interface SectionProps {
   narrow?: boolean
   children: React.ReactNode
   className?: string
+  id?: string
 }
 
 export default function Section({ 
@@ -13,7 +14,8 @@ export default function Section({
   hero = false, 
   narrow = false, 
   children, 
-  className = '' 
+  className = '',
+  id,
 }: SectionProps) {
   const variantClasses = {
     white: 'bg-white',
@@ -25,7 +27,7 @@ export default function Section({
   const innerClass = narrow ? 'section-inner-narrow' : 'section-inner'
   
   return (
-    <section className={`${sectionClass} ${variantClasses[variant]} ${className}`}>
+    <section id={id} className={`${sectionClass} ${variantClasses[variant]} ${className}`}>
       <div className={innerClass}>
         {children}
       </div>

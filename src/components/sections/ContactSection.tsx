@@ -22,17 +22,18 @@ const CheckIcon = ({ className }: { className?: string }) => (
 // Copy centralizado de la sección
 const COPY = {
   hero: {
-    headline: 'Transforma tus Datos en Decisiones Rentables',
-    description: 'En 45 minutos analizamos tu situación actual y te mostramos oportunidades concretas para monetizar tus datos. Sin costo, sin compromiso.'
+    headline: 'Agenda tu Sprint 0 Gratuitamente',
+    description:
+      'Una sesión de 1 hora para entender tu contexto y tu problema. Te entregamos un diagnóstico resumido y una propuesta con las opciones más adecuadas para tu negocio. Sin costo, sin compromiso.'
   },
   benefits: [
-    'Diagnóstico de quick wins en tus datos actuales',
-    'Roadmap inicial con ROI estimado por iniciativa',
-    'Documento con próximos pasos y recomendaciones'
+    'Claridad sobre tu problema real y sus causas raíz',
+    'Opciones de solución concretas, alineadas a tu operación',
+    'Próximos pasos y roadmap sugerido, sin compromiso'
   ],
   trustNote: 'Respuesta en menos de 24 horas.',
   form: {
-    title: 'Solicita tu sesión',
+    title: 'Agenda tu Sprint 0',
     fields: {
       nombre: {
         label: 'Nombre completo',
@@ -52,7 +53,7 @@ const COPY = {
       }
     },
     button: {
-      idle: 'Solicitar sesión estratégica',
+      idle: 'Agendar Sprint 0 (gratis)',
       loading: 'Enviando solicitud...'
     },
     privacyNote: 'Tus datos son confidenciales. No compartimos información con terceros.'

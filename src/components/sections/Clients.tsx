@@ -1,136 +1,187 @@
 import Image from 'next/image'
 import Section from '../ui/Section'
-import Card from '../ui/Card'
+
+interface ClientStory {
+  name: string
+  logo: string
+  alt: string
+  accentColor: string
+  pain: string
+  solution: string
+  result: string
+}
+
+const featured: ClientStory = {
+  name: 'Colegio San Francisco de Machalí',
+  logo: '/images/icono_colegio.jpeg',
+  alt: 'Logo del Colegio San Francisco de Machalí',
+  accentColor: '#3FA9F5',
+  pain: 'El equipo docente y administrativo perdía horas buscando protocolos y normativas en carpetas dispersas. Riesgo alto de información desactualizada.',
+  solution: 'Agente IA (RAG) entrenado exclusivamente con la documentación oficial del colegio.',
+  result: 'Respuestas precisas en segundos. Se eliminó la incertidumbre operativa y se estandarizó el cumplimiento.',
+}
+
+const secondary: ClientStory[] = [
+  {
+    name: 'Cruz Verde',
+    logo: '/images/icono_cruz_verde.png',
+    alt: 'Logo de Cruz Verde',
+    accentColor: '#2FBF71',
+    pain: 'Falta de visibilidad sobre quiebres de stock y rotación.',
+    solution: 'Trazabilidad con alertas operativas automáticas.',
+    result: 'Decisiones comerciales más rápidas y control de sobrestock.',
+  },
+  {
+    name: 'Stem Inversiones',
+    logo: '/images/icono_stem.png',
+    alt: 'Logo de Stem Inversiones',
+    accentColor: '#3FA9F5',
+    pain: 'Dificultad para trazar gastos y gestionar clientes.',
+    solution: 'Plataforma de control financiero asistida por IA.',
+    result: 'Trazabilidad total y gestión proactiva de cartera.',
+  },
+  {
+    name: 'Cerro El Plomo',
+    logo: '/images/icono_cerro.png',
+    alt: 'Logo de Cerro El Plomo',
+    accentColor: '#2FBF71',
+    pain: 'Inventario opaco y datos difíciles de interpretar.',
+    solution: 'Agentes de IA que explican los insights del inventario.',
+    result: 'El equipo entiende el inventario en lenguaje natural.',
+  },
+]
 
 export default function Clients() {
   return (
     <Section variant="gray">
       <div className="text-center mb-12 md:mb-16">
         <h2 className="font-[family-name:var(--font-inter)] text-3xl sm:text-4xl md:text-5xl font-bold text-[#0B2A3C] mb-4 px-4">
-          Clientes con los que hemos trabajado
+          Resultados reales: Menos fricción, más control.
         </h2>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 max-w-[1200px] mx-auto">
-        {/* Cliente 1: Cruz Verde */}
-        <Card className="group hover:shadow-md transition-all duration-200">
-          <div className="flex flex-col sm:flex-row md:flex-row gap-4 sm:gap-6">
-            {/* Logo Cruz Verde */}
-            <Image 
-              src="/images/icono_cruz_verde.png"
-              alt="Logo de Cruz Verde"
-              width={96}
-              height={96}
-              className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 object-contain flex-shrink-0 mx-auto sm:mx-0"
-            />
-            
-            <div className="flex-1">
-              <h3 className="text-xl sm:text-2xl font-semibold text-[#0B2A3C] mb-3 group-hover:text-[#2FBF71] transition-colors">
-                Cruz Verde
-              </h3>
-              <ul className="space-y-3 mt-1 sm:mt-2" role="list">
-                <li className="flex items-start gap-3">
-                  <div className="w-1.5 h-1.5 rounded-full bg-[#2FBF71] mt-2 flex-shrink-0" aria-hidden="true"></div>
-                  <span className="text-[#6F7A83] leading-relaxed text-sm sm:text-base">Control y trazabilidad de inventario en tiempo real (quiebres, sobrestock y rotación).</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <div className="w-1.5 h-1.5 rounded-full bg-[#2FBF71] mt-2 flex-shrink-0" aria-hidden="true"></div>
-                  <span className="text-[#6F7A83] leading-relaxed text-sm sm:text-base">Alertas operativas y reportes accionables para decisiones comerciales más rápidas.</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </Card>
+      <div className="max-w-[1200px] mx-auto space-y-8">
+        {/* Featured card — estilo claro que se integra con la página */}
+        <div className="relative overflow-hidden rounded-2xl bg-white border border-[rgba(11,42,60,0.08)] p-8 md:p-12 shadow-[0_2px_8px_rgba(11,42,60,0.04)]">
+          {/* Borde acento lateral */}
+          <div
+            className="absolute left-0 top-0 bottom-0 w-1 rounded-l-2xl"
+            style={{ backgroundColor: featured.accentColor }}
+          />
 
-        {/* Cliente 2: Colegio San Francisco de Machalí */}
-        <Card className="group hover:shadow-md transition-all duration-200">
-          <div className="flex flex-col sm:flex-row md:flex-row gap-4 sm:gap-6">
-            {/* Logo Colegio San Francisco de Machalí */}
-            <Image 
-              src="/images/icono_colegio.jpeg"
-              alt="Logo del Colegio San Francisco de Machalí"
-              width={96}
-              height={96}
-              className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 object-contain flex-shrink-0 mx-auto sm:mx-0"
-            />
-            
-            <div className="flex-1">
-              <h3 className="text-xl sm:text-2xl font-semibold text-[#0B2A3C] mb-3 group-hover:text-[#3FA9F5] transition-colors">
-                Colegio San Francisco de Machalí
-              </h3>
-              <ul className="space-y-3 mt-1 sm:mt-2" role="list">
-                <li className="flex items-start gap-3">
-                  <div className="w-1.5 h-1.5 rounded-full bg-[#2FBF71] mt-2 flex-shrink-0" aria-hidden="true"></div>
-                  <span className="text-[#6F7A83] leading-relaxed text-sm sm:text-base">Agente de IA para acceso instantáneo a normativa y procedimientos internos.</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <div className="w-1.5 h-1.5 rounded-full bg-[#2FBF71] mt-2 flex-shrink-0" aria-hidden="true"></div>
-                  <span className="text-[#6F7A83] leading-relaxed text-sm sm:text-base">Onboarding guiado que estandariza el cumplimiento y mejora la autonomía del equipo.</span>
-                </li>
-              </ul>
+          <div className="relative flex flex-col md:flex-row gap-8 md:gap-12 items-start">
+            {/* Logo */}
+            <div className="flex-shrink-0 flex items-center justify-center w-20 h-20 md:w-28 md:h-28 rounded-xl bg-[#0B2A3C]/[0.04] p-3 mx-auto md:mx-0">
+              <Image
+                src={featured.logo}
+                alt={featured.alt}
+                width={96}
+                height={96}
+                className="w-full h-full object-contain"
+              />
             </div>
-          </div>
-        </Card>
 
-        {/* Cliente 3: Stem Inversiones */}
-        <Card className="group hover:shadow-md transition-all duration-200">
-          <div className="flex flex-col sm:flex-row md:flex-row gap-4 sm:gap-6">
-            {/* Logo Stem Inversiones */}
-            <Image 
-              src="/images/icono_stem.png"
-              alt="Logo de Stem Inversiones"
-              width={96}
-              height={96}
-              className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 object-contain flex-shrink-0 mx-auto sm:mx-0"
-            />
-            
-            <div className="flex-1">
-              <h3 className="text-xl sm:text-2xl font-semibold text-[#0B2A3C] mb-3 group-hover:text-[#6F7A83] transition-colors">
-                Stem Inversiones
+            {/* Content */}
+            <div className="flex-1 min-w-0">
+              <p
+                className="text-[10px] font-bold uppercase tracking-[0.2em] mb-2"
+                style={{ color: featured.accentColor }}
+              >
+                Caso destacado
+              </p>
+              <h3 className="text-2xl md:text-3xl font-bold text-[#0B2A3C] mb-8 leading-tight">
+                {featured.name}
               </h3>
-              <ul className="space-y-3 mt-1 sm:mt-2" role="list">
-                <li className="flex items-start gap-3">
-                  <div className="w-1.5 h-1.5 rounded-full bg-[#2FBF71] mt-2 flex-shrink-0" aria-hidden="true"></div>
-                  <span className="text-[#6F7A83] leading-relaxed text-sm sm:text-base">Control financiero y trazabilidad de gastos en tiempo real.</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <div className="w-1.5 h-1.5 rounded-full bg-[#2FBF71] mt-2 flex-shrink-0" aria-hidden="true"></div>
-                  <span className="text-[#6F7A83] leading-relaxed text-sm sm:text-base">Seguimiento proactivo con clientes y apoyo a la gestión asistido por IA.</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </Card>
 
-        {/* Cliente 4: Cerro El Plomo */}
-        <Card className="group hover:shadow-md transition-all duration-200">
-          <div className="flex flex-col sm:flex-row md:flex-row gap-4 sm:gap-6">
-            {/* Logo Cerro El Plomo */}
-            <Image 
-              src="/images/icono_cerro.png"
-              alt="Logo de Cerro El Plomo"
-              width={96}
-              height={96}
-              className="w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 object-contain flex-shrink-0 mx-auto sm:mx-0"
-            />
-            
-            <div className="flex-1">
-              <h3 className="text-xl sm:text-2xl font-semibold text-[#0B2A3C] mb-3 group-hover:text-[#2FBF71] transition-colors">
-                Cerro El Plomo
-              </h3>
-              <ul className="space-y-3 mt-1 sm:mt-2" role="list">
-                <li className="flex items-start gap-3">
-                  <div className="w-1.5 h-1.5 rounded-full bg-[#2FBF71] mt-2 flex-shrink-0" aria-hidden="true"></div>
-                  <span className="text-[#6F7A83] leading-relaxed text-sm sm:text-base">Software de manejo de inventario con control y trazabilidad en tiempo real.</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <div className="w-1.5 h-1.5 rounded-full bg-[#2FBF71] mt-2 flex-shrink-0" aria-hidden="true"></div>
-                  <span className="text-[#6F7A83] leading-relaxed text-sm sm:text-base">Agentes de IA que comprenden y explican insights accionables del inventario.</span>
-                </li>
-              </ul>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                <div className="space-y-1.5">
+                  <span className="text-[10px] font-semibold uppercase tracking-widest text-[#6F7A83] block">
+                    Desafío
+                  </span>
+                  <p className="text-[#0B2A3C]/90 text-sm leading-relaxed">
+                    {featured.pain}
+                  </p>
+                </div>
+
+                <div className="space-y-1.5">
+                  <span className="text-[10px] font-semibold uppercase tracking-widest text-[#6F7A83] block">
+                    Solución
+                  </span>
+                  <p className="text-[#0B2A3C]/90 text-sm leading-relaxed">
+                    {featured.solution}
+                  </p>
+                </div>
+
+                <div className="space-y-1.5">
+                  <span
+                    className="text-[10px] font-semibold uppercase tracking-widest block"
+                    style={{ color: featured.accentColor }}
+                  >
+                    Impacto
+                  </span>
+                  <p className="text-[#0B2A3C] font-medium text-sm leading-relaxed">
+                    {featured.result}
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
-        </Card>
+        </div>
+
+        {/* Secondary cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+          {secondary.map((client) => (
+            <div
+              key={client.name}
+              className="bg-white rounded-xl border border-[rgba(11,42,60,0.08)] p-5 flex flex-col gap-4"
+            >
+              <div className="flex items-center gap-3">
+                <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-gray-50 flex items-center justify-center p-1.5">
+                  <Image
+                    src={client.logo}
+                    alt={client.alt}
+                    width={40}
+                    height={40}
+                    className="w-full h-full object-contain"
+                  />
+                </div>
+                <h3 className="text-sm font-semibold text-[#0B2A3C] leading-tight">
+                  {client.name}
+                </h3>
+              </div>
+
+              <div className="space-y-2.5 border-t border-[rgba(11,42,60,0.06)] pt-4">
+                <div>
+                  <span className="text-[9px] font-bold uppercase tracking-widest text-[#6F7A83] block mb-0.5">
+                    Desafío
+                  </span>
+                  <p className="text-[#0B2A3C]/85 text-xs leading-relaxed">{client.pain}</p>
+                </div>
+                <div>
+                  <span className="text-[9px] font-bold uppercase tracking-widest text-[#6F7A83] block mb-0.5">
+                    Solución
+                  </span>
+                  <p className="text-[#0B2A3C]/85 text-xs leading-relaxed">{client.solution}</p>
+                </div>
+                <div>
+                  <span
+                    className="text-[9px] font-bold uppercase tracking-widest block mb-0.5"
+                    style={{ color: client.accentColor }}
+                  >
+                    Impacto
+                  </span>
+                  <p className="text-[#0B2A3C] text-xs leading-relaxed font-medium">{client.result}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="mt-12 md:mt-16 text-center">
+        <a href="#sprint-0" className="btn-primary">
+          ¿Tienes un dolor operativo similar? Agendar Sprint 0
+        </a>
       </div>
     </Section>
   )
