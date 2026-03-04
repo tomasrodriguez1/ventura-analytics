@@ -77,7 +77,7 @@ export default function Sprint0Section() {
             <LinkButton
               href={LINKS.contact}
               variant="primary"
-              className="shadow-lg shadow-[#0B2A3C]/10 hover:shadow-xl hover:shadow-[#0B2A3C]/20 transition-all duration-300"
+              className="w-full sm:w-auto shadow-lg shadow-[#0B2A3C]/10 hover:shadow-xl hover:shadow-[#0B2A3C]/20 transition-all duration-300"
             >
               Agendar Sprint 0 (Gratis)
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">

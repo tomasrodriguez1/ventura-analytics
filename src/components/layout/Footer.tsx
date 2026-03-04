@@ -52,11 +52,11 @@ export default function Footer() {
 
         {/* Contacto */}
         <div className="border-t border-[rgba(255,255,255,0.08)] pt-6 mb-6">
-          <p className="text-gray-400 text-sm">
+          <p className="text-gray-400 text-sm break-words">
             <span className="text-white font-semibold">Email:</span>{' '}
             <a 
               href="mailto:soporte@zalantos.com" 
-              className="text-[#2FBF71] hover:text-[#2FBF71]/80 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2FBF71] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B2A3C] rounded"
+              className="text-[#2FBF71] hover:text-[#2FBF71]/80 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2FBF71] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B2A3C] rounded break-all sm:break-normal"
             >
               soporte@zalantos.com
             </a>
@@ -73,7 +73,7 @@ export default function Footer() {
               href="/privacy"
               className="text-gray-500 hover:text-[#2FBF71] transition-colors min-h-[44px] flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2FBF71] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B2A3C] rounded"
             >
-              Privacidas y términos
+              Privacidad y términos
             </Link>
           </div>
         </div>

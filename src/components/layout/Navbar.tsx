@@ -15,12 +15,24 @@ export default function Navbar() {
       <div className="w-full px-2 sm:px-4 md:px-12 lg:px-16">
         <div className="max-w-[1400px] mx-auto flex items-center justify-between h-16 md:h-20">
           {/* Logo Lockup */}
-          <LogoLockup 
-            size="sm" 
-            priority 
-            asLinkHref={LINKS.home}
-            className="flex-shrink-0"
-          />
+          <div className="flex-shrink-0">
+            <div className="sm:hidden">
+              <LogoLockup
+                size="sm"
+                variant="iconOnly"
+                priority
+                asLinkHref={LINKS.home}
+              />
+            </div>
+            <div className="hidden sm:block">
+              <LogoLockup
+                size="sm"
+                priority
+                asLinkHref={LINKS.home}
+                className="flex-shrink-0"
+              />
+            </div>
+          </div>
           
           {/* Links y CTA */}
           <div className="flex gap-1.5 sm:gap-2 lg:gap-8 items-center flex-shrink-0">
@@ -68,7 +80,7 @@ export default function Navbar() {
             </div>
 
             {/* CTA con versión responsive */}
-            <div className="flex flex-wrap items-center gap-2 sm:gap-3 justify-end w-full sm:w-auto">
+            <div className="flex flex-wrap items-center gap-1.5 sm:gap-3 justify-end w-full sm:w-auto">
               <AiCtaButton 
                 href={LINKS.aiConsultant} 
                 variant="navbar"
@@ -97,11 +109,11 @@ export default function Navbar() {
 
               <Link
                 href={LINKS.contact}
-                className="sm:hidden inline-flex w-14 h-14 rounded-full bg-[#0B2A3C] shadow-lg items-center justify-center text-white border border-[#0B2A3C]/25"
+                className="sm:hidden inline-flex w-11 h-11 rounded-full bg-[#0B2A3C] shadow-lg items-center justify-center text-white border border-[#0B2A3C]/25"
                 aria-label="Ir a página de contacto"
               >
                 <svg
-                  className="w-7 h-7"
+                  className="w-5 h-5"
                   viewBox="0 0 64 64"
                   fill="none"
                   stroke="currentColor"

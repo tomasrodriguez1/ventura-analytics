@@ -114,7 +114,7 @@ export default function ContactSection() {
           
           {/* --- COLUMNA IZQUIERDA: Propuesta de Valor --- */}
           <div className="space-y-6 md:space-y-8">
-            <h1 id="contact-heading" className="font-[family-name:var(--font-inter)] text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-bold text-[#0B2A3C] leading-[1.1] mb-6 md:mb-8">
+            <h1 id="contact-heading" className="font-[family-name:var(--font-inter)] text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-[#0B2A3C] leading-[1.1] mb-6 md:mb-8">
               {COPY.hero.headline}
             </h1>
             
@@ -242,7 +242,7 @@ export default function ContactSection() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-[#2FBF71] hover:bg-[#25a05e] disabled:opacity-50 disabled:cursor-not-allowed text-white font-bold py-4 min-h-[44px] rounded-lg shadow-md transition-all duration-200 touch-manipulation focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2FBF71] focus-visible:ring-offset-2"
+                className="w-full bg-[#2FBF71] hover:bg-[#25a05e] disabled:opacity-50 disabled:cursor-not-allowed text-white text-sm sm:text-base font-bold py-4 min-h-[44px] rounded-lg shadow-md transition-all duration-200 touch-manipulation focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2FBF71] focus-visible:ring-offset-2"
                 aria-label={isSubmitting ? COPY.form.button.loading : COPY.form.button.idle}
               >
                 {isSubmitting ? COPY.form.button.loading : COPY.form.button.idle}

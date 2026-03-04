@@ -60,9 +60,9 @@ export default function Clients() {
         </h2>
       </div>
 
-      <div className="max-w-[1200px] mx-auto space-y-8">
+      <div className="max-w-[1200px] mx-auto space-y-6 sm:space-y-8">
         {/* Featured card — estilo claro que se integra con la página */}
-        <div className="relative overflow-hidden rounded-2xl bg-white border border-[rgba(11,42,60,0.08)] p-8 md:p-12 shadow-[0_2px_8px_rgba(11,42,60,0.04)]">
+        <div className="relative overflow-hidden rounded-2xl bg-white border border-[rgba(11,42,60,0.08)] p-5 sm:p-8 md:p-12 shadow-[0_2px_8px_rgba(11,42,60,0.04)]">
           {/* Borde acento lateral */}
           <div
             className="absolute left-0 top-0 bottom-0 w-1 rounded-l-2xl"
@@ -93,7 +93,7 @@ export default function Clients() {
                 {featured.name}
               </h3>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="space-y-1.5">
                   <span className="text-[10px] font-semibold uppercase tracking-widest text-[#6F7A83] block">
                     Desafío
@@ -129,7 +129,7 @@ export default function Clients() {
         </div>
 
         {/* Secondary cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {secondary.map((client) => (
             <div
               key={client.name}
@@ -179,7 +179,7 @@ export default function Clients() {
       </div>
 
       <div className="mt-12 md:mt-16 text-center">
-        <a href="#sprint-0" className="btn-primary">
+        <a href="#sprint-0" className="btn-primary w-full sm:w-auto">
           ¿Tienes un dolor operativo similar? Agendar Sprint 0
         </a>
       </div>
