@@ -19,6 +19,7 @@ export const LINKS = {
   about: '/?section=about',
   contact: '/?section=contact',
   aiConsultant: '/consultor-ia',
+  blog: '/blog',
 } as const
 
 export const SOCIAL_LINKS = {

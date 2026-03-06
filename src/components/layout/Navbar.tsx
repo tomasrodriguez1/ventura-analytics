@@ -1,6 +1,6 @@
 'use client'
 
-import { useSearchParams } from 'next/navigation'
+import { useSearchParams, usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { LINKS } from '@/lib/constants'
 import LogoLockup from '@/components/Brand/LogoLockup'
@@ -9,6 +9,8 @@ import AiCtaButton from '@/components/ui/AiCtaButton'
 export default function Navbar() {
   const searchParams = useSearchParams()
   const currentSection = searchParams.get('section') || 'home'
+  const pathname = usePathname()
+  const isBlog = pathname.startsWith('/blog')
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-[rgba(11,42,60,0.08)]" role="navigation" aria-label="Navegación principal">
@@ -59,6 +61,25 @@ export default function Navbar() {
                 <span className="hidden lg:block">Inicio</span>
               </Link>
               
+              {/* Link Blog */}
+              <Link
+                href={LINKS.blog}
+                className={`text-sm font-medium transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0B2A3C] focus-visible:ring-offset-2 rounded px-1.5 sm:px-2 lg:px-0 flex-shrink-0 ${isBlog ? 'text-[#0B2A3C]' : 'text-[#6F7A83] hover:text-[#0B2A3C]'}`}
+                aria-current={isBlog ? 'page' : undefined}
+                aria-label="Blog"
+              >
+                <svg
+                  className="w-5 h-5 block lg:hidden flex-shrink-0"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+                <span className="hidden lg:block">Blog</span>
+              </Link>
+
               {/* Link Nosotros - DESACTIVADO: Página about desactivada temporalmente */}
               {/* <Link
                 href={LINKS.about}
