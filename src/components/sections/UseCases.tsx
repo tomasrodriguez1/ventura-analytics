@@ -103,13 +103,19 @@ export default function UseCases() {
         </Card>
 
         {/* Caso 6 */}
-        <Card>
+        <Card className="flex flex-col">
           <h3 className="text-lg sm:text-xl font-semibold text-[#0B2A3C] mb-3">
             Automatización de procesos con trazabilidad
           </h3>
-          <p className="text-[#6F7A83] leading-relaxed text-sm sm:text-base">
+          <p className="text-[#6F7A83] leading-relaxed text-sm sm:text-base flex-1">
             Flujos aprobatorios, auditoría y registro de decisiones para control y gobierno.
           </p>
+          <Link
+            href="/blog/insight-automatizacion-procesos-trazabilidad-control-auditoria"
+            className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-[#2BA8DC] hover:text-[#0B2A3C] transition-colors"
+          >
+            Leer insight <span aria-hidden="true">→</span>
+          </Link>
         </Card>
       </div>
     </Section>
