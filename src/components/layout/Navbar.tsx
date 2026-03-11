@@ -4,7 +4,6 @@ import { useSearchParams, usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { LINKS } from '@/lib/constants'
 import LogoLockup from '@/components/Brand/LogoLockup'
-import AiCtaButton from '@/components/ui/AiCtaButton'
 
 export default function Navbar() {
   const searchParams = useSearchParams()
