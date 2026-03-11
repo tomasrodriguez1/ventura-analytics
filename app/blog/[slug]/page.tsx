@@ -147,14 +147,14 @@ export default async function BlogPostPage({ params }: PageProps) {
                 className="text-2xl sm:text-3xl font-bold leading-snug mb-3"
                 style={{ color: '#0B2A3C' }}
               >
-                Agenda un Sprint 0 (Gratis) y diseñemos la solución en 1 semana.
+                Agenda un Sprint 0 sin costo y diseñemos la solución en 1 semana.
               </h2>
               <p className="text-sm leading-relaxed mb-8" style={{ color: '#6F7A83' }}>
                 En 5 días de trabajo conjunto diagnosticamos el problema, definimos la arquitectura
-                y te entregamos un plan de acción concreto — sin compromisos, sin ventas de humo.
+                y te entregamos un plan de acción concreto sin compromisos.
               </p>
               <LinkButton href={LINKS.contact} variant="primary" className="px-8 py-3 text-sm">
-                Agendar Sprint 0
+                Agenda tu Sprint 0
               </LinkButton>
             </div>
 
