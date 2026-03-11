@@ -26,7 +26,7 @@ export default function Pillars() {
             Datos y BI
           </p>
           <p className="text-[#6F7A83] leading-relaxed text-sm sm:text-base">
-            Dejamos atrás las planillas infinitas para darte <strong>tableros de control con datos consistentes</strong> y una <strong>fuente única de verdad</strong> para decidir sin depender de &quot;la persona que sabe&quot;.
+            Dejamos atrás las planillas infinitas para darte <strong>tableros de control con datos consistentes</strong> y una <strong>fuente única de información</strong> para decidir sin depender de &quot;la persona que sabe&quot;.
           </p>
         </Card>
 
@@ -56,7 +56,7 @@ export default function Pillars() {
             IA aplicada
           </p>
           <p className="text-[#6F7A83] leading-relaxed text-sm sm:text-base">
-            Aplicamos IA donde realmente aporta: <strong>asistentes internos</strong>, búsqueda en documentación (RAG) y automatizaciones inteligentes, con <strong>límites y control</strong> para evitar humo.
+            Aplicamos IA donde realmente aporta: <strong>asistentes internos</strong>, búsqueda en documentación (RAG) y automatizaciones inteligentes, con <strong>límites y control</strong>.
           </p>
         </Card>
       </div>

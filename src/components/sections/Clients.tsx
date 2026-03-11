@@ -56,7 +56,7 @@ export default function Clients() {
     <Section variant="gray">
       <div className="text-center mb-12 md:mb-16">
         <h2 className="font-[family-name:var(--font-inter)] text-3xl sm:text-4xl md:text-5xl font-bold text-[#0B2A3C] mb-4 px-4">
-          Resultados reales: Menos fricción, más control.
+          Nuestras Soluciones Aplicadas
         </h2>
       </div>
 
@@ -180,7 +180,7 @@ export default function Clients() {
 
       <div className="mt-12 md:mt-16 text-center">
         <a href="#sprint-0" className="btn-primary w-full sm:w-auto">
-          ¿Tienes un dolor operativo similar? Agendar Sprint 0
+          ¿Tienes un dolor operativo similar? Agenda tu Sprint 0
         </a>
       </div>
     </Section>

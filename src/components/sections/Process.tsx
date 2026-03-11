@@ -17,7 +17,7 @@ export default function Process() {
       badge: '02',
       icon: Wrench,
       title: 'Diseño e Implementación',
-      subtitle: 'Soluciones a medida, construida en conjunto',
+      subtitle: 'Soluciones a medida, desarrolladas colaborativamente',
       bullets: [
         'Desarrollamos e implementamos una solución a medida de forma ágil, entregando valor desde el primer sprint y alineada a cómo opera tu negocio.',
         'Validamos con usuarios durante la construcción, iterando con feedback y datos reales para asegurar adopción y resultados antes de escalar.'

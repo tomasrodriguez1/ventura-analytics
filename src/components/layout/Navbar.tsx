@@ -102,24 +102,7 @@ export default function Navbar() {
 
             {/* CTA con versión responsive */}
             <div className="flex flex-wrap items-center gap-1.5 sm:gap-3 justify-end w-full sm:w-auto">
-              <AiCtaButton 
-                href={LINKS.aiConsultant} 
-                variant="navbar"
-                betaLabel="Beta"
-                className="hidden sm:inline-flex"
-              >
-                Consultor IA
-              </AiCtaButton>
-
-              <AiCtaButton
-                href={LINKS.aiConsultant}
-                variant="navbar"
-                iconOnly
-                className="sm:hidden"
-              >
-                Consultor IA
-              </AiCtaButton>
-
+              
               <Link
                 href={LINKS.contact}
                 className="btn-primary hidden sm:inline-flex text-xs sm:text-sm px-3 sm:px-4 lg:px-6 py-2.5 whitespace-nowrap"

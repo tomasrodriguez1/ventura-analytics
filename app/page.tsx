@@ -32,8 +32,8 @@ function PageContent() {
         {section === 'home' && (
           <>
             <Hero />
-            <Sprint0Section />
             <Pillars />
+            <Sprint0Section />
             <Process />
             <Clients />
             <UseCases />

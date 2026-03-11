@@ -33,7 +33,7 @@ export default function Hero() {
 
         {/* Description */}
         <p className="text-base sm:text-xl md:text-2xl text-[#4D555D] leading-relaxed mb-8 sm:mb-10 max-w-2xl mx-auto animate-fade-in-up animation-delay-200">
-          En <strong>zalantos</strong> diseñamos software a medida y automatización para que tus procesos fluyan y tus datos estén siempre a la mano. Haz que tus equipos operen sin trabas y recupera el tiempo para tomar decisiones estratégicas.
+          En <strong>zalantos</strong> diseñamos soluciones a la medida con IA para tu negocio: conectamos tus sistemas, automatizamos los flujos manuales y ponemos tus datos donde los necesitas. Para que tu equipo deje de apagar incendios y empiece a enfocarse en lo que hace crecer el negocio.
         </p>
         
         {/* CTA Buttons */}
