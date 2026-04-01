@@ -5,7 +5,16 @@ import Link from 'next/link'
 import { LINKS } from '@/lib/constants'
 import LogoLockup from '@/components/Brand/LogoLockup'
 
-export default function Navbar() {
+type ExtraLink = {
+  href: string
+  label: string
+}
+
+type NavbarProps = {
+  extraLink?: ExtraLink
+}
+
+export default function Navbar({ extraLink }: NavbarProps) {
   const searchParams = useSearchParams()
   const currentSection = searchParams.get('section') || 'home'
   const pathname = usePathname()
@@ -35,7 +44,7 @@ export default function Navbar() {
             </div>
           </div>
           
-          {/* Links y CTA */}
+            {/* Links y CTA */}
           <div className="flex gap-1.5 sm:gap-2 lg:gap-8 items-center flex-shrink-0">
             {/* Links con iconos hasta tablets, texto solo en desktop grande */}
             <div className="flex gap-1 sm:gap-2 lg:gap-8 flex-shrink-0">
@@ -99,6 +108,17 @@ export default function Navbar() {
               </Link> */}
             </div>
 
+            {extraLink && (
+              <div className="hidden lg:block">
+                <Link
+                  href={extraLink.href}
+                  className="text-sm font-semibold text-[#0B2A3C] transition-colors hover:text-[#2FBF71]"
+                  aria-label={extraLink.label}
+                >
+                  {extraLink.label}
+                </Link>
+              </div>
+            )}
             {/* CTA con versión responsive */}
             <div className="flex flex-wrap items-center gap-1.5 sm:gap-3 justify-end w-full sm:w-auto">
               
