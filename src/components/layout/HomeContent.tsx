@@ -1,0 +1,49 @@
+'use client'
+
+import { Suspense } from 'react'
+import { useSearchParams } from 'next/navigation'
+import Navbar from '@/components/layout/Navbar'
+import Footer from '@/components/layout/Footer'
+import Hero from '@/components/sections/Hero'
+import Sprint0Section from '@/components/sections/Sprint0Section'
+import Pillars from '@/components/sections/Pillars'
+import Process from '@/components/sections/Process'
+import Clients from '@/components/sections/Clients'
+import UseCases from '@/components/sections/UseCases'
+import CTAFinal from '@/components/sections/CTAFinal'
+// import AboutSection from '@/components/sections/AboutSection' // DESACTIVADO: Página about desactivada temporalmente
+import ContactSection from '@/components/sections/ContactSection'
+
+export default function HomeContent() {
+  // ⚠️ Usar useSearchParams() del cliente para compatibilidad con export estático
+  // En export estático, los searchParams del servidor no están disponibles
+  const searchParams = useSearchParams()
+  const sectionParam = searchParams.get('section')
+  const section = sectionParam && ['home', 'contact'].includes(sectionParam) // 'about' removido temporalmente
+    ? sectionParam
+    : 'home'
+
+  return (
+    <div className="min-h-screen flex flex-col font-[family-name:var(--font-inter)]">
+      <Suspense fallback={<div className="h-16" aria-label="Cargando navegación" />}>
+        <Navbar />
+      </Suspense>
+      <main id="main-content" className="flex-grow w-full pt-20">
+        {section === 'home' && (
+          <>
+            <Hero />
+            <Pillars />
+            <Sprint0Section />
+            <Process />
+            <Clients />
+            <UseCases />
+            <CTAFinal />
+          </>
+        )}
+        {/* {section === 'about' && <AboutSection />} DESACTIVADO: Página about desactivada temporalmente */}
+        {section === 'contact' && <ContactSection />}
+      </main>
+      <Footer />
+    </div>
+  )
+}

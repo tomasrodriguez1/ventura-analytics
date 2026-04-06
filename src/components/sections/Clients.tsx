@@ -179,7 +179,11 @@ export default function Clients() {
       </div>
 
       <div className="mt-12 md:mt-16 text-center">
-        <a href="#sprint-0" className="btn-primary w-full sm:w-auto">
+        <a
+          href="#sprint-0"
+          className="btn-primary w-full sm:w-auto"
+          title="Agenda tu Sprint 0 gratuito con Zalantos"
+        >
           ¿Tienes un dolor operativo similar? Agenda tu Sprint 0
         </a>
       </div>

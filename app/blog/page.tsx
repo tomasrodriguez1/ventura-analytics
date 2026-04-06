@@ -6,9 +6,22 @@ import Footer from '@/components/layout/Footer'
 import { blogPosts } from '@/data/blog'
 
 export const metadata: Metadata = {
-  title: 'Insights & Casos | Zalantos',
+  title: 'Insights & Casos de Automatización IA | Zalantos',
   description:
-    'Artículos sobre automatización, inteligencia artificial y casos de éxito reales. Ingeniería aplicada a problemas reales.',
+    'Artículos sobre automatización, inteligencia artificial y casos de éxito reales. Ingeniería aplicada a problemas reales de empresas en Chile.',
+  keywords: ['automatización IA', 'inteligencia artificial empresas', 'casos de éxito', 'insights tecnología', 'transformación digital', 'zalantos blog'],
+  alternates: { canonical: '/blog' },
+  openGraph: {
+    title: 'Insights & Casos de Automatización IA | Zalantos',
+    description: 'Artículos sobre automatización, inteligencia artificial y casos de éxito reales.',
+    url: '/blog',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Insights & Casos de Automatización IA | Zalantos',
+    description: 'Artículos sobre automatización, inteligencia artificial y casos de éxito reales.',
+  },
 }
 
 function formatDate(dateStr: string): string {

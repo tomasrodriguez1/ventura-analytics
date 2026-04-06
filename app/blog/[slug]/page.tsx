@@ -25,14 +25,31 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   }
 
   return {
-    title: `${post.title} | Zalantos`,
+    title: post.title,
     description: post.excerpt,
+    keywords: ['zalantos', post.category.toLowerCase(), 'inteligencia artificial', 'automatización', 'transformación digital'],
+    alternates: { canonical: `/blog/${post.slug}` },
     openGraph: {
       title: post.title,
       description: post.excerpt,
       type: 'article',
       publishedTime: post.date,
       authors: [post.author],
+      url: `/blog/${post.slug}`,
+      images: [
+        {
+          url: '/icon.png',
+          width: 512,
+          height: 512,
+          alt: post.title,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.excerpt,
+      images: ['/icon.png'],
     },
   }
 }
@@ -56,8 +73,71 @@ export default async function BlogPostPage({ params }: PageProps) {
     notFound()
   }
 
+  const articleSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: post.title,
+    description: post.excerpt,
+    author: {
+      '@type': 'Person',
+      name: post.author,
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Zalantos',
+      url: 'https://zalantos.com',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://zalantos.com/icon.png',
+      },
+    },
+    datePublished: post.date,
+    dateModified: post.date,
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `https://zalantos.com/blog/${post.slug}/`,
+    },
+    image: 'https://zalantos.com/icon.png',
+    articleSection: post.category,
+    inLanguage: 'es-CL',
+    url: `https://zalantos.com/blog/${post.slug}/`,
+  }
+
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Inicio',
+        item: 'https://zalantos.com/',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Insights & Casos',
+        item: 'https://zalantos.com/blog/',
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: post.title,
+        item: `https://zalantos.com/blog/${post.slug}/`,
+      },
+    ],
+  }
+
   return (
     <div className="min-h-screen flex flex-col font-[family-name:var(--font-inter)]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <Suspense fallback={NAVBAR_FALLBACK}>
         <Navbar />
       </Suspense>
@@ -73,6 +153,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                   href={LINKS.blog}
                   className="transition-colors duration-150"
                   style={{ color: '#6F7A83' }}
+                  title="Ver todos los artículos de Zalantos"
                 >
                   Insights & Casos
                 </Link>
@@ -154,7 +235,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                 y te entregamos un plan de acción concreto sin compromisos.
               </p>
               <LinkButton href={LINKS.contact} variant="primary" className="px-8 py-3 text-sm">
-                Agenda tu Sprint 0
+                Agenda tu Sprint 0 gratuito
               </LinkButton>
             </div>
 
@@ -164,6 +245,7 @@ export default async function BlogPostPage({ params }: PageProps) {
                 href={LINKS.blog}
                 className="inline-flex items-center gap-2 text-sm font-medium transition-colors duration-150"
                 style={{ color: '#6F7A83' }}
+                title="Ver todos los artículos de Insights & Casos"
               >
                 <svg
                   className="w-4 h-4"

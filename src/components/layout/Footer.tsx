@@ -22,25 +22,27 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2">
               <li>
-                <Link 
-                  href="/" 
+                <Link
+                  href="/"
+                  title="Volver al inicio de Zalantos"
                   className="text-gray-400 hover:text-[#2FBF71] transition-colors text-sm inline-block min-h-[44px] flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2FBF71] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B2A3C] rounded"
                 >
                   Inicio
                 </Link>
               </li>
-              {/* DESACTIVADO: Página about desactivada temporalmente */}
-              {/* <li>
-                <Link 
-                  href="/?section=about" 
+              <li>
+                <Link
+                  href="/blog"
+                  title="Ver artículos de Insights y Casos de Zalantos"
                   className="text-gray-400 hover:text-[#2FBF71] transition-colors text-sm inline-block min-h-[44px] flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2FBF71] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B2A3C] rounded"
                 >
-                  Nosotros
+                  Blog
                 </Link>
-              </li> */}
+              </li>
               <li>
-                <Link 
-                  href="/?section=contact" 
+                <Link
+                  href="/?section=contact"
+                  title="Contactar a Zalantos para agendar un Sprint 0"
                   className="text-gray-400 hover:text-[#2FBF71] transition-colors text-sm inline-block min-h-[44px] flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2FBF71] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B2A3C] rounded"
                 >
                   Contacto
@@ -54,8 +56,9 @@ export default function Footer() {
         <div className="border-t border-[rgba(255,255,255,0.08)] pt-6 mb-6">
           <p className="text-gray-400 text-sm break-words">
             <span className="text-white font-semibold">Email:</span>{' '}
-            <a 
-              href="mailto:soporte@zalantos.com" 
+            <a
+              href="mailto:soporte@zalantos.com"
+              title="Enviar correo a Zalantos"
               className="text-[#2FBF71] hover:text-[#2FBF71]/80 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2FBF71] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B2A3C] rounded break-all sm:break-normal"
             >
               soporte@zalantos.com
@@ -66,11 +69,12 @@ export default function Footer() {
         {/* Copyright */}
         <div className="border-t border-[rgba(255,255,255,0.08)] pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-gray-500 text-sm">
-            © 2025 zalantos. Todos los derechos reservados.
+            © 2026 zalantos. Todos los derechos reservados.
           </p>
           <div className="flex gap-6 text-sm">
             <Link
               href="/privacy"
+              title="Ver política de privacidad de Zalantos"
               className="text-gray-500 hover:text-[#2FBF71] transition-colors min-h-[44px] flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2FBF71] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B2A3C] rounded"
             >
               Privacidad y términos

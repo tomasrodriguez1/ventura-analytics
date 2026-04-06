@@ -1,3 +1,12 @@
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Política de Privacidad | Zalantos',
+  description: 'Política de privacidad de Zalantos SPA. Conoce cómo recopilamos, tratamos y protegemos tus datos personales conforme a la Ley N° 19.628 de Chile.',
+  alternates: { canonical: '/privacy' },
+  robots: { index: false, follow: false },
+}
+
 const definitions = [
   {
     term: 'Dato Personal',

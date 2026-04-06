@@ -1,0 +1,19 @@
+{
+  "name": "Zalantos — IA para Empresas",
+  "short_name": "Zalantos",
+  "description": "Soluciones de inteligencia artificial, automatización de procesos y análisis de datos para empresas.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#ffffff",
+  "theme_color": "#0B2A3C",
+  "lang": "es-CL",
+  "icons": [
+    {
+      "src": "/icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "productivity"]
+}
