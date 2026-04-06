@@ -9,7 +9,7 @@ const description =
 export const metadata: Metadata = {
   title,
   description,
-  alternates: { canonical: '/' },
+  alternates: { canonical: 'https://zalantos.com/' },
   keywords: [
     'inteligencia artificial empresas',
     'automatización procesos',

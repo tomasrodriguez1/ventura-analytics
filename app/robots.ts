@@ -10,10 +10,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: [
-        '/api/',
-        '/informe-apv-ventanas-oportunidades/',
-      ],
+      disallow: ['/api/'],
     },
     sitemap: `${baseUrl}/sitemap.xml`,
   }

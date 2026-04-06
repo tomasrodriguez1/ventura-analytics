@@ -42,9 +42,9 @@ export const metadata: Metadata = {
     url: 'https://zalantos.com',
     images: [
       {
-        url: '/icon.png',
-        width: 512,
-        height: 512,
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
         alt: 'Zalantos — Automatización IA para empresas',
       },
     ],
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     creator: '@zalantos',
     title: 'Automatización IA para Empresas | Zalantos',
     description: 'Zalantos diseña soluciones de inteligencia artificial, automatización de procesos y análisis de datos para empresas en Chile.',
-    images: ['/icon.png'],
+    images: ['/og-image.png'],
   },
   robots: {
     index: true,

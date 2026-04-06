@@ -38,9 +38,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       url: `/blog/${post.slug}`,
       images: [
         {
-          url: '/icon.png',
-          width: 512,
-          height: 512,
+          url: '/og-image.png',
+          width: 1200,
+          height: 630,
           alt: post.title,
         },
       ],
@@ -49,7 +49,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       card: 'summary_large_image',
       title: post.title,
       description: post.excerpt,
-      images: ['/icon.png'],
+      images: ['/og-image.png'],
     },
   }
 }
