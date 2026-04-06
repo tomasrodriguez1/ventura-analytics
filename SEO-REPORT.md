@@ -69,8 +69,8 @@
 
 | Ítem | Razón |
 |------|-------|
-| **Imagen OG 1200×630** | No existe un archivo `og-image.png` en el repositorio. Se usa `/icon.png` (512×512) como fallback. **Acción recomendada:** crear y subir `/public/og-image.png` de 1200×630 px con la identidad visual de Zalantos. |
-| **`canonical` en homepage `/`** | `app/page.tsx` es `'use client'` (usa `useSearchParams`) — Next.js no permite exportar `metadata` desde Client Components. La URL canónica queda en manos del `.htaccess` (redirige HTTP→HTTPS y www→no-www). **Acción recomendada a futuro:** separar `PageContent` en su propio archivo para convertir `page.tsx` en Server Component. |
+| ~~**Imagen OG 1200×630**~~ | ✅ **Resuelto 2026-04-06** — `/public/og-image.png` generado (1200×630 px) con identidad visual Zalantos: fondo `#0B2A3C`, wordmark en blanco, tagline verde `#2FBF71`, dominio y pill de keywords. |
+| ~~**`canonical` en homepage `/`**~~ | ✅ **Resuelto** — `app/page.tsx` refactorizado a Server Component. Lógica cliente movida a `src/components/layout/HomeContent.tsx`. `metadata` con canonical exportado correctamente. |
 | **`twitter:site` con handle real** | No existe cuenta de Twitter/X verificada para zalantos. Se usó `@zalantos` como placeholder. Actualizar cuando esté disponible. |
 | **favicon.ico** | Solo existe `/icon.png`. Para mayor compatibilidad, generar un `favicon.ico` (16×16, 32×32, 48×48) y referenciarlo en `layout.tsx`. |
 | **apple-touch-icon.png dedicado** | Se usa `/icon.png` para todos los casos. Para mejor experiencia iOS, crear un `/apple-touch-icon.png` de 180×180 px. |
