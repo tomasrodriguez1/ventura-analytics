@@ -1,38 +1,32 @@
 {
-  "name": "ventura-analytics",
-  "version": "0.1.0",
+  "name": "zalantos-astro",
+  "version": "1.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "npx eslint src/ app/"
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
   },
   "dependencies": {
-    "@types/dompurify": "^3.0.5",
-    "@types/pg": "^8.15.5",
+    "@astrojs/react": "^3.6.2",
+    "@astrojs/sitemap": "^3.2.1",
+    "@astrojs/tailwind": "^5.1.2",
+    "astro": "^4.16.18",
     "axios": "^1.9.0",
-    "class-variance-authority": "^0.7.1",
     "dompurify": "^3.3.1",
-    "framer-motion": "^12.0.5",
-    "lucide-react": "^0.563.0",
-    "next": "^15.1.6",
-    "node": "^22.17.0",
-    "pg": "^8.16.3",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "tailwindcss": "^4.0.0",
-    "uuid": "^13.0.0"
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tailwindcss": "^3.4.14",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9.19.0",
-    "eslint-config-next": "^15.1.6",
-    "postcss": "^8",
-    "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "@types/dompurify": "^3.0.5",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@types/uuid": "^9.0.8",
+    "typescript": "^5.6.3"
   }
 }

@@ -1,0 +1,81 @@
+---
+import Section from '../ui/Section.astro'
+import Card from '../ui/Card.astro'
+import Badge from '../ui/Badge.astro'
+
+const cases = [
+  {
+    title: 'Agentes de IA para soporte interno',
+    text: 'Asistentes para políticas, procesos, manuales y preguntas frecuentes del negocio.',
+    href: '/blog/insight-asistente-interno-ia-politicas-procesos-faqs/',
+  },
+  {
+    title: 'IA para insights de inteligencia de negocio',
+    text: 'Consultas en lenguaje natural, alertas y hallazgos accionables sobre KPIs.',
+    href: '/blog/insight-ia-kpis-hallazgos-lenguaje-natural/',
+    badge: 'Alto ROI',
+  },
+  {
+    title: 'Software de tracking con IA',
+    text: 'Seguimiento de tareas, proyectos, activos y operaciones con acceso rápido vía IA.',
+    href: '/blog/insight-sistema-tracking-operacional-acceso-rapido-ia/',
+  },
+  {
+    title: 'Forecasting y planificación operacional',
+    text: 'Proyección de demanda, carga de trabajo y mantenciones para reducir incertidumbre.',
+    href: '/blog/insight-ia-forecasting-planificacion-reducir-incertidumbre-operacional/',
+  },
+  {
+    title: 'Monitoreo de performance y alertas ejecutivas',
+    text: 'Semáforos, desviaciones y alertas automáticas para foco gerencial.',
+    href: '/blog/insight-alertas-ejecutivas-inteligentes-desvios-criticos/',
+    badge: 'Valor ejecutivo',
+  },
+  {
+    title: 'Automatización de procesos con trazabilidad',
+    text: 'Flujos aprobatorios, auditoría y registro de decisiones para control y gobierno.',
+    href: '/blog/insight-automatizacion-procesos-trazabilidad-control-auditoria/',
+  },
+]
+---
+<Section variant="white">
+  <div class="text-center mb-12 md:mb-16">
+    <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-[#0B2A3C] mb-4 px-4">
+      Casos de uso que implementamos
+    </h2>
+    <p class="text-base sm:text-lg md:text-xl text-[#6F7A83] max-w-[700px] mx-auto px-4">
+      Soluciones de IA adaptadas a las necesidades reales de su operación
+    </p>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-[1200px] mx-auto">
+    {cases.map((c) => (
+      <Card class="flex flex-col">
+        <h3 class="text-lg sm:text-xl font-semibold text-[#0B2A3C] mb-3">
+          {c.title}
+        </h3>
+        <p class="text-[#6F7A83] leading-relaxed text-sm sm:text-base flex-1">
+          {c.text}
+        </p>
+        {c.badge ? (
+          <div class="flex items-center justify-between mt-4">
+            <Badge variant="success">{c.badge}</Badge>
+            <a
+              href={c.href}
+              class="inline-flex items-center gap-1 text-sm font-medium text-[#2BA8DC] hover:text-[#0B2A3C] transition-colors"
+            >
+              Leer insight <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        ) : (
+          <a
+            href={c.href}
+            class="mt-4 inline-flex items-center gap-1 text-sm font-medium text-[#2BA8DC] hover:text-[#0B2A3C] transition-colors"
+          >
+            Leer insight <span aria-hidden="true">→</span>
+          </a>
+        )}
+      </Card>
+    ))}
+  </div>
+</Section>

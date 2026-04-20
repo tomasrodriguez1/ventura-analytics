@@ -1,12 +1,8 @@
-'use client'
-
-import { useEffect, useState, Suspense } from 'react'
-import Navbar from '@/components/layout/Navbar'
-import Footer from '@/components/layout/Footer'
-import ChatPanel from '@/components/chat/ChatPanel'
-import OnboardingPanel from '@/components/chat/OnboardingPanel'
-import LeadGateModal from '@/components/LeadGateModal'
-import { getLeadContext } from '@/lib/zalantosSession'
+import { useEffect, useState } from 'react'
+import ChatPanel from './ChatPanel'
+import OnboardingPanel from './OnboardingPanel'
+import LeadGateModal from '../LeadGateModal'
+import { getLeadContext } from '../../lib/zalantosSession'
 
 export default function ConsultorIAContent() {
   const [isReady, setIsReady] = useState(false)
@@ -21,19 +17,11 @@ export default function ConsultorIAContent() {
   }, [])
 
   const handleExampleClick = (example: string) => {
-    if (!isReady) {
-      setExampleToFill(example)
-      return
-    }
     setExampleToFill(example)
   }
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
-      <Suspense fallback={<div className="h-16 md:h-20" />}>
-        <Navbar />
-      </Suspense>
-
       <div className="h-16 md:h-20" />
 
       <main className="flex-1 w-full px-4 sm:px-6 md:px-8 lg:px-12 py-6 md:py-10">
@@ -63,7 +51,8 @@ export default function ConsultorIAContent() {
               Consultor IA de Zalantos
             </h1>
             <p className="text-base sm:text-lg text-[#6F7A83] max-w-[720px]">
-              Resuelve tus dudas sobre análisis de datos, implementación de IA y transformación digital con un asistente que entiende tu contexto y responde con claridad.
+              Resuelve tus dudas sobre análisis de datos, implementación de IA y transformación
+              digital con un asistente que entiende tu contexto y responde con claridad.
             </p>
           </div>
         </div>
@@ -93,8 +82,6 @@ export default function ConsultorIAContent() {
           }}
         />
       </main>
-
-      <Footer />
     </div>
   )
 }
