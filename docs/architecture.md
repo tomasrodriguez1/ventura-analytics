@@ -64,8 +64,6 @@ Este proyecto sigue una arquitectura modular y escalable basada en componentes r
   website-spec.md
   estructura-actual.md
   architecture.md             # Este archivo
-
-/_quarantine                  # Archivos legacy o dudosos
 ```
 
 ---

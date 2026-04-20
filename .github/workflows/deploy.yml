@@ -1,4 +1,4 @@
-name: Deploy to cPanel (static export)
+name: Deploy to cPanel (Astro static)
 
 on:
   push:
@@ -22,16 +22,23 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build (Next static export -> out/)
+      - name: Build (Astro static -> dist/)
         run: npm run build
 
       - name: Verify build output
-        run: test -d out && test -f out/index.html
+        run: |
+          test -d dist
+          test -f dist/index.html
+          test -f dist/.htaccess
+          test -f dist/robots.txt
+          test -f dist/sitemap.xml
+          test -f dist/blog/index.html
+          test -f dist/consultor-ia/index.html
 
       - name: Install lftp
         run: sudo apt-get update && sudo apt-get install -y lftp
 
-      - name: Deploy via FTPS (out/ -> public_html)
+      - name: Deploy via FTPS (dist/ -> public_html)
         env:
           HOST: ${{ secrets.CPANEL_HOST }}     # ftp.zalantos.com
           USER: ${{ secrets.CPANEL_USER }}     # deploy@zalantos.com
@@ -45,6 +52,6 @@ jobs:
             set net:max-retries 2;
             set net:timeout 20;
             open -u $USER,$PASS ftp://$HOST;
-            mirror -R --delete --verbose --parallel=5 out/ $REMOTE_PATH;
+            mirror -R --delete --verbose --parallel=5 --include-glob '.*' --include-glob '*' dist/ $REMOTE_PATH;
             bye
           "

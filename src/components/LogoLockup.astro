@@ -1,0 +1,61 @@
+---
+interface Props {
+  size?: 'sm' | 'md' | 'lg'
+  class?: string
+  showText?: boolean
+  variant?: 'default' | 'iconOnly'
+  priority?: boolean
+  href?: string
+}
+
+const {
+  size = 'md',
+  class: className = '',
+  showText = true,
+  variant = 'default',
+  priority = false,
+  href,
+} = Astro.props
+
+const sizeConfig = {
+  sm: { gap: 10, iconHeight: 40, textClass: 'text-3xl' },
+  md: { gap: 10, iconHeight: 24, textClass: 'text-xl' },
+  lg: { gap: 12, iconHeight: 32, textClass: 'text-2xl' },
+} as const
+
+const config = sizeConfig[size]
+const shouldShowText = variant === 'iconOnly' ? false : showText
+const iconSrc = '/images/icono_zalantos_sf.png'
+
+const ContentTag = href ? 'a' : 'div'
+---
+<ContentTag
+  href={href}
+  class={`focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0B2A3C] focus-visible:ring-offset-2 rounded inline-flex items-center ${className}`}
+  style={`gap:${shouldShowText ? config.gap : 0}px`}
+  aria-label={href ? 'zalantos - Inicio' : 'Zalantos'}
+>
+  <span
+    class="flex-shrink-0 relative block"
+    style={`height:${config.iconHeight}px;width:${config.iconHeight}px`}
+  >
+    <img
+      src={iconSrc}
+      alt="Zalantos"
+      width={config.iconHeight}
+      height={config.iconHeight}
+      loading={priority ? 'eager' : 'lazy'}
+      decoding="async"
+      class="object-contain"
+      style={`width:${config.iconHeight}px;height:${config.iconHeight}px;max-width:${config.iconHeight}px;max-height:${config.iconHeight}px`}
+    />
+  </span>
+  {shouldShowText && (
+    <span
+      class={`${config.textClass} font-bold text-[#0B2A3C] flex-shrink-0`}
+      style="font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1;"
+    >
+      zalantos
+    </span>
+  )}
+</ContentTag>

@@ -1,0 +1,91 @@
+---
+import { getCollection } from 'astro:content'
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import { SITE_URL } from '../../lib/schemas'
+
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+)
+
+function formatDate(date: Date): string {
+  return date.toLocaleDateString('es-CL', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  })
+}
+---
+<BaseLayout
+  title="Insights & Casos de Automatización IA"
+  description="Artículos sobre automatización, inteligencia artificial y casos de éxito reales. Ingeniería aplicada a problemas reales de empresas en Chile."
+  canonical={`${SITE_URL}/blog/`}
+>
+  <main class="flex-grow w-full pt-20">
+    <section class="section-full bg-white">
+      <div class="section-inner">
+        <div class="max-w-2xl">
+          <span class="inline-block text-xs font-semibold tracking-widest uppercase mb-4 text-[#2FBF71]">
+            Zalantos
+          </span>
+          <h1 class="text-4xl sm:text-5xl font-bold leading-tight mb-4 text-[#0B2A3C]">
+            Insights & Casos
+          </h1>
+          <p class="text-lg text-[#6F7A83]">
+            Ingeniería aplicada a problemas reales.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <div class="w-full h-px bg-[rgba(11,42,60,0.08)]"></div>
+
+    <section class="section-full bg-gray-50">
+      <div class="section-inner">
+        {posts.length === 0 ? (
+          <p class="text-center py-24 text-[#6F7A83]">
+            Próximamente nuevos artículos.
+          </p>
+        ) : (
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {posts.map((post) => (
+              <article class="card-flat flex flex-col group transition-all duration-200 hover:shadow-md border-[rgba(11,42,60,0.1)]">
+                <div class="p-6 sm:p-8 flex flex-col flex-grow">
+                  <span class="text-xs font-semibold tracking-wider uppercase mb-3 text-[#2FBF71]">
+                    {post.data.category}
+                  </span>
+                  <h2 class="text-xl font-bold leading-snug mb-3 group-hover:text-[#2FBF71] transition-colors duration-200 text-[#0B2A3C]">
+                    {post.data.title}
+                  </h2>
+                  <p class="text-xs mb-4 text-[#6F7A83]">
+                    {formatDate(post.data.pubDate)}
+                  </p>
+                  <p class="text-sm leading-relaxed flex-grow text-[#6F7A83]">
+                    {post.data.excerpt}
+                  </p>
+                  <div class="mt-6 pt-4 border-t border-[rgba(11,42,60,0.08)]">
+                    <a
+                      href={`/blog/${post.slug}/`}
+                      class="inline-flex items-center gap-1.5 text-sm font-semibold transition-colors duration-200 text-[#0B2A3C]"
+                      aria-label={`Leer artículo: ${post.data.title}`}
+                    >
+                      Leer artículo
+                      <svg
+                        class="w-4 h-4 transition-transform duration-200 group-hover:translate-x-1"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                      >
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                      </svg>
+                    </a>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+  </main>
+</BaseLayout>

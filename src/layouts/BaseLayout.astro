@@ -1,0 +1,97 @@
+---
+import '../styles/global.css'
+import SEOHead from '../components/SEOHead.astro'
+import JsonLd from '../components/JsonLd.astro'
+import Header from '../components/Header.astro'
+import Footer from '../components/Footer.astro'
+import {
+  organizationSchema,
+  websiteSchema,
+  serviceSchema,
+} from '../lib/schemas'
+
+interface Props {
+  title: string
+  description: string
+  canonical: string
+  ogImage?: string
+  type?: 'website' | 'article'
+  pubDate?: Date
+  updatedDate?: Date
+  author?: string
+  bodyClass?: string
+  hideHeader?: boolean
+  hideFooter?: boolean
+  extraSchemas?: Record<string, unknown>[]
+}
+
+const {
+  title,
+  description,
+  canonical,
+  ogImage,
+  type = 'website',
+  pubDate,
+  updatedDate,
+  author,
+  bodyClass = '',
+  hideHeader = false,
+  hideFooter = false,
+  extraSchemas = [],
+} = Astro.props
+
+const GA_ID = 'G-X2L1QQ8X0D'
+---
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=5"
+    />
+    <meta name="theme-color" content="#0B2A3C" />
+    <link rel="icon" type="image/png" href="/icon.png" />
+    <link rel="shortcut icon" href="/icon.png" />
+    <link rel="apple-touch-icon" href="/icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+    />
+
+    <SEOHead
+      title={title}
+      description={description}
+      canonical={canonical}
+      ogImage={ogImage}
+      type={type}
+      pubDate={pubDate}
+      updatedDate={updatedDate}
+      author={author}
+    />
+
+    <JsonLd schema={organizationSchema} />
+    <JsonLd schema={websiteSchema} />
+    <JsonLd schema={serviceSchema} />
+    {extraSchemas.map((schema) => <JsonLd schema={schema} />)}
+
+    <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}></script>
+    <script is:inline define:vars={{ GA_ID }}>
+      window.dataLayer = window.dataLayer || []
+      function gtag() { window.dataLayer.push(arguments) }
+      gtag('js', new Date())
+      gtag('config', GA_ID)
+    </script>
+  </head>
+  <body class={`font-sans antialiased ${bodyClass}`}>
+    {!hideHeader && <Header />}
+    <slot />
+    {!hideFooter && <Footer />}
+  </body>
+</html>

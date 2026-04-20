@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useEffect, useState } from 'react'
-import { useRouter } from 'next/navigation'
 import { registerLead, ApiError, getErrorMapping } from '@/lib/api'
 import { getLeadContext } from '@/lib/zalantosSession'
 import Button from '@/components/ui/Button'
@@ -68,7 +67,6 @@ export default function LeadGateModal({ pageUrl, onReady }: LeadGateModalProps) 
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>(initialFieldErrors)
   const [generalError, setGeneralError] = useState<string | null>(null)
   const [isRegistered, setIsRegistered] = useState(false)
-  const router = useRouter()
 
   useEffect(() => {
     const context = getLeadContext()
@@ -169,7 +167,7 @@ export default function LeadGateModal({ pageUrl, onReady }: LeadGateModalProps) 
 
   const handleClose = () => {
     setIsVisible(false)
-    router.push('/')
+    window.location.href = '/'
   }
 
   if (!isVisible && isRegistered) {

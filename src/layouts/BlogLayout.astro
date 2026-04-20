@@ -1,0 +1,57 @@
+---
+import BaseLayout from './BaseLayout.astro'
+import { articleSchema, breadcrumbSchema, SITE_URL } from '../lib/schemas'
+
+interface Props {
+  title: string
+  description: string
+  slug: string
+  pubDate: Date
+  updatedDate?: Date
+  author: string
+  category?: string
+  image?: string
+}
+
+const {
+  title,
+  description,
+  slug,
+  pubDate,
+  updatedDate,
+  author,
+  category,
+  image,
+} = Astro.props
+
+const canonical = `${SITE_URL}/blog/${slug}/`
+
+const articleLd = articleSchema({
+  title,
+  description,
+  author,
+  category,
+  pubDate,
+  updatedDate,
+  slug,
+  image,
+})
+
+const breadcrumbLd = breadcrumbSchema([
+  { name: 'Inicio', url: `${SITE_URL}/` },
+  { name: 'Insights & Casos', url: `${SITE_URL}/blog/` },
+  { name: title, url: canonical },
+])
+---
+<BaseLayout
+  title={title}
+  description={description}
+  canonical={canonical}
+  type="article"
+  pubDate={pubDate}
+  updatedDate={updatedDate}
+  author={author}
+  extraSchemas={[articleLd, breadcrumbLd]}
+>
+  <slot />
+</BaseLayout>

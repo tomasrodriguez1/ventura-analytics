@@ -1,6 +1,3 @@
-'use client'
-
-import Link from 'next/link'
 
 interface OnboardingPanelProps {
   onExampleClick: (example: string) => void
@@ -124,12 +121,12 @@ export default function OnboardingPanel({ onExampleClick }: OnboardingPanelProps
             </p>
             <p className="text-xs text-[#6F7A83]">
               No compartimos información con terceros.{' '}
-              <Link 
-                href="/privacy" 
+              <a
+                href="/privacy/"
                 className="text-[#2FBF71] hover:text-[#26a662] underline font-medium"
               >
                 Ver política de privacidad
-              </Link>
+              </a>
             </p>
           </div>
         </div>

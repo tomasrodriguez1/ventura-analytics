@@ -1,0 +1,126 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content'
+import BlogLayout from '../../layouts/BlogLayout.astro'
+import LinkButton from '../../components/ui/LinkButton.astro'
+import { LINKS } from '../../lib/constants'
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog')
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }))
+}
+
+interface Props {
+  post: CollectionEntry<'blog'>
+}
+
+const { post } = Astro.props
+const { Content } = await post.render()
+
+function formatDate(date: Date): string {
+  return date.toLocaleDateString('es-CL', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  })
+}
+---
+<BlogLayout
+  title={post.data.title}
+  description={post.data.description}
+  slug={post.slug}
+  pubDate={post.data.pubDate}
+  updatedDate={post.data.updatedDate}
+  author={post.data.author}
+  category={post.data.category}
+  image={post.data.image}
+>
+  <main class="flex-grow w-full pt-20">
+    <section class="section-full bg-white">
+      <div class="section-inner">
+        <div class="max-w-3xl mx-auto text-center">
+          <nav class="flex items-center justify-center gap-2 text-xs mb-8" aria-label="Navegación de migas de pan">
+            <a
+              href={LINKS.blog}
+              class="transition-colors duration-150 text-[#6F7A83]"
+              title="Ver todos los artículos de Zalantos"
+            >
+              Insights & Casos
+            </a>
+            <svg
+              class="w-3 h-3 text-[#6F7A83]"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+            <span class="text-[#0B2A3C]">{post.data.category}</span>
+          </nav>
+
+          <span class="inline-block text-xs font-semibold tracking-widest uppercase mb-4 text-[#2FBF71]">
+            {post.data.category}
+          </span>
+
+          <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold leading-tight mb-6 text-[#0B2A3C]">
+            {post.data.title}
+          </h1>
+
+          <div class="flex items-center justify-center gap-4 text-sm text-[#6F7A83]">
+            <span>{post.data.author}</span>
+            <span aria-hidden="true">·</span>
+            <time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="w-full h-px bg-[rgba(11,42,60,0.08)]"></div>
+
+    <section class="section-full bg-white">
+      <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+        <article class="blog-content">
+          <Content />
+        </article>
+
+        <aside class="mt-16 mb-8 rounded-2xl p-8 sm:p-10 bg-[rgba(47,191,113,0.06)] border-[1.5px] border-[rgba(47,191,113,0.3)]">
+          <p class="text-xs font-semibold tracking-widest uppercase mb-3 text-[#2FBF71]">
+            ¿Te identificas con este problema?
+          </p>
+          <h2 class="text-2xl sm:text-3xl font-bold leading-snug mb-3 text-[#0B2A3C]">
+            Agenda un Sprint 0 sin costo y diseñemos la solución en 1 semana.
+          </h2>
+          <p class="text-sm leading-relaxed mb-8 text-[#6F7A83]">
+            En 5 días de trabajo conjunto diagnosticamos el problema, definimos la arquitectura
+            y te entregamos un plan de acción concreto sin compromisos.
+          </p>
+          <LinkButton href={LINKS.contact} variant="primary" class="px-8 py-3 text-sm">
+            Agenda tu Sprint 0 gratuito
+          </LinkButton>
+        </aside>
+
+        <div class="pb-12">
+          <a
+            href={LINKS.blog}
+            class="inline-flex items-center gap-2 text-sm font-medium transition-colors duration-150 text-[#6F7A83]"
+            title="Ver todos los artículos de Insights & Casos"
+          >
+            <svg
+              class="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16l-4-4m0 0l4-4m-4 4h18" />
+            </svg>
+            Ver todos los artículos
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+</BlogLayout>

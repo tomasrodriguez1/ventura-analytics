@@ -1,5 +1,3 @@
-// Constantes centralizadas para zalantos
-
 export const BRAND = 'zalantos'
 
 export const COLORS = {
@@ -18,26 +16,25 @@ export const LINKS = {
   home: '/',
   about: '/?section=about',
   contact: '/?section=contact',
-  aiConsultant: '/consultor-ia',
-  blog: '/blog',
+  aiConsultant: '/consultor-ia/',
+  blog: '/blog/',
+  privacy: '/privacy/',
 } as const
 
 export const SOCIAL_LINKS = {
-  // TODO: Agregar cuando estén disponibles
-  // twitter: '',
-  // linkedin: '',
-  // github: '',
+  linkedin: 'https://www.linkedin.com/company/zalantos/',
 } as const
 
-// Worker API endpoints (hardcoded para static export)
-export const WORKER_BASE_URL = 'https://silent-union-0457.tom-s-account-3d0.workers.dev'
+export const WORKER_BASE_URL =
+  'https://silent-union-0457.tom-s-account-3d0.workers.dev'
 export const LEAD_REGISTER_URL = `${WORKER_BASE_URL}/lead/register`
 export const CHAT_API_URL = `${WORKER_BASE_URL}/chat`
 
-// Versión de consentimiento
+export const CONTACT_WEBHOOK_URL =
+  'https://n8n.venturanalytic.com/webhook/95513fc5-bf2c-4d4f-b5d8-e5ab229e8629'
+
 export const CONSENT_VERSION = '2026-01-07'
 
-// Keys de localStorage para sesión
 export const STORAGE_KEYS = {
   SESSION_ID: 'zalantos_session_id',
   LEAD_ID: 'zalantos_lead_id',

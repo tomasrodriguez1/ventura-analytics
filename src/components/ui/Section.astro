@@ -1,0 +1,25 @@
+---
+interface Props {
+  variant?: 'white' | 'gray' | 'dark'
+  hero?: boolean
+  narrow?: boolean
+  class?: string
+  id?: string
+}
+
+const { variant = 'white', hero = false, narrow = false, class: className = '', id } = Astro.props
+
+const variantClass = {
+  white: 'bg-white',
+  gray: 'bg-gray-50',
+  dark: 'bg-[#0B2A3C] text-white',
+}[variant]
+
+const sectionClass = hero ? 'section-full-hero' : 'section-full'
+const innerClass = narrow ? 'section-inner-narrow' : 'section-inner'
+---
+<section id={id} class={`${sectionClass} ${variantClass} ${className}`}>
+  <div class={innerClass}>
+    <slot />
+  </div>
+</section>

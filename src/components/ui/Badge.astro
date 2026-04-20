@@ -1,0 +1,15 @@
+---
+interface Props {
+  variant?: 'success' | 'info' | 'warning'
+  class?: string
+}
+const { variant = 'success', class: className = '' } = Astro.props
+const variantClass = {
+  success: 'bg-[#2FBF71]/10 text-[#2FBF71]',
+  info: 'bg-[#3FA9F5]/10 text-[#3FA9F5]',
+  warning: 'bg-yellow-500/10 text-yellow-700',
+}[variant]
+---
+<span class={`inline-block text-xs px-3 py-1 rounded-full font-medium ${variantClass} ${className}`}>
+  <slot />
+</span>
