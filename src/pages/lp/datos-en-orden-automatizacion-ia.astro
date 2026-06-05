@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import LinkedInCampaignLanding from '../../components/landing/LinkedInCampaignLanding.astro'
+import { landingContent } from '../../data/landingCampaigns/datos-en-orden-automatizacion-ia'
+
+const title = landingContent.meta?.title ?? 'Campaña Zalantos'
+const description =
+  landingContent.meta?.description ?? 'Descripción por defecto.'
+const canonical = 'https://zalantos.com/lp/datos-en-orden-automatizacion-ia/'
+---
+<BaseLayout
+  title={title}
+  description={description}
+  canonical={canonical}
+  type="website"
+  hideHeader
+  hideFooter
+>
+  <LinkedInCampaignLanding content={landingContent} />
+</BaseLayout>

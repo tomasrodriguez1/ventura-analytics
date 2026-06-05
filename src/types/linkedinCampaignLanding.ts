@@ -32,4 +32,8 @@ export type LinkedInCampaignContent = {
     description: string
   }
   footerLine?: string
+  qualifySection?: {
+    title: string
+    bullets: string[]
+  }
 }

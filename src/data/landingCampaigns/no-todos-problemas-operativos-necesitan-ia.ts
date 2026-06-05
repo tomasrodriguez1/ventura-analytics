@@ -20,8 +20,8 @@ export const landingContent: LinkedInCampaignContent = {
     href: '/?section=contact',
   },
   secondaryCta: {
-    label: 'Charlemos de tu problema',
-    href: '/?section=contact',
+    label: 'Hablar con el Consultor IA',
+    href: '/consultor-ia/',
   },
   chips: [
     'Diagnóstico en 1 semana',
