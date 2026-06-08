@@ -26,6 +26,12 @@ function formatDate(date: Date): string {
     day: 'numeric',
   })
 }
+
+function readingTime(body: string): string {
+  const words = body.trim().split(/\s+/).length
+  const minutes = Math.ceil(words / 200)
+  return `${minutes} min de lectura`
+}
 ---
 <BlogLayout
   title={post.data.title}
@@ -73,6 +79,8 @@ function formatDate(date: Date): string {
             <span>{post.data.author}</span>
             <span aria-hidden="true">·</span>
             <time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time>
+            <span aria-hidden="true">·</span>
+            <span>{readingTime(post.body)}</span>
           </div>
         </div>
       </div>

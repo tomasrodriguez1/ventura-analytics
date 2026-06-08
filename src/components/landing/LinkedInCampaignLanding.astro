@@ -17,6 +17,7 @@ const {
   trustLine,
   visual,
   footerLine,
+  qualifySection,
 } = content
 
 const bulletsToShow = bullets.slice(0, 3)
@@ -60,24 +61,29 @@ function isExternalHref(href: string) {
           </ul>
         )}
 
-        <div class="flex flex-wrap gap-3 pt-1">
+        <div class="flex max-w-xl flex-col items-center gap-4 pt-2">
           <a
             href={primaryCta.href}
-            class="btn-primary rounded-[var(--radius-lg)] text-sm"
+            class="btn-primary w-full justify-center rounded-[var(--radius-lg)] px-6 py-4 text-center text-base sm:w-fit sm:text-lg"
             target={isExternalHref(primaryCta.href) ? '_blank' : undefined}
             rel={isExternalHref(primaryCta.href) ? 'noopener noreferrer' : undefined}
           >
             {primaryCta.label}
           </a>
           {secondaryCta && (
-            <a
-              href={secondaryCta.href}
-              class="btn-outline rounded-[var(--radius-lg)] text-sm"
-              target={isExternalHref(secondaryCta.href) ? '_blank' : undefined}
-              rel={isExternalHref(secondaryCta.href) ? 'noopener noreferrer' : undefined}
-            >
-              {secondaryCta.label}
-            </a>
+            <div class="w-full rounded-2xl border border-[#EBEEF1] bg-[#F7F8FA] p-4 text-center">
+              <p class="mb-3 text-sm leading-relaxed text-[#4D555D]">
+                ¿Tienes dudas o no sabes si vale la pena agendar el Sprint 0? Habla con nuestro agente de IA y aclara tu caso antes de reservar.
+              </p>
+              <a
+                href={secondaryCta.href}
+                class="inline-flex items-center justify-center rounded-[var(--radius-lg)] border border-[#2FBF71] px-4 py-2 text-xs font-semibold text-[#0B2A3C] transition-colors duration-200 hover:bg-[#2FBF71] hover:text-white"
+                target={isExternalHref(secondaryCta.href) ? '_blank' : undefined}
+                rel={isExternalHref(secondaryCta.href) ? 'noopener noreferrer' : undefined}
+              >
+                {secondaryCta.label}
+              </a>
+            </div>
           )}
         </div>
 
@@ -128,6 +134,24 @@ function isExternalHref(href: string) {
         </div>
       </div>
     </div>
+
+    {qualifySection && (
+      <section class="border-t border-[rgba(11,42,60,0.06)] bg-[#F7F8FA] px-4 py-10 sm:px-6 lg:px-10">
+        <div class="mx-auto max-w-[900px]">
+          <h2 class="mb-6 text-base font-semibold uppercase tracking-[0.15em] text-[#0B2A3C]">
+            {qualifySection.title}
+          </h2>
+          <ul class="grid gap-3 sm:grid-cols-2">
+            {qualifySection.bullets.map((item) => (
+              <li class="flex items-start gap-3 rounded-xl border border-[#EBEEF1] bg-white px-4 py-3 text-sm text-[#4D555D]">
+                <span class="mt-1 h-2 w-2 shrink-0 rounded-full bg-[#2FBF71]"></span>
+                <span class="leading-snug">{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )}
 
     {footerLine && (
       <footer class="border-t border-[var(--z-border)] px-4 py-3 sm:px-6 lg:px-10">

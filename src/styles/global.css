@@ -188,6 +188,7 @@ body {
 
   .blog-content {
     @apply text-[#374151] text-base sm:text-lg leading-relaxed;
+    overflow: hidden;
   }
 
   .blog-content h2 {

@@ -8,6 +8,7 @@ const staticPages = [
   { path: '/blog/', changefreq: 'weekly', priority: '0.9' },
   { path: '/consultor-ia/', changefreq: 'monthly', priority: '0.8' },
   { path: '/lp/no-todos-problemas-operativos-necesitan-ia/', changefreq: 'monthly', priority: '0.7' },
+  { path: '/lp/datos-en-orden-automatizacion-ia/', changefreq: 'monthly', priority: '0.7' },
   { path: '/privacy/', changefreq: 'yearly', priority: '0.3' },
 ]
 
