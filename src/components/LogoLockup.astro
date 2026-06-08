@@ -1,4 +1,6 @@
 ---
+import { BRAND_LOGO_SRC } from '../lib/constants'
+
 interface Props {
   size?: 'sm' | 'md' | 'lg'
   class?: string
@@ -25,7 +27,7 @@ const sizeConfig = {
 
 const config = sizeConfig[size]
 const shouldShowText = variant === 'iconOnly' ? false : showText
-const iconSrc = '/images/icono_zalantos_sf.png'
+const iconSrc = BRAND_LOGO_SRC
 
 const ContentTag = href ? 'a' : 'div'
 ---

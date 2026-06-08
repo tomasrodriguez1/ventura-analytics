@@ -1,5 +1,9 @@
 export const BRAND = 'zalantos'
 
+export const BRAND_LOGO_SRC = '/images/icono-nuevo-gordo.svg'
+export const BRAND_ICON_SRC = '/icon.png'
+export const BRAND_OG_IMAGE = '/og-image.png'
+
 export const COLORS = {
   primary: '#0B2A3C',
   value: '#2FBF71',
