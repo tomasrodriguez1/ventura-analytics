@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import ProductLanding from '../../components/products/ProductLanding.astro'
+import { getProduct } from '../../data/products'
+import { breadcrumbSchema, softwareApplicationSchema } from '../../lib/schemas'
+
+const product = getProduct('gestion-proyectos')
+const canonical = 'https://zalantos.com/productos/gestion-de-proyectos/'
+---
+<BaseLayout
+  title={product.meta.title}
+  description={product.meta.description}
+  canonical={canonical}
+  ogImage={product.meta.ogImage}
+  extraSchemas={[
+    breadcrumbSchema([
+      { name: 'Inicio', url: 'https://zalantos.com/' },
+      { name: 'Productos', url: 'https://zalantos.com/productos/' },
+      { name: product.name, url: canonical },
+    ]),
+    softwareApplicationSchema({ name: product.name, description: product.meta.description, url: canonical }),
+  ]}
+>
+  <main id="main-content" class="flex-grow"><ProductLanding product={product} /></main>
+</BaseLayout>

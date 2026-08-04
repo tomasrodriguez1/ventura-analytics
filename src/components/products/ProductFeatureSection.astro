@@ -1,0 +1,29 @@
+---
+import type { ProductContent } from '../../types/products'
+import Section from '../ui/Section.astro'
+
+interface Props { product: ProductContent }
+const { product } = Astro.props
+const isBlue = product.accent === 'blue'
+const bullet = isBlue ? 'bg-[#3FA9F5]' : 'bg-[#2FBF71]'
+---
+<Section variant="white">
+  <div class="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+    <div>
+      <p class={`text-sm font-semibold uppercase tracking-[0.16em] ${isBlue ? 'text-[#3FA9F5]' : 'text-[#2FBF71]'}`}>Capacidades disponibles</p>
+      <h2 class="mt-3 text-3xl font-bold leading-tight text-[#0B2A3C] sm:text-4xl">{product.featureTitle}</h2>
+      <p class="mt-5 text-lg leading-relaxed text-[#6F7A83]">{product.featureDescription}</p>
+      <ul class="mt-8 space-y-4">
+        {product.capabilities.map((capability) => (
+          <li class="flex gap-3 text-[#0B2A3C]">
+            <span class={`mt-2 h-2 w-2 shrink-0 rounded-full ${bullet}`}></span>
+            <span>{capability}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+    <figure class="overflow-hidden rounded-[var(--radius-lg)] border border-[rgba(11,42,60,0.12)] bg-white shadow-[0_24px_60px_-30px_rgba(11,42,60,0.4)]">
+      <img src={product.featureImage.src} alt={product.featureImage.alt} width={product.featureImage.width} height={product.featureImage.height} class="h-auto w-full" loading="lazy" decoding="async" />
+    </figure>
+  </div>
+</Section>

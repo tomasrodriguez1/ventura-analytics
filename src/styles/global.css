@@ -178,6 +178,10 @@ body {
     @apply bg-white p-5 sm:p-6 md:p-8 rounded-[var(--radius-lg)] border border-[rgba(11,42,60,0.08)] transition-all duration-150;
   }
 
+  .footer-link {
+    @apply inline-flex min-h-[36px] items-center rounded text-sm text-gray-400 transition-colors hover:text-[#2FBF71] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2FBF71] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B2A3C];
+  }
+
   .form-input {
     @apply w-full px-4 py-3 min-h-[44px] rounded-[var(--radius-md)] bg-white border border-[rgba(11,42,60,0.15)] text-[#0B2A3C] focus:outline-none focus:border-[#3FA9F5] focus:ring-2 focus:ring-[#3FA9F5]/10 transition-colors duration-150 touch-manipulation;
   }

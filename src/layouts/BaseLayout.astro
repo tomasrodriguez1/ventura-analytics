@@ -87,6 +87,15 @@ const GA_ID = 'G-X2L1QQ8X0D'
       function gtag() { window.dataLayer.push(arguments) }
       gtag('js', new Date())
       gtag('config', GA_ID)
+      window.gtag = gtag
+      document.addEventListener('click', function (event) {
+        var target = event.target instanceof Element ? event.target.closest('[data-analytics]') : null
+        if (!target) return
+        gtag('event', target.dataset.analytics, {
+          product: target.dataset.product || undefined,
+          link_url: target.getAttribute('href') || undefined,
+        })
+      })
     </script>
   </head>
   <body class={`font-sans antialiased ${bodyClass}`}>

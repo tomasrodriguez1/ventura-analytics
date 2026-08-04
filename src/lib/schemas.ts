@@ -131,3 +131,25 @@ export function breadcrumbSchema(items: { name: string; url: string }[]) {
     })),
   }
 }
+
+export function softwareApplicationSchema(input: {
+  name: string
+  description: string
+  url: string
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: input.name,
+    description: input.description,
+    url: input.url,
+    applicationCategory: 'BusinessApplication',
+    operatingSystem: 'Web',
+    provider: {
+      '@type': 'Organization',
+      name: 'Zalantos SPA',
+      url: SITE_URL,
+    },
+    inLanguage: 'es-CL',
+  }
+}

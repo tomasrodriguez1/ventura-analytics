@@ -1,0 +1,15 @@
+---
+import type { ProductContent } from '../../types/products'
+import Section from '../ui/Section.astro'
+
+interface Props { product: ProductContent }
+const { product } = Astro.props
+const isBlue = product.accent === 'blue'
+---
+<Section variant="gray">
+  <div class="mx-auto max-w-[860px] rounded-[var(--radius-lg)] border border-[rgba(11,42,60,0.1)] bg-white p-7 sm:p-10">
+    <p class={`text-sm font-semibold uppercase tracking-[0.16em] ${isBlue ? 'text-[#3FA9F5]' : 'text-[#2FBF71]'}`}>{product.scenarioTitle}</p>
+    <p class="mt-4 text-2xl font-semibold leading-snug text-[#0B2A3C]">{product.scenarioText}</p>
+    <p class="mt-5 text-sm text-[#6F7A83]">Este ejemplo describe una forma de uso; no corresponde a un caso de cliente ni a una promesa de resultado.</p>
+  </div>
+</Section>

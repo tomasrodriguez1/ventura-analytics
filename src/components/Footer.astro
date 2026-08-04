@@ -1,87 +1,37 @@
 ---
 import { LINKS } from '../lib/constants'
 ---
-<footer class="w-full bg-[#0B2A3C] text-gray-300 border-t border-[rgba(255,255,255,0.08)]" role="contentinfo">
+<footer class="w-full border-t border-[rgba(255,255,255,0.08)] bg-[#0B2A3C] text-gray-300" role="contentinfo">
   <div class="section-inner py-12">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 mb-8">
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-4 md:gap-10">
       <div class="md:col-span-2">
-        <h3 class="text-xl md:text-2xl font-bold text-white mb-3">zalantos</h3>
-        <p class="text-gray-400 text-sm mb-4">
-          Convertimos datos en decisiones y monetizamos resultados
-        </p>
+        <h3 class="text-xl font-bold text-white md:text-2xl">zalantos</h3>
+        <p class="mt-3 max-w-md text-sm text-gray-400">Convertimos datos en decisiones y monetizamos resultados.</p>
       </div>
-
       <nav aria-label="Navegación del pie de página">
-        <h4 class="text-white font-semibold mb-4 text-sm uppercase tracking-wider">
-          Navegación
-        </h4>
-        <ul class="space-y-2">
-          <li>
-            <a
-              href={LINKS.home}
-              title="Volver al inicio de Zalantos"
-              class="text-gray-400 hover:text-[#2FBF71] transition-colors text-sm inline-flex items-center min-h-[44px] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2FBF71] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B2A3C] rounded"
-            >
-              Inicio
-            </a>
-          </li>
-          <li>
-            <a
-              href={LINKS.blog}
-              title="Ver artículos de Insights y Casos de Zalantos"
-              class="text-gray-400 hover:text-[#2FBF71] transition-colors text-sm inline-flex items-center min-h-[44px] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2FBF71] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B2A3C] rounded"
-            >
-              Blog
-            </a>
-          </li>
-          <li>
-            <a
-              href={LINKS.contact}
-              title="Contactar a Zalantos para agendar un Sprint 0"
-              class="text-gray-400 hover:text-[#2FBF71] transition-colors text-sm inline-flex items-center min-h-[44px] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2FBF71] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B2A3C] rounded"
-            >
-              Contacto
-            </a>
-          </li>
-          <li>
-            <a
-              href={LINKS.aiConsultant}
-              title="Probar el Consultor IA de Zalantos"
-              class="text-gray-400 hover:text-[#2FBF71] transition-colors text-sm inline-flex items-center min-h-[44px] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2FBF71] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B2A3C] rounded"
-            >
-              Consultor IA
-            </a>
-          </li>
+        <h4 class="mb-3 text-sm font-semibold uppercase tracking-wider text-white">Navegación</h4>
+        <ul class="space-y-1">
+          <li><a href={LINKS.home} class="footer-link">Inicio</a></li>
+          <li><a href={LINKS.blog} class="footer-link">Blog</a></li>
+          <li><a href={LINKS.aiConsultant} class="footer-link">Consultor IA</a></li>
+          <li><a href={LINKS.contact} class="footer-link">Contacto</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Productos Zalantos">
+        <h4 class="mb-3 text-sm font-semibold uppercase tracking-wider text-white">Productos</h4>
+        <ul class="space-y-1">
+          <li><a href={LINKS.products} class="footer-link" data-analytics="product_nav_click">Ver productos</a></li>
+          <li><a href={LINKS.crm} class="footer-link">CRM Zalantos</a></li>
+          <li><a href={LINKS.projectManagement} class="footer-link">Gestión de Proyectos</a></li>
         </ul>
       </nav>
     </div>
-
-    <div class="border-t border-[rgba(255,255,255,0.08)] pt-6 mb-6">
-      <p class="text-gray-400 text-sm break-words">
-        <span class="text-white font-semibold">Email:</span>{' '}
-        <a
-          href="mailto:soporte@zalantos.com"
-          title="Enviar correo a Zalantos"
-          class="text-[#2FBF71] hover:text-[#2FBF71]/80 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2FBF71] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B2A3C] rounded break-all sm:break-normal"
-        >
-          soporte@zalantos.com
-        </a>
-      </p>
+    <div class="mt-8 border-t border-[rgba(255,255,255,0.08)] pt-6">
+      <p class="text-sm text-gray-400"><span class="font-semibold text-white">Email:</span> <a href="mailto:soporte@zalantos.com" class="text-[#2FBF71] hover:text-[#2FBF71]/80">soporte@zalantos.com</a></p>
     </div>
-
-    <div class="border-t border-[rgba(255,255,255,0.08)] pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
-      <p class="text-gray-500 text-sm">
-        © 2026 zalantos. Todos los derechos reservados.
-      </p>
-      <div class="flex gap-6 text-sm">
-        <a
-          href={LINKS.privacy}
-          title="Ver política de privacidad de Zalantos"
-          class="text-gray-500 hover:text-[#2FBF71] transition-colors min-h-[44px] inline-flex items-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[#2FBF71] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0B2A3C] rounded"
-        >
-          Privacidad y términos
-        </a>
-      </div>
+    <div class="mt-6 flex flex-col items-center justify-between gap-4 border-t border-[rgba(255,255,255,0.08)] pt-6 md:flex-row">
+      <p class="text-sm text-gray-500">© 2026 zalantos. Todos los derechos reservados.</p>
+      <a href={LINKS.privacy} class="footer-link">Privacidad y términos</a>
     </div>
   </div>
 </footer>

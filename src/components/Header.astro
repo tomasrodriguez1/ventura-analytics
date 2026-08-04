@@ -7,112 +7,58 @@ interface Props {
 }
 
 const { extraLink } = Astro.props
-
 const pathname = Astro.url.pathname
-const section = Astro.url.searchParams.get('section') || 'home'
 const isHome = pathname === '/' || pathname === ''
 const isBlog = pathname.startsWith('/blog')
-const isHomeActive = isHome && section === 'home'
+const isProducts = pathname.startsWith('/productos')
+const navItems = [
+  { href: LINKS.home, label: 'Inicio', active: isHome },
+  { href: LINKS.products, label: 'Productos', active: isProducts },
+  { href: LINKS.blog, label: 'Blog', active: isBlog },
+]
 ---
-<nav
-  class="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-[rgba(11,42,60,0.08)]"
-  role="navigation"
-  aria-label="Navegación principal"
->
-  <div class="w-full px-2 sm:px-4 md:px-12 lg:px-16">
-    <div class="max-w-[1400px] mx-auto flex items-center justify-between h-16 md:h-20">
-      <div class="flex-shrink-0">
-        <div class="sm:hidden">
-          <LogoLockup size="sm" variant="iconOnly" priority href={LINKS.home} />
-        </div>
-        <div class="hidden sm:block">
-          <LogoLockup size="sm" priority href={LINKS.home} class="flex-shrink-0" />
-        </div>
+<nav class="fixed left-0 right-0 top-0 z-50 border-b border-[rgba(11,42,60,0.08)] bg-white/95 backdrop-blur-md" aria-label="Navegación principal">
+  <div class="w-full px-4 sm:px-6 md:px-12 lg:px-16">
+    <div class="mx-auto flex h-16 max-w-[1400px] items-center justify-between md:h-20">
+      <LogoLockup size="sm" priority href={LINKS.home} class="flex-shrink-0" />
+      <div class="hidden items-center gap-7 lg:flex">
+        {navItems.map((item) => (
+          <a href={item.href} class={`rounded text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0B2A3C] focus-visible:ring-offset-2 ${item.active ? 'text-[#0B2A3C]' : 'text-[#6F7A83] hover:text-[#0B2A3C]'}`} aria-current={item.active ? 'page' : undefined} data-analytics={item.label === 'Productos' ? 'product_nav_click' : undefined}>
+            {item.label}
+          </a>
+        ))}
+        {extraLink && <a href={extraLink.href} class="text-sm font-semibold text-[#0B2A3C] hover:text-[#2FBF71]">{extraLink.label}</a>}
+        <a href={LINKS.contact} class="btn-primary px-5 py-2.5 text-sm" aria-label="Ir a página de contacto">Contacto</a>
       </div>
-
-      <div class="flex gap-1.5 sm:gap-2 lg:gap-8 items-center flex-shrink-0">
-        <div class="flex gap-1 sm:gap-2 lg:gap-8 flex-shrink-0">
-          <a
-            href={LINKS.home}
-            class={`text-sm font-medium transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0B2A3C] focus-visible:ring-offset-2 rounded px-1.5 sm:px-2 lg:px-0 flex-shrink-0 ${isHomeActive ? 'text-[#0B2A3C]' : 'text-[#6F7A83] hover:text-[#0B2A3C]'}`}
-            aria-current={isHomeActive ? 'page' : undefined}
-            aria-label="Inicio"
-          >
-            <svg
-              class="w-5 h-5 block lg:hidden flex-shrink-0"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
-            </svg>
-            <span class="hidden lg:block">Inicio</span>
-          </a>
-
-          <a
-            href={LINKS.blog}
-            class={`text-sm font-medium transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0B2A3C] focus-visible:ring-offset-2 rounded px-1.5 sm:px-2 lg:px-0 flex-shrink-0 ${isBlog ? 'text-[#0B2A3C]' : 'text-[#6F7A83] hover:text-[#0B2A3C]'}`}
-            aria-current={isBlog ? 'page' : undefined}
-            aria-label="Blog"
-          >
-            <svg
-              class="w-5 h-5 block lg:hidden flex-shrink-0"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-            </svg>
-            <span class="hidden lg:block">Blog</span>
-          </a>
-        </div>
-
-        {extraLink && (
-          <div class="hidden lg:block">
-            <a
-              href={extraLink.href}
-              class="text-sm font-semibold text-[#0B2A3C] transition-colors hover:text-[#2FBF71]"
-              aria-label={extraLink.label}
-            >
-              {extraLink.label}
-            </a>
+      <details id="mobile-menu" class="group relative lg:hidden">
+        <summary class="flex h-11 w-11 cursor-pointer list-none items-center justify-center rounded border border-[rgba(11,42,60,0.15)] text-[#0B2A3C] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0B2A3C] focus-visible:ring-offset-2">
+          <svg class="h-5 w-5 group-open:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+          <svg class="hidden h-5 w-5 group-open:block" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+          <span class="sr-only">Abrir menú</span>
+        </summary>
+        <div class="absolute right-0 mt-3 w-72 rounded-[var(--radius-lg)] border border-[rgba(11,42,60,0.12)] bg-white p-3 shadow-xl">
+          <div class="space-y-1">
+            {navItems.map((item) => <a href={item.href} class={`block rounded px-4 py-3 text-sm font-semibold focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0B2A3C] ${item.active ? 'bg-gray-50 text-[#0B2A3C]' : 'text-[#6F7A83] hover:bg-gray-50 hover:text-[#0B2A3C]'}`} aria-current={item.active ? 'page' : undefined} data-analytics={item.label === 'Productos' ? 'product_nav_click' : undefined}>{item.label}</a>)}
           </div>
-        )}
-
-        <div class="flex flex-wrap items-center gap-1.5 sm:gap-3 justify-end w-full sm:w-auto">
-          <a
-            href={LINKS.contact}
-            class="btn-primary hidden sm:inline-flex text-xs sm:text-sm px-3 sm:px-4 lg:px-6 py-2.5 whitespace-nowrap"
-            aria-label="Ir a página de contacto"
-          >
-            Contacto
-          </a>
-
-          <a
-            href={LINKS.contact}
-            class="sm:hidden inline-flex w-11 h-11 rounded-full bg-[#0B2A3C] shadow-lg items-center justify-center text-white border border-[#0B2A3C]/25"
-            aria-label="Ir a página de contacto"
-          >
-            <svg
-              class="w-5 h-5"
-              viewBox="0 0 64 64"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="3"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              aria-hidden="true"
-              role="img"
-            >
-              <circle cx="32" cy="32" r="28" />
-              <path d="M16 24h32c2.2 0 4 1.8 4 4v14c0 2.2-1.8 4-4 4H16c-2.2 0-4-1.8-4-4V28c0-2.2 1.8-4 4-4z" />
-              <path d="M12 26l20 12 20-12" />
-            </svg>
-          </a>
+          <div class="mt-3 border-t border-[rgba(11,42,60,0.1)] pt-3">
+            <p class="px-4 pb-2 text-xs font-semibold uppercase tracking-wider text-[#6F7A83]">Productos</p>
+            <a href={LINKS.crm} class="block rounded px-4 py-2.5 text-sm text-[#0B2A3C] hover:bg-gray-50">CRM Zalantos</a>
+            <a href={LINKS.projectManagement} class="block rounded px-4 py-2.5 text-sm text-[#0B2A3C] hover:bg-gray-50">Gestión de Proyectos</a>
+          </div>
+          <a href={LINKS.contact} class="btn-primary mt-4 w-full px-4 py-3 text-sm">Contacto</a>
         </div>
-      </div>
+      </details>
     </div>
   </div>
 </nav>
+<script is:inline>
+  const menu = document.getElementById('mobile-menu')
+  if (menu instanceof HTMLDetailsElement) {
+    menu.addEventListener('click', (event) => {
+      if ((event.target).closest('a')) menu.open = false
+    })
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') menu.open = false
+    })
+  }
+</script>

@@ -1,5 +1,7 @@
 # Contexto del proyecto — Zalantos (sitio corporativo)
 
+> **Nota (estandarización Zalantos, jul 2026):** el contenido vigente de este archivo fue reorganizado en `docs/context/context.md` (breve) y `docs/context/context-extended.md` (técnico extendido), siguiendo el estándar de documentación Zalantos. Este archivo se conserva íntegro como referencia histórica detallada; ante cualquier discrepancia, `docs/context/` es la fuente de verdad más reciente.
+
 Documento de referencia para asistentes de IA y desarrolladores. Resume qué es el repo, cómo está armado y dónde tocar cada cosa.
 
 ---
@@ -40,7 +42,7 @@ Documento de referencia para asistentes de IA y desarrolladores. Resume qué es 
 - **Sanitización:** DOMPurify en mensajes del chat
 - **Analytics:** Google Analytics 4 `G-X2L1QQ8X0D` en `src/layouts/BaseLayout.astro`
 
-No hay variables de entorno en build local: el sitio es 100 % estático. Los secretos de deploy viven en GitHub Actions (`CPANEL_*`).
+No hay variables de entorno en build local: el sitio es 100 % estático. El deploy es Cloudflare Pages (`NODE_VERSION=20` en el dashboard). Los secrets FTPS `CPANEL_*` son legacy y deben eliminarse — ver `docs/operations/env-vars.md`.
 
 ---
 
@@ -67,9 +69,9 @@ src/
 ├── types/                  # api, session, chat, linkedin landing
 └── styles/global.css
 
-public/                     # Copiado tal cual a dist/ (.htaccess, robots, OG, iconos)
+public/                     # Copiado tal cual a dist/ (_headers, robots, OG, iconos)
 docs/                       # Guías de estilo y architecture.md (obsoleto Next)
-.github/workflows/deploy.yml
+.github/workflows/ci.yml    # Verificación de build (no despliega)
 ```
 
 ---
@@ -196,14 +198,14 @@ npm run preview  # sirve dist/
 
 ### Deploy producción
 
-1. **CI:** push a `main` → `.github/workflows/deploy.yml`
-2. `npm ci` + `npm run build`
-3. Verifica `dist/index.html`, `.htaccess`, `robots.txt`, `sitemap.xml`, rutas clave
-4. **FTPS** con `lftp` → `public_html` en cPanel (secrets: `CPANEL_HOST`, `CPANEL_USER`, `CPANEL_PASS`, `CPANEL_PATH`)
+1. Push/merge a `main` → **Cloudflare Pages** (integración Git) ejecuta `npm run build` y publica `dist/`
+2. En paralelo, `.github/workflows/ci.yml` verifica el build en GitHub Actions (no despliega)
+3. Checks esperados en `dist/`: `index.html`, `_headers`, `robots.txt`, `sitemap.xml`, rutas clave
+4. Dominio custom + redirect www→apex se configuran en el dashboard de Pages (ver `docs/operations/deployment.md`)
 
-### Apache / cPanel
+### Cloudflare Pages (headers)
 
-`public/.htaccess`: HTTPS, reescrituras, cache. Debe subirse con el contenido de `dist/` (incluye archivos ocultos).
+`public/_headers`: Cache-Control para assets vs HTML/XML. Sustituye el antiguo `.htaccess` de Apache/cPanel.
 
 `public/robots.txt`: permite crawlers habituales y bots de IA; apunta al sitemap.
 

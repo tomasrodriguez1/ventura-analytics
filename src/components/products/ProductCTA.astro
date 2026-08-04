@@ -1,0 +1,15 @@
+---
+import type { ProductContent } from '../../types/products'
+import Section from '../ui/Section.astro'
+
+interface Props { product: ProductContent }
+const { product } = Astro.props
+---
+<Section variant="dark">
+  <div class="mx-auto max-w-[780px] text-center">
+    <p class="text-sm font-semibold uppercase tracking-[0.16em] text-[#2FBF71]">Acceso anticipado</p>
+    <h2 class="mt-3 text-3xl font-bold leading-tight sm:text-4xl">Conoce {product.name} en una demo</h2>
+    <p class="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-gray-300">Conversemos sobre cómo este producto puede adaptarse a la operación de tu equipo.</p>
+    <a href={product.contactHref} class="btn-secondary mt-8 w-full sm:w-auto" data-analytics="product_demo_click" data-product={product.id}>Solicitar demo <span aria-hidden="true">→</span></a>
+  </div>
+</Section>

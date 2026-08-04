@@ -22,6 +22,9 @@ export const LINKS = {
   contact: '/?section=contact',
   aiConsultant: '/consultor-ia/',
   blog: '/blog/',
+  products: '/productos/',
+  crm: '/productos/crm/',
+  projectManagement: '/productos/gestion-de-proyectos/',
   privacy: '/privacy/',
 } as const
 
